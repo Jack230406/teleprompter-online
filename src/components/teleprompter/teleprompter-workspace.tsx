@@ -514,14 +514,9 @@ export function TeleprompterWorkspace({
           </div>
         ) : null}
 
-        <div
-          className={cn(
-            "grid gap-0",
-            isFocusMode ? "xl:grid-cols-1" : "xl:grid-cols-[0.96fr_1.04fr]"
-          )}
-        >
+        <div className="grid gap-0">
           {!isFocusMode ? (
-            <section className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 md:p-8">
+            <section className="border-b p-4 sm:p-6 md:p-8">
               <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <div>
                   <h2 className="font-display text-2xl leading-none sm:text-3xl">
@@ -536,87 +531,96 @@ export function TeleprompterWorkspace({
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2.5">
-                <ActionButton
-                  label={copy.tool.play}
-                  onClick={handleTogglePlayback}
-                  disabled={!state.script.trim()}
-                  variant="primary"
-                  theme={state.theme}
-                  className="min-w-[8.5rem]"
-                />
-                <ActionButton
-                  label={copy.tool.stop}
-                  onClick={handleStop}
-                  disabled={playbackState === "ready"}
-                  variant="danger"
-                  theme={state.theme}
-                />
-                {canFullscreen ? (
+              <label className="mt-4 block space-y-2.5 sm:mt-6 sm:space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
+                  <div className={cn("text-xs sm:text-sm", toolTheme.muted)}>
+                    {keyboardHint}
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <textarea
+                    ref={textareaRef}
+                    value={state.script}
+                    onChange={(event) => setScript(event.target.value)}
+                    placeholder={copy.tool.scriptPlaceholder}
+                    className={cn(
+                      "min-h-[16rem] w-full rounded-[1.25rem] border px-3.5 py-3.5 pr-14 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:min-h-[20rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:pr-16 sm:text-base sm:leading-7 lg:min-h-[22rem]",
+                      toolTheme.textarea
+                    )}
+                  />
+                  <button
+                    type="button"
+                    aria-label={clearScriptLabel}
+                    onClick={handleClearScript}
+                    disabled={!state.script.trim()}
+                    className={cn(
+                      "absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-40 sm:right-4 sm:top-4",
+                      toolTheme.card
+                    )}
+                  >
+                    <ClearIcon />
+                  </button>
+                </div>
+              </label>
+            </section>
+          ) : null}
+
+          <div
+            className={cn(
+              "grid gap-0",
+              isFocusMode ? "xl:grid-cols-1" : "xl:grid-cols-[0.92fr_1.08fr]"
+            )}
+          >
+            {!isFocusMode ? (
+              <section className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 md:p-8">
+                <div className="flex flex-wrap gap-2.5">
                   <ActionButton
-                    label={
-                      isFullscreen
-                        ? copy.tool.exitFullscreen
-                        : copy.tool.fullscreen
-                    }
-                    onClick={handleToggleFullscreen}
-                    variant="secondary"
+                    label={copy.tool.play}
+                    onClick={handleTogglePlayback}
+                    disabled={!state.script.trim()}
+                    variant="primary"
+                    theme={state.theme}
+                    className="min-w-[8.5rem]"
+                  />
+                  <ActionButton
+                    label={copy.tool.stop}
+                    onClick={handleStop}
+                    disabled={playbackState === "ready"}
+                    variant="danger"
                     theme={state.theme}
                   />
-                ) : null}
-                <ActionButton
-                  label={copy.tool.reset}
-                  onClick={handleResetPosition}
-                  disabled={!state.script.trim()}
-                  variant="ghost"
-                  theme={state.theme}
-                />
-                <button
-                  type="button"
-                  onClick={() => setIsMobileControlsOpen(true)}
-                  className={cn(
-                    "inline-flex items-center rounded-full border px-4 py-2.5 text-xs font-medium transition sm:text-sm md:hidden",
-                    toolTheme.secondaryButton
-                  )}
-                >
-                  {controlsMenuLabel}
-                </button>
-              </div>
-
-              <div className="grid gap-3 sm:gap-4 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
-                <label className="space-y-2.5 sm:space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
-                    <div className={cn("text-xs sm:text-sm", toolTheme.muted)}>
-                      {keyboardHint}
-                    </div>
-                  </div>
-
-                  <div className="relative">
-                    <textarea
-                      ref={textareaRef}
-                      value={state.script}
-                      onChange={(event) => setScript(event.target.value)}
-                      placeholder={copy.tool.scriptPlaceholder}
-                      className={cn(
-                        "min-h-[13rem] w-full rounded-[1.25rem] border px-3.5 py-3.5 pr-14 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:min-h-[18rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:pr-16 sm:text-base sm:leading-7",
-                        toolTheme.textarea
-                      )}
+                  {canFullscreen ? (
+                    <ActionButton
+                      label={
+                        isFullscreen
+                          ? copy.tool.exitFullscreen
+                          : copy.tool.fullscreen
+                      }
+                      onClick={handleToggleFullscreen}
+                      variant="secondary"
+                      theme={state.theme}
                     />
-                    <button
-                      type="button"
-                      aria-label={clearScriptLabel}
-                      onClick={handleClearScript}
-                      disabled={!state.script.trim()}
-                      className={cn(
-                        "absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-40 sm:right-4 sm:top-4",
-                        toolTheme.card
-                      )}
-                    >
-                      <ClearIcon />
-                    </button>
-                  </div>
-                </label>
+                  ) : null}
+                  <ActionButton
+                    label={copy.tool.reset}
+                    onClick={handleResetPosition}
+                    disabled={!state.script.trim()}
+                    variant="ghost"
+                    theme={state.theme}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileControlsOpen(true)}
+                    className={cn(
+                      "inline-flex items-center rounded-full border px-4 py-2.5 text-xs font-medium transition sm:text-sm md:hidden",
+                      toolTheme.secondaryButton
+                    )}
+                  >
+                    {controlsMenuLabel}
+                  </button>
+                </div>
 
                 <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-1">
                   {readerMetrics.map((metric) => (
@@ -629,40 +633,38 @@ export function TeleprompterWorkspace({
                     />
                   ))}
                 </div>
-              </div>
 
-              <div
-                className={cn(
-                  "rounded-[1.25rem] border p-3.5 md:hidden",
-                  toolTheme.cardMuted
-                )}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <div className="text-sm font-medium">{copy.tool.controlsTitle}</div>
-                    <div className={cn("mt-1 text-sm leading-5", toolTheme.muted)}>
-                      {copy.tool.speedLabel}: {state.speed} px/s · {copy.tool.fontSizeLabel}:{" "}
-                      {state.fontSize}px
+                <div
+                  className={cn(
+                    "rounded-[1.25rem] border p-3.5 md:hidden",
+                    toolTheme.cardMuted
+                  )}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <div className="text-sm font-medium">{copy.tool.controlsTitle}</div>
+                      <div className={cn("mt-1 text-sm leading-5", toolTheme.muted)}>
+                        {copy.tool.speedLabel}: {state.speed} px/s · {copy.tool.fontSizeLabel}: {state.fontSize}px
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileControlsOpen(true)}
+                      className={cn(
+                        "inline-flex items-center rounded-full border px-4 py-2 text-xs font-medium transition",
+                        toolTheme.secondaryButton
+                      )}
+                    >
+                      {controlsMenuLabel}
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setIsMobileControlsOpen(true)}
-                    className={cn(
-                      "inline-flex items-center rounded-full border px-4 py-2 text-xs font-medium transition",
-                      toolTheme.secondaryButton
-                    )}
-                  >
-                    {controlsMenuLabel}
-                  </button>
                 </div>
-              </div>
 
-              {desktopControls}
-            </section>
-          ) : null}
+                {desktopControls}
+              </section>
+            ) : null}
 
-          <section
+            <section
             ref={readerSectionRef}
             id="reader"
             className={cn(
@@ -810,6 +812,7 @@ export function TeleprompterWorkspace({
               </div>
             </div>
           </section>
+          </div>
         </div>
       </div>
 
