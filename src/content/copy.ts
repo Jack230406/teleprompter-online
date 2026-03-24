@@ -89,10 +89,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
     },
     home: {
       eyebrow: "Free teleprompter online",
-      title:
-        "Teleprompter Online is the free online teleprompter app for recording, rehearsal, and teleprompter mirror setups.",
+      title: "Free Online Teleprompter with Mirror Mode",
       description:
-        "Write or paste your script, control speed, font size, line height, text width, reverse scroll, and teleprompter mirror mode directly on the homepage. Everything stays in this browser with fullscreen-ready controls.",
+        "Paste your script, adjust the reading speed, and use fullscreen teleprompting directly on the homepage. No login or download required.",
       highlights: [
         "No account or backend required",
         "Script and settings persist locally",
@@ -232,10 +231,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
     },
     home: {
       eyebrow: "Teleprompter online gratis",
-      title:
-        "Teleprompter Online es la app de teleprompter gratis para grabar, ensayar y usar modo espejo desde la home.",
+      title: "Teleprompter Online Gratis con Modo Espejo",
       description:
-        "Escribe o pega tu guion, controla velocidad, fuente, altura de linea, ancho del texto, direccion inversa y modo espejo directamente en la home. Todo queda guardado en este navegador con controles listos para pantalla completa.",
+        "Pega tu guion, ajusta la velocidad de lectura y usa pantalla completa directamente desde la home. Sin login ni descarga.",
       highlights: [
         "Sin cuenta y sin backend",
         "Guion y ajustes guardados localmente",

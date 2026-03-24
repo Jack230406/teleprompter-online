@@ -44,8 +44,10 @@ export function HomePage({ locale }: HomePageProps) {
           >
             <TeleprompterWorkspace locale={locale} copy={copy} mode="reader" />
           </div>
+        </section>
 
-          <div className="mx-auto mt-6 max-w-5xl">
+        <section className="py-8">
+          <div className="mx-auto max-w-5xl">
             <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
               {copy.home.highlights.map((highlight) => (
                 <div
