@@ -14,14 +14,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: toAbsoluteUrl(getLocalizedPath("en", path)),
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: path === "/" ? 1 : 0.9
+      changeFrequency: path === "/" || path === "/teleprompter" ? "daily" : "weekly",
+      priority:
+        path === "/"
+          ? 1
+          : path === "/teleprompter"
+            ? 0.95
+            : 0.8
     },
     {
       url: toAbsoluteUrl(getLocalizedPath("es", path)),
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: path === "/" ? 0.95 : 0.85
+      changeFrequency: path === "/" || path === "/teleprompter" ? "daily" : "weekly",
+      priority:
+        path === "/"
+          ? 0.95
+          : path === "/teleprompter"
+            ? 0.9
+            : 0.75
     }
   ]);
 }

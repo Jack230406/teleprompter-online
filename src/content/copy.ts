@@ -33,6 +33,17 @@ export type LocalizedCopy = {
     metaTitle: string;
     metaDescription: string;
   };
+  landing: {
+    workflowLabel: string;
+    productPagesLabel: string;
+    productPagesTitle: string;
+    productPagesDescription: string;
+    homeCardDescription: string;
+    readerCardDescription: string;
+    relatedPagesLabel: string;
+    faqLabel: string;
+    stateNote: string;
+  };
   tool: {
     localBadge: string;
     editorTitle: string;
@@ -166,6 +177,21 @@ export const copy: Record<Locale, LocalizedCopy> = {
       metaTitle: "Teleprompter Reader",
       metaDescription:
         "Open the dedicated Teleprompter Online reader with fullscreen, script speed, font size, line height, text width, theme, mirrored text, and reverse scrolling controls."
+    },
+    landing: {
+      workflowLabel: "Scenario workflow",
+      productPagesLabel: "Main product pages",
+      productPagesTitle: "Use the landing page to set up, then move into the main product.",
+      productPagesDescription:
+        "The homepage and the dedicated teleprompter reader remain the strongest product destinations. These landing pages are tuned for a scenario, not meant to replace the full workspace.",
+      homeCardDescription:
+        "See the product overview, core benefits, and the broader Teleprompter Online story.",
+      readerCardDescription:
+        "Open the dedicated reader with fullscreen, playback controls, reverse scroll, and full teleprompter settings.",
+      relatedPagesLabel: "More landing pages",
+      faqLabel: "FAQ",
+      stateNote:
+        "Your script and current settings stay saved locally when you open the full reader."
     },
     tool: {
       localBadge: "Saved locally in this browser",
@@ -301,6 +327,21 @@ export const copy: Record<Locale, LocalizedCopy> = {
       metaTitle: "Lector de Teleprompter",
       metaDescription:
         "Abre el lector dedicado de Teleprompter Online con pantalla completa, velocidad, fuente, altura de linea, ancho del texto, tema, espejo y direccion inversa."
+    },
+    landing: {
+      workflowLabel: "Flujo por escenario",
+      productPagesLabel: "Paginas principales",
+      productPagesTitle: "Usa la landing para preparar el guion y termina en el producto principal.",
+      productPagesDescription:
+        "La home y el lector dedicado siguen siendo las paginas principales del producto. Estas landings responden a un escenario concreto y no sustituyen el espacio completo.",
+      homeCardDescription:
+        "Revisa la propuesta general del producto, sus ventajas principales y la vista completa de Teleprompter Online.",
+      readerCardDescription:
+        "Abre el lector dedicado con pantalla completa, controles de reproduccion, direccion inversa y la configuracion completa del teleprompter.",
+      relatedPagesLabel: "Mas landings",
+      faqLabel: "Preguntas frecuentes",
+      stateNote:
+        "Tu guion y la configuracion actual siguen guardados localmente al abrir el lector completo."
     },
     tool: {
       localBadge: "Guardado localmente en este navegador",

@@ -17,6 +17,24 @@ export type LandingPageEntry = {
   metaTitle: string;
   metaDescription: string;
   highlights: string[];
+  heroFacts: Array<{
+    label: string;
+    value: string;
+  }>;
+  tool: {
+    title: string;
+    description: string;
+    points: string[];
+    extraControl: "lineHeight" | "textWidth";
+  };
+  workflow: {
+    title: string;
+    description: string;
+    steps: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
   sections: Array<{
     title: string;
     description: string;
@@ -47,6 +65,40 @@ export const landingPages: Record<
         "Keeps script and settings saved locally",
         "Supports mirror mode, reverse scroll, and fullscreen reading"
       ],
+      heroFacts: [
+        { label: "Runs on", value: "Browser only" },
+        { label: "Setup", value: "< 1 minute" },
+        { label: "Best for", value: "Fast rehearsals" }
+      ],
+      tool: {
+        title: "Draft and test the browser setup first.",
+        description:
+          "Use a lightweight prompting surface here, then move the same script and settings into the dedicated reader when you need fullscreen control.",
+        points: ["No install", "Shared local state", "Reader handoff"],
+        extraControl: "textWidth"
+      },
+      workflow: {
+        title: "A browser-first workflow for quick starts.",
+        description:
+          "This landing page keeps the tool close to the headline so visitors can test the product before they scroll into supporting copy.",
+        steps: [
+          {
+            title: "Paste the script immediately",
+            description:
+              "Start inside the landing page instead of navigating through product copy before you can try the teleprompter."
+          },
+          {
+            title: "Tune readable browser settings",
+            description:
+              "Adjust speed, font size, mirror mode, and text width to match your display distance and delivery pace."
+          },
+          {
+            title: "Open the main reader",
+            description:
+              "When you are ready to rehearse or record, move into the full reader with the same locally saved script and settings."
+          }
+        ]
+      },
       sections: [
         {
           title: "Fast setup for live use",
@@ -97,6 +149,40 @@ export const landingPages: Record<
         "No forced install or server sync",
         "Built for rehearsal, recording, and presentation workflows"
       ],
+      heroFacts: [
+        { label: "Cost", value: "Free" },
+        { label: "Account", value: "Not required" },
+        { label: "Storage", value: "Local only" }
+      ],
+      tool: {
+        title: "Use the free setup before you commit to a take.",
+        description:
+          "The landing page keeps the essential controls available right away, with no pricing wall and no signup step blocking the teleprompter itself.",
+        points: ["No paywall", "No login", "Saved locally"],
+        extraControl: "lineHeight"
+      },
+      workflow: {
+        title: "Keep the free workflow simple.",
+        description:
+          "Visitors looking for a free teleprompter should reach a usable tool quickly, then decide whether they want the larger reader workspace.",
+        steps: [
+          {
+            title: "Write or paste without friction",
+            description:
+              "The editor is available on arrival so users can test the teleprompter before they trust another free tool."
+          },
+          {
+            title: "Shape the read for comfort",
+            description:
+              "Adjust pace, font size, line height, and mirror mode to make short rehearsals or budget setups workable."
+          },
+          {
+            title: "Switch to the main product page",
+            description:
+              "The full reader remains the best place for fullscreen prompting, but the draft and settings carry over from this landing page."
+          }
+        ]
+      },
       sections: [
         {
           title: "Free without account friction",
@@ -147,6 +233,40 @@ export const landingPages: Record<
         "Mirror and reverse controls help with glass rigs",
         "Layout settings make scripts easier to read near the lens"
       ],
+      heroFacts: [
+        { label: "Best for", value: "Talking-head videos" },
+        { label: "Eye line", value: "Near the lens" },
+        { label: "Rig", value: "Glass or tablet" }
+      ],
+      tool: {
+        title: "Shape a YouTube script before you hit record.",
+        description:
+          "Keep the intro, hook, or tutorial section in view while you adjust speed, size, and readable width for a tighter eye line near the camera.",
+        points: ["Hook scripts", "Mirror ready", "Lens-friendly width"],
+        extraControl: "textWidth"
+      },
+      workflow: {
+        title: "Tune the script for recording, not just reading.",
+        description:
+          "YouTube scripts usually need tighter line width and faster iteration than a general presentation, so the landing page stays centered on creator pacing.",
+        steps: [
+          {
+            title: "Drop in the opening section first",
+            description:
+              "Use the landing page to test the hook, intro, or sponsor read that needs the cleanest eye contact near the lens."
+          },
+          {
+            title: "Control width and mirror mode",
+            description:
+              "Keep the script narrow enough for talking-head delivery and flip the preview when you are using reflective glass."
+          },
+          {
+            title: "Finish in the full reader",
+            description:
+              "Move into the dedicated teleprompter when the script is ready for multiple takes, fullscreen viewing, or longer tutorial segments."
+          }
+        ]
+      },
       sections: [
         {
           title: "Built for creator pacing",
@@ -199,6 +319,40 @@ export const landingPages: Record<
         "Guarda guion y ajustes de forma local",
         "Incluye espejo, direccion inversa y pantalla completa"
       ],
+      heroFacts: [
+        { label: "Funciona en", value: "Solo navegador" },
+        { label: "Preparacion", value: "< 1 minuto" },
+        { label: "Ideal para", value: "Ensayos rapidos" }
+      ],
+      tool: {
+        title: "Prueba primero el flujo dentro del navegador.",
+        description:
+          "Usa aqui una superficie ligera para escribir y leer, y despues abre el lector dedicado con el mismo guion y la misma configuracion local.",
+        points: ["Sin instalar", "Estado compartido", "Salto al lector"],
+        extraControl: "textWidth"
+      },
+      workflow: {
+        title: "Un flujo de navegador pensado para empezar rapido.",
+        description:
+          "La landing deja la herramienta junto al titular para que el visitante pueda probar el producto antes de recorrer todo el contenido.",
+        steps: [
+          {
+            title: "Pega el guion de inmediato",
+            description:
+              "Empieza dentro de la landing en lugar de cruzar varias secciones de marketing antes de probar el teleprompter."
+          },
+          {
+            title: "Ajusta la lectura en el navegador",
+            description:
+              "Controla velocidad, fuente, espejo y ancho del texto para que el guion se adapte a tu pantalla y a tu ritmo."
+          },
+          {
+            title: "Abre el lector principal",
+            description:
+              "Cuando llegue el momento de ensayar o grabar, cambia al lector completo con el mismo guion guardado localmente."
+          }
+        ]
+      },
       sections: [
         {
           title: "Preparacion rapida para usarlo en vivo",
@@ -249,6 +403,40 @@ export const landingPages: Record<
         "Sin instalacion obligatoria ni sincronizacion forzada",
         "Pensado para ensayar, grabar y presentar"
       ],
+      heroFacts: [
+        { label: "Costo", value: "Gratis" },
+        { label: "Cuenta", value: "No hace falta" },
+        { label: "Guardado", value: "Solo local" }
+      ],
+      tool: {
+        title: "Usa el flujo gratis antes de empezar una toma.",
+        description:
+          "La landing mantiene los controles esenciales visibles desde el principio, sin muro de pago ni formulario de registro antes de usar el teleprompter.",
+        points: ["Sin pago", "Sin login", "Guardado local"],
+        extraControl: "lineHeight"
+      },
+      workflow: {
+        title: "Mantener el flujo gratis tambien debe ser simple.",
+        description:
+          "Quien busca un teleprompter gratis deberia encontrar una herramienta usable enseguida y luego decidir si necesita el lector mas grande.",
+        steps: [
+          {
+            title: "Escribe o pega sin friccion",
+            description:
+              "El editor aparece desde la primera pantalla para que el visitante pruebe la herramienta antes de confiar en otro teleprompter gratis."
+          },
+          {
+            title: "Ajusta la lectura para sentir comodidad",
+            description:
+              "Controla ritmo, fuente, altura de linea y espejo para que ensayos rapidos o setups sencillos sigan siendo utiles."
+          },
+          {
+            title: "Pasa a la pagina principal del producto",
+            description:
+              "El lector completo sigue siendo el mejor lugar para usar pantalla completa, pero el borrador y la configuracion viajan desde esta landing."
+          }
+        ]
+      },
       sections: [
         {
           title: "Gratis sin friccion",
@@ -290,7 +478,7 @@ export const landingPages: Record<
       eyebrow: "Flujo para creadores",
       title: "Un teleprompter para YouTube, intros, tutoriales y videos frente a camara.",
       description:
-        "Mantén los ojos cerca del lente, ensaya linea por linea y ajusta margenes, fuente y modo espejo para tu configuracion de YouTube.",
+        "Mantiene los ojos cerca del lente, ensaya linea por linea y ajusta margenes, fuente y modo espejo para tu configuracion de YouTube.",
       metaTitle: "Teleprompter para YouTube",
       metaDescription:
         "Usa Teleprompter Online como teleprompter para YouTube con pantalla completa, control de margenes, fuente y modo espejo para videos y tutoriales.",
@@ -299,6 +487,40 @@ export const landingPages: Record<
         "Espejo y direccion inversa para rigs con cristal",
         "Controles de formato para leer mejor cerca del lente"
       ],
+      heroFacts: [
+        { label: "Ideal para", value: "Talking-head" },
+        { label: "Linea visual", value: "Cerca del lente" },
+        { label: "Rig", value: "Cristal o tablet" }
+      ],
+      tool: {
+        title: "Da forma al guion de YouTube antes de grabar.",
+        description:
+          "Mantiene visible la intro, el hook o el tutorial mientras ajustas velocidad, tamano y ancho de lectura para cuidar la linea visual junto a la camara.",
+        points: ["Hooks", "Espejo listo", "Ancho corto"],
+        extraControl: "textWidth"
+      },
+      workflow: {
+        title: "Ajusta el guion para grabar, no solo para leer.",
+        description:
+          "Los guiones de YouTube suelen necesitar lineas mas cortas y mas iteracion que una presentacion general, asi que esta landing se centra en el ritmo del creador.",
+        steps: [
+          {
+            title: "Empieza por la apertura",
+            description:
+              "Usa la landing para probar el hook, la intro o la mencion patrocinada que necesita el contacto visual mas limpio."
+          },
+          {
+            title: "Controla ancho y espejo",
+            description:
+              "Manten el texto lo bastante estrecho para videos talking-head y activa el espejo cuando uses cristal reflectante."
+          },
+          {
+            title: "Termina en el lector completo",
+            description:
+              "Pasa al teleprompter dedicado cuando el guion ya este listo para varias tomas, pantalla completa o segmentos mas largos."
+          }
+        ]
+      },
       sections: [
         {
           title: "Pensado para el ritmo de creadores",
