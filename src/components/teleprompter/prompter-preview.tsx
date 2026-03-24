@@ -130,22 +130,26 @@ export function PrompterPreview({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[2rem] border",
+        "relative overflow-hidden rounded-[1.5rem] border sm:rounded-[2rem]",
         theme === "dark"
           ? "border-slate-800 bg-slate-950 text-slate-100"
           : "border-slate-200 bg-white text-slate-900",
         compact
-          ? "min-h-[22rem]"
+          ? "min-h-[17rem] sm:min-h-[22rem]"
           : isFullscreen
             ? "h-full min-h-[calc(100vh-14rem)]"
-            : "min-h-[28rem]"
+            : "min-h-[20rem] sm:min-h-[28rem]"
       )}
     >
       <div
         ref={containerRef}
         className={cn(
-          "h-full overflow-y-auto px-6 py-16 md:px-10",
-          compact ? "max-h-[22rem]" : isFullscreen ? "max-h-none" : "max-h-[70vh]"
+          "h-full overflow-y-auto px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-16",
+          compact
+            ? "max-h-[17rem] sm:max-h-[22rem]"
+            : isFullscreen
+              ? "max-h-none"
+              : "max-h-[70vh]"
         )}
       >
         <div
@@ -165,21 +169,21 @@ export function PrompterPreview({
       <div
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b",
+          "pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b sm:h-20",
           theme === "dark" ? "from-slate-950 to-transparent" : "from-white to-transparent"
         )}
       />
       <div
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t",
+          "pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t sm:h-24",
           theme === "dark" ? "from-slate-950 to-transparent" : "from-white to-transparent"
         )}
       />
       <div
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute inset-x-6 top-1/2 h-20 -translate-y-1/2 rounded-3xl border",
+          "pointer-events-none absolute inset-x-4 top-1/2 h-14 -translate-y-1/2 rounded-2xl border sm:inset-x-6 sm:h-20 sm:rounded-3xl",
           theme === "dark"
             ? "border-white/10 bg-white/[0.03]"
             : "border-slate-900/10 bg-brand-soft/20"

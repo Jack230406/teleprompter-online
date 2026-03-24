@@ -160,13 +160,13 @@ export function TeleprompterWorkspace({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[2rem] border shadow-panel",
+        "overflow-hidden rounded-[1.5rem] border shadow-panel sm:rounded-[2rem]",
         toolTheme.shell
       )}
     >
       <div
         className={cn(
-          "flex items-center justify-between gap-3 border-b px-6 py-4",
+          "flex flex-col items-start justify-between gap-2.5 border-b px-4 py-3 sm:flex-row sm:items-center sm:gap-3 sm:px-6 sm:py-4",
           toolTheme.section
         )}
       >
@@ -178,7 +178,7 @@ export function TeleprompterWorkspace({
         </div>
         <div
           className={cn(
-            "rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em]",
+            "self-start rounded-full border px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] sm:self-auto sm:text-xs",
             toolTheme.statusPill
           )}
         >
@@ -194,36 +194,36 @@ export function TeleprompterWorkspace({
             : "xl:grid-cols-[0.84fr_1.16fr]"
         )}
       >
-        <section className="flex flex-col gap-6 p-6 md:p-8">
-          <div className="flex items-center justify-between gap-4">
+        <section className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 md:p-8">
+          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
             <div>
-              <h2 className="font-display text-3xl leading-none">
+              <h2 className="font-display text-2xl leading-none sm:text-3xl">
                 {copy.tool.editorTitle}
               </h2>
-              <p className={cn("mt-2 text-sm leading-6", toolTheme.muted)}>
+              <p className={cn("mt-1.5 text-sm leading-5 sm:mt-2 sm:leading-6", toolTheme.muted)}>
                 {copy.tool.localHint}
               </p>
             </div>
-            <div className="text-xs uppercase tracking-[0.2em] text-slate-400">
+            <div className="text-[0.65rem] uppercase tracking-[0.2em] text-slate-400 sm:text-xs">
               {copy.localeLabel}
             </div>
           </div>
 
-          <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
-            <label className="space-y-3">
+          <div className="grid gap-3 sm:gap-4 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
+            <label className="space-y-2.5 sm:space-y-3">
               <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
               <textarea
                 value={state.script}
                 onChange={(event) => setScript(event.target.value)}
                 placeholder={copy.tool.scriptPlaceholder}
                 className={cn(
-                  "min-h-[18rem] w-full rounded-[1.5rem] border px-4 py-4 text-base leading-7 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20",
+                  "min-h-[13rem] w-full rounded-[1.25rem] border px-3.5 py-3.5 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:min-h-[18rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:text-base sm:leading-7",
                   toolTheme.textarea
                 )}
               />
             </label>
 
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-1">
               {readerMetrics.map((metric) => (
                 <MetricCard
                   key={metric.label}
@@ -237,20 +237,20 @@ export function TeleprompterWorkspace({
 
           <div
             className={cn(
-              "rounded-[1.5rem] border p-4 md:p-5",
+              "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4 md:p-5",
               toolTheme.cardMuted
             )}
           >
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3 sm:mb-4">
               <div>
                 <div className="text-sm font-medium">{copy.tool.controlsTitle}</div>
-                <div className={cn("mt-1 text-sm", toolTheme.muted)}>
+                <div className={cn("mt-1 text-sm leading-5 sm:leading-6", toolTheme.muted)}>
                   {copy.tool.speedLabel}, {copy.tool.fontSizeLabel}, {copy.tool.lineHeightLabel}, {copy.tool.textWidthLabel}
                 </div>
               </div>
               <div
                 className={cn(
-                  "rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em]",
+                  "rounded-full border px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] sm:text-xs",
                   toolTheme.statusPill
                 )}
               >
@@ -258,49 +258,48 @@ export function TeleprompterWorkspace({
               </div>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2">
-            <RangeControl
-              label={copy.tool.speedLabel}
-              value={state.speed}
-              min={20}
-              max={160}
-              onChange={setSpeed}
-              formatValue={(value) => `${value} px/s`}
-              theme={state.theme}
-            />
-            <RangeControl
-              label={copy.tool.fontSizeLabel}
-              value={state.fontSize}
-              min={28}
-              max={104}
-              onChange={setFontSize}
-              formatValue={(value) => `${value} px`}
-              theme={state.theme}
-            />
-            <RangeControl
-              label={copy.tool.lineHeightLabel}
-              value={state.lineHeight}
-              min={1.15}
-              max={2.4}
-              step={0.05}
-              onChange={setLineHeight}
-              formatValue={(value) => `${trimDecimal(value)}x`}
-              theme={state.theme}
-            />
-            <RangeControl
-              label={copy.tool.textWidthLabel}
-              value={state.textWidth}
-              min={42}
-              max={100}
-              onChange={setTextWidth}
-              formatValue={(value) => `${value}%`}
-              theme={state.theme}
-            />
+            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 md:gap-5">
+              <RangeControl
+                label={copy.tool.speedLabel}
+                value={state.speed}
+                min={20}
+                max={160}
+                onChange={setSpeed}
+                formatValue={(value) => `${value} px/s`}
+                theme={state.theme}
+              />
+              <RangeControl
+                label={copy.tool.fontSizeLabel}
+                value={state.fontSize}
+                min={28}
+                max={104}
+                onChange={setFontSize}
+                formatValue={(value) => `${value} px`}
+                theme={state.theme}
+              />
+              <RangeControl
+                label={copy.tool.lineHeightLabel}
+                value={state.lineHeight}
+                min={1.15}
+                max={2.4}
+                step={0.05}
+                onChange={setLineHeight}
+                formatValue={(value) => `${trimDecimal(value)}x`}
+                theme={state.theme}
+              />
+              <RangeControl
+                label={copy.tool.textWidthLabel}
+                value={state.textWidth}
+                min={42}
+                max={100}
+                onChange={setTextWidth}
+                formatValue={(value) => `${value}%`}
+                theme={state.theme}
+              />
+            </div>
           </div>
 
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className="grid gap-3 sm:gap-4 lg:grid-cols-3">
             <ToggleCard
               title={copy.tool.mirrorLabel}
               description={mirrorDescription}
@@ -316,10 +315,10 @@ export function TeleprompterWorkspace({
               theme={state.theme}
             />
             <div
-              className={cn("rounded-[1.5rem] border p-4", toolTheme.card)}
+              className={cn("rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4", toolTheme.card)}
             >
               <div className="text-sm font-medium">{copy.tool.themeLabel}</div>
-              <div className={cn("mt-1 text-sm", toolTheme.muted)}>
+              <div className={cn("mt-1 text-sm leading-5 sm:leading-6", toolTheme.muted)}>
                 {themeDescription}
               </div>
               <div className="mt-4 inline-flex rounded-full border border-current/10 p-1">
@@ -342,11 +341,11 @@ export function TeleprompterWorkspace({
           </div>
 
           {mode === "landing" ? (
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
               <Link
                 href={readerPath}
                 className={cn(
-                  "inline-flex items-center rounded-full px-5 py-3 text-sm font-medium transition",
+                  "inline-flex items-center rounded-full px-4 py-2.5 text-xs font-medium transition sm:px-5 sm:py-3 sm:text-sm",
                   toolTheme.primaryButton
                 )}
               >
@@ -355,7 +354,7 @@ export function TeleprompterWorkspace({
               <Link
                 href={`${readerPath}#reader`}
                 className={cn(
-                  "inline-flex items-center rounded-full border px-5 py-3 text-sm font-medium transition",
+                  "inline-flex items-center rounded-full border px-4 py-2.5 text-xs font-medium transition sm:px-5 sm:py-3 sm:text-sm",
                   toolTheme.secondaryButton
                 )}
               >
@@ -364,7 +363,7 @@ export function TeleprompterWorkspace({
             </div>
           ) : null}
 
-          <p className={cn("text-sm leading-6", toolTheme.muted)}>
+          <p className={cn("text-sm leading-5 sm:leading-6", toolTheme.muted)}>
             {copy.tool.closeNote}
           </p>
         </section>
@@ -372,28 +371,28 @@ export function TeleprompterWorkspace({
         <section
           id="reader"
           className={cn(
-            "border-t p-6 md:p-8 xl:border-l xl:border-t-0",
+            "border-t p-4 sm:p-6 md:p-8 xl:border-l xl:border-t-0",
             state.theme === "dark" ? "border-slate-800" : "border-slate-200"
           )}
         >
           <div
             ref={readerStageRef}
             className={cn(
-              "space-y-5",
+              "space-y-4 sm:space-y-5",
               isFullscreen &&
                 (state.theme === "dark"
                   ? "flex min-h-screen flex-col bg-slate-950 p-4 md:p-6"
                   : "flex min-h-screen flex-col bg-white p-4 md:p-6")
             )}
           >
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col items-start justify-between gap-2.5 sm:flex-row sm:items-center sm:gap-4">
               <div>
-                <h2 className="font-display text-3xl leading-none">
+                <h2 className="font-display text-2xl leading-none sm:text-3xl">
                   {mode === "landing"
                     ? copy.tool.previewTitle
                     : copy.tool.readerTitle}
                 </h2>
-                <p className={cn("mt-2 text-sm leading-6", toolTheme.muted)}>
+                <p className={cn("mt-1.5 text-sm leading-5 sm:mt-2 sm:leading-6", toolTheme.muted)}>
                   {mode === "landing"
                     ? copy.tool.previewHint
                     : copy.tool.readerHint}
@@ -401,7 +400,7 @@ export function TeleprompterWorkspace({
               </div>
               <div
                 className={cn(
-                  "rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em]",
+                  "self-start rounded-full border px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] sm:self-auto sm:text-xs",
                   toolTheme.statusPill
                 )}
               >
@@ -412,11 +411,11 @@ export function TeleprompterWorkspace({
             {mode === "reader" ? (
               <div
                 className={cn(
-                  "rounded-[1.5rem] border p-4",
+                  "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
                   toolTheme.cardMuted
                 )}
               >
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2.5 sm:gap-3">
                   <ActionButton
                     label={copy.tool.play}
                     onClick={handlePlay}

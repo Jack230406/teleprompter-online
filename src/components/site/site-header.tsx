@@ -48,18 +48,18 @@ export function SiteHeader({
       ];
 
   return (
-    <header className="sticky top-0 z-40 pt-1">
-      <div className="rounded-[1.9rem] border border-white/80 bg-white/88 px-4 py-3 shadow-soft backdrop-blur-xl md:px-5">
+    <header className="sticky top-0 z-40 pt-0.5 sm:pt-1">
+      <div className="rounded-[1.5rem] border border-white/80 bg-white/88 px-3 py-2.5 shadow-soft backdrop-blur-xl sm:rounded-[1.9rem] sm:px-4 sm:py-3 md:px-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <Link href={homePath} className="inline-flex min-w-0 items-center gap-3">
-            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-ink text-sm font-semibold tracking-[0.16em] text-white">
+          <Link href={homePath} className="inline-flex min-w-0 items-center gap-2.5 sm:gap-3">
+            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-ink text-xs font-semibold tracking-[0.16em] text-white sm:h-10 sm:w-10 sm:rounded-2xl sm:text-sm">
               TO
             </span>
             <div className="min-w-0">
-              <div className="truncate font-display text-2xl leading-none text-ink">
+              <div className="truncate font-display text-xl leading-none text-ink sm:text-2xl">
                 Teleprompter Online
               </div>
-              <div className="text-xs uppercase tracking-[0.18em] text-slate-500">
+              <div className="text-[0.65rem] uppercase tracking-[0.16em] text-slate-500 sm:text-xs sm:tracking-[0.18em]">
                 {labels.subtitle}
               </div>
             </div>
@@ -83,13 +83,13 @@ export function SiteHeader({
           <div className="flex flex-wrap items-center justify-end gap-2">
             <Link
               href={switchPath}
-              className="inline-flex items-center rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
+              className="inline-flex items-center rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-900 hover:text-slate-900 sm:px-4 sm:py-2 sm:text-sm"
             >
               {labels.switchLanguage}
             </Link>
             <Link
               href={teleprompterPath}
-              className="inline-flex items-center rounded-full bg-ink px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+              className="inline-flex items-center rounded-full bg-ink px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-800 sm:px-4 sm:py-2 sm:text-sm"
             >
               {labels.launch}
             </Link>

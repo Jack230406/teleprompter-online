@@ -84,15 +84,15 @@ export function RangeControl({
   return (
     <label
       className={cn(
-        "rounded-[1.5rem] border p-4",
+        "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? "border-slate-800 bg-slate-900"
           : "border-slate-200 bg-slate-50"
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-medium">{label}</span>
-        <span className="text-sm text-slate-500">{formatValue(value)}</span>
+        <span className="text-xs font-medium sm:text-sm">{label}</span>
+        <span className="text-xs text-slate-500 sm:text-sm">{formatValue(value)}</span>
       </div>
       <input
         type="range"
@@ -101,7 +101,7 @@ export function RangeControl({
         step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-brand"
+        className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-brand sm:mt-4"
       />
     </label>
   );
@@ -117,16 +117,18 @@ export function MetricCard({ label, value, theme }: MetricCardProps) {
   return (
     <div
       className={cn(
-        "rounded-[1.5rem] border p-4",
+        "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? "border-slate-800 bg-slate-900"
           : "border-slate-200 bg-slate-50"
       )}
     >
-      <div className="text-xs uppercase tracking-[0.2em] text-slate-500">
+      <div className="text-[0.65rem] uppercase tracking-[0.18em] text-slate-500 sm:text-xs sm:tracking-[0.2em]">
         {label}
       </div>
-      <div className="mt-3 font-display text-3xl leading-none">{value}</div>
+      <div className="mt-2 font-display text-2xl leading-none sm:mt-3 sm:text-3xl">
+        {value}
+      </div>
     </div>
   );
 }
@@ -151,7 +153,7 @@ export function ToggleCard({
       type="button"
       onClick={onToggle}
       className={cn(
-        "rounded-[1.5rem] border p-4 text-left transition",
+        "rounded-[1.25rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? enabled
             ? "border-slate-700 bg-slate-800"
@@ -161,12 +163,12 @@ export function ToggleCard({
             : "border-slate-200 bg-slate-50 hover:border-slate-300"
       )}
     >
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-3 sm:gap-4">
         <div>
-          <div className="text-sm font-medium">{title}</div>
+          <div className="text-xs font-medium sm:text-sm">{title}</div>
           <div
             className={cn(
-              "mt-1 text-sm",
+              "mt-1 text-xs sm:text-sm",
               theme === "dark" ? "text-slate-400" : "text-slate-500"
             )}
           >
@@ -175,7 +177,7 @@ export function ToggleCard({
         </div>
         <div
           className={cn(
-            "inline-flex h-7 w-12 items-center rounded-full p-1 transition",
+            "inline-flex h-6 w-10 items-center rounded-full p-1 transition sm:h-7 sm:w-12",
             enabled
               ? "justify-end bg-ink"
               : theme === "dark"
@@ -183,7 +185,7 @@ export function ToggleCard({
                 : "justify-start bg-slate-300"
           )}
         >
-          <span className="h-5 w-5 rounded-full bg-white" />
+          <span className="h-4 w-4 rounded-full bg-white sm:h-5 sm:w-5" />
         </div>
       </div>
     </button>
@@ -210,7 +212,7 @@ export function ThemeButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full px-4 py-2 text-sm font-medium transition",
+        "rounded-full px-3 py-1.5 text-xs font-medium transition sm:px-4 sm:py-2 sm:text-sm",
         active ? activeClass : idleClass
       )}
     >
@@ -240,7 +242,7 @@ export function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center rounded-full px-5 py-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-45",
+        "inline-flex items-center rounded-full px-4 py-2.5 text-xs font-medium transition disabled:cursor-not-allowed disabled:opacity-45 sm:px-5 sm:py-3 sm:text-sm",
         getActionButtonClass(variant, theme)
       )}
     >
