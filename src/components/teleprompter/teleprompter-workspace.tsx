@@ -209,31 +209,56 @@ export function TeleprompterWorkspace({
             </div>
           </div>
 
-          <label className="space-y-3">
-            <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
-            <textarea
-              value={state.script}
-              onChange={(event) => setScript(event.target.value)}
-              placeholder={copy.tool.scriptPlaceholder}
-              className={cn(
-                "min-h-[18rem] w-full rounded-[1.5rem] border px-4 py-4 text-base leading-7 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20",
-                toolTheme.textarea
-              )}
-            />
-          </label>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {readerMetrics.map((metric) => (
-              <MetricCard
-                key={metric.label}
-                label={metric.label}
-                value={metric.value}
-                theme={state.theme}
+          <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_15rem] xl:items-start">
+            <label className="space-y-3">
+              <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
+              <textarea
+                value={state.script}
+                onChange={(event) => setScript(event.target.value)}
+                placeholder={copy.tool.scriptPlaceholder}
+                className={cn(
+                  "min-h-[18rem] w-full rounded-[1.5rem] border px-4 py-4 text-base leading-7 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20",
+                  toolTheme.textarea
+                )}
               />
-            ))}
+            </label>
+
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+              {readerMetrics.map((metric) => (
+                <MetricCard
+                  key={metric.label}
+                  label={metric.label}
+                  value={metric.value}
+                  theme={state.theme}
+                />
+              ))}
+            </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div
+            className={cn(
+              "rounded-[1.5rem] border p-4 md:p-5",
+              toolTheme.cardMuted
+            )}
+          >
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div className="text-sm font-medium">Core controls</div>
+                <div className={cn("mt-1 text-sm", toolTheme.muted)}>
+                  {copy.tool.speedLabel}, {copy.tool.fontSizeLabel}, {copy.tool.lineHeightLabel} and {copy.tool.textWidthLabel}
+                </div>
+              </div>
+              <div
+                className={cn(
+                  "rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em]",
+                  toolTheme.statusPill
+                )}
+              >
+                {statusLabel}
+              </div>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
             <RangeControl
               label={copy.tool.speedLabel}
               value={state.speed}
@@ -271,6 +296,8 @@ export function TeleprompterWorkspace({
               formatValue={(value) => `${value}%`}
               theme={state.theme}
             />
+          </div>
+
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3">
