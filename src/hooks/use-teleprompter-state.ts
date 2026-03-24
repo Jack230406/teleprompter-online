@@ -1,0 +1,144 @@
+"use client";
+
+import { useEffect, useReducer, useState } from "react";
+
+export type TeleprompterTheme = "light" | "dark";
+
+export type TeleprompterState = {
+  script: string;
+  speed: number;
+  fontSize: number;
+  mirrored: boolean;
+  reverse: boolean;
+  theme: TeleprompterTheme;
+};
+
+type TeleprompterAction =
+  | { type: "hydrate"; value: TeleprompterState }
+  | { type: "script"; value: string }
+  | { type: "speed"; value: number }
+  | { type: "fontSize"; value: number }
+  | { type: "toggleMirror" }
+  | { type: "toggleReverse" }
+  | { type: "theme"; value: TeleprompterTheme };
+
+const STORAGE_KEY = "teleprompter-online:v1";
+
+export const defaultTeleprompterState: TeleprompterState = {
+  script: `Welcome to Teleprompter Online.
+
+This is a clean, local-first teleprompter MVP built for creators, presenters, and teams.
+
+Paste your own script, adjust the speed, mirror the text for reflective glass, and start reading when you are ready.`,
+  speed: 42,
+  fontSize: 54,
+  mirrored: false,
+  reverse: false,
+  theme: "light"
+};
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function coerceState(value: unknown): TeleprompterState | null {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const candidate = value as Partial<TeleprompterState>;
+
+  return {
+    script:
+      typeof candidate.script === "string"
+        ? candidate.script
+        : defaultTeleprompterState.script,
+    speed:
+      typeof candidate.speed === "number"
+        ? clamp(candidate.speed, 20, 160)
+        : defaultTeleprompterState.speed,
+    fontSize:
+      typeof candidate.fontSize === "number"
+        ? clamp(candidate.fontSize, 28, 104)
+        : defaultTeleprompterState.fontSize,
+    mirrored:
+      typeof candidate.mirrored === "boolean"
+        ? candidate.mirrored
+        : defaultTeleprompterState.mirrored,
+    reverse:
+      typeof candidate.reverse === "boolean"
+        ? candidate.reverse
+        : defaultTeleprompterState.reverse,
+    theme:
+      candidate.theme === "dark" || candidate.theme === "light"
+        ? candidate.theme
+        : defaultTeleprompterState.theme
+  };
+}
+
+function reducer(
+  state: TeleprompterState,
+  action: TeleprompterAction
+): TeleprompterState {
+  switch (action.type) {
+    case "hydrate":
+      return action.value;
+    case "script":
+      return { ...state, script: action.value };
+    case "speed":
+      return { ...state, speed: clamp(action.value, 20, 160) };
+    case "fontSize":
+      return { ...state, fontSize: clamp(action.value, 28, 104) };
+    case "toggleMirror":
+      return { ...state, mirrored: !state.mirrored };
+    case "toggleReverse":
+      return { ...state, reverse: !state.reverse };
+    case "theme":
+      return { ...state, theme: action.value };
+    default:
+      return state;
+  }
+}
+
+export function useTeleprompterState() {
+  const [state, dispatch] = useReducer(reducer, defaultTeleprompterState);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const rawValue = window.localStorage.getItem(STORAGE_KEY);
+
+      if (rawValue) {
+        const parsed = coerceState(JSON.parse(rawValue));
+
+        if (parsed) {
+          dispatch({ type: "hydrate", value: parsed });
+        }
+      }
+    } catch {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } finally {
+      setHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) {
+      return;
+    }
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, [hydrated, state]);
+
+  return {
+    hydrated,
+    state,
+    setScript: (value: string) => dispatch({ type: "script", value }),
+    setSpeed: (value: number) => dispatch({ type: "speed", value }),
+    setFontSize: (value: number) => dispatch({ type: "fontSize", value }),
+    toggleMirror: () => dispatch({ type: "toggleMirror" }),
+    toggleReverse: () => dispatch({ type: "toggleReverse" }),
+    setTheme: (value: TeleprompterTheme) =>
+      dispatch({ type: "theme", value })
+  };
+}
