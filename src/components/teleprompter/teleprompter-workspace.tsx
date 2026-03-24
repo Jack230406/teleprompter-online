@@ -575,14 +575,14 @@ export function TeleprompterWorkspace({
           >
             {!isFocusMode ? (
               <section className="flex flex-col gap-4 p-4 sm:gap-5 sm:p-5 md:p-6">
-                <div className="flex flex-wrap gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-1 2xl:grid-cols-2">
                   <ActionButton
                     label={copy.tool.play}
                     onClick={handleTogglePlayback}
                     disabled={!state.script.trim()}
                     variant="primary"
                     theme={state.theme}
-                    className="min-w-[8.5rem]"
+                    className="w-full min-w-0"
                   />
                   <ActionButton
                     label={copy.tool.stop}

@@ -118,20 +118,20 @@ export function MetricCard({ label, value, theme, hint }: MetricCardProps) {
   return (
     <div
       className={cn(
-        "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
+        "flex min-h-[7.5rem] flex-col rounded-[1.25rem] border p-3.5 sm:min-h-[8rem] sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? "border-slate-800 bg-slate-900"
           : "border-slate-200 bg-slate-50"
       )}
     >
-      <div className="text-[0.65rem] uppercase tracking-[0.18em] text-slate-500 sm:text-xs sm:tracking-[0.2em]">
+      <div className="line-clamp-1 text-[0.65rem] uppercase tracking-[0.18em] text-slate-500 sm:text-xs sm:tracking-[0.2em]">
         {label}
       </div>
       <div className="mt-2 font-display text-2xl leading-none sm:mt-3 sm:text-3xl">
         {value}
       </div>
       {hint ? (
-        <div className="mt-2 text-xs text-slate-500 sm:text-sm">{hint}</div>
+        <div className="mt-2 line-clamp-2 text-xs text-slate-500 sm:text-sm">{hint}</div>
       ) : null}
     </div>
   );
@@ -167,12 +167,12 @@ export function ToggleCard({
             : "border-slate-200 bg-slate-50 hover:border-slate-300"
       )}
     >
-      <div className="flex items-center justify-between gap-3 sm:gap-4">
-        <div>
-          <div className="text-xs font-medium sm:text-sm">{title}</div>
+      <div className="flex items-start justify-between gap-3 sm:gap-4">
+        <div className="min-w-0 flex-1">
+          <div className="line-clamp-1 text-xs font-medium sm:text-sm">{title}</div>
           <div
             className={cn(
-              "mt-1 text-xs sm:text-sm",
+              "mt-1 line-clamp-2 text-xs sm:text-sm",
               theme === "dark" ? "text-slate-400" : "text-slate-500"
             )}
           >
