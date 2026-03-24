@@ -171,9 +171,13 @@ export function LandingTeleprompterTool({
             onChange={(event) => setScript(event.target.value)}
             placeholder={copy.tool.scriptPlaceholder}
             className={cn(
-              "min-h-[12rem] w-full rounded-[1.5rem] border px-4 py-4 text-base leading-7 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20",
+              "h-[14rem] max-h-[14rem] w-full resize-none overflow-x-hidden overflow-y-auto rounded-[1.5rem] border px-4 py-4 text-base leading-7 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 [overflow-wrap:anywhere] break-words sm:h-[16rem] sm:max-h-[16rem]",
               toolTheme.textarea
             )}
+            style={{
+              overflowWrap: "anywhere",
+              wordBreak: "break-word"
+            }}
           />
         </label>
 
@@ -212,7 +216,7 @@ export function LandingTeleprompterTool({
             type="button"
             onClick={toggleMirror}
             className={cn(
-              "rounded-[1.5rem] border p-4 text-left transition",
+              "min-w-0 rounded-[1.5rem] border p-4 text-left transition",
               toolTheme.card,
               state.mirrored
                 ? state.theme === "dark"

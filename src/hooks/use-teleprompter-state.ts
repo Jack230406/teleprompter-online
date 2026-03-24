@@ -16,6 +16,11 @@ export type TeleprompterState = {
   theme: TeleprompterTheme;
 };
 
+export type TeleprompterReaderSettings = Pick<
+  TeleprompterState,
+  "fontSize" | "lineHeight" | "textWidth"
+>;
+
 type TeleprompterAction =
   | { type: "hydrate"; value: TeleprompterState }
   | { type: "script"; value: string }
@@ -23,6 +28,8 @@ type TeleprompterAction =
   | { type: "fontSize"; value: number }
   | { type: "lineHeight"; value: number }
   | { type: "textWidth"; value: number }
+  | { type: "readerSettings"; value: TeleprompterReaderSettings }
+  | { type: "resetSettings"; value?: Partial<TeleprompterReaderSettings> }
   | { type: "toggleMirror" }
   | { type: "toggleReverse" }
   | { type: "toggleEyeLine" }
@@ -42,12 +49,45 @@ This is a free online teleprompter built for creators, presenters, and recording
   textWidth: 74,
   mirrored: false,
   reverse: false,
-  showEyeLine: true,
+  showEyeLine: false,
   theme: "light"
 };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
+}
+
+export function getViewportReaderSettings(
+  viewportWidth: number,
+  viewportHeight: number
+): TeleprompterReaderSettings {
+  const safeWidth = Math.max(viewportWidth, 320);
+  const safeHeight = Math.max(viewportHeight, 480);
+  const widthDrivenFont =
+    safeWidth < 480
+      ? safeWidth * 0.1
+      : safeWidth < 768
+        ? safeWidth * 0.088
+        : safeWidth < 1024
+          ? safeWidth * 0.072
+          : safeWidth * 0.056;
+  const heightDrivenFont =
+    safeWidth < 768 ? safeHeight * 0.075 : safeHeight * 0.068;
+
+  return {
+    fontSize: clamp(
+      Math.round(Math.min(widthDrivenFont, heightDrivenFont)),
+      28,
+      72
+    ),
+    lineHeight:
+      safeWidth < 480 ? 1.42 : safeWidth < 768 ? 1.46 : safeWidth < 1024 ? 1.5 : 1.55,
+    textWidth: clamp(
+      safeWidth < 480 ? 96 : safeWidth < 768 ? 92 : safeWidth < 1024 ? 84 : 74,
+      42,
+      100
+    )
+  };
 }
 
 function coerceState(value: unknown): TeleprompterState | null {
@@ -114,6 +154,19 @@ function reducer(
       return { ...state, lineHeight: clamp(action.value, 1.15, 2.4) };
     case "textWidth":
       return { ...state, textWidth: clamp(action.value, 42, 100) };
+    case "readerSettings":
+      return {
+        ...state,
+        fontSize: clamp(action.value.fontSize, 28, 104),
+        lineHeight: clamp(action.value.lineHeight, 1.15, 2.4),
+        textWidth: clamp(action.value.textWidth, 42, 100)
+      };
+    case "resetSettings":
+      return {
+        ...defaultTeleprompterState,
+        ...action.value,
+        script: state.script
+      };
     case "toggleMirror":
       return { ...state, mirrored: !state.mirrored };
     case "toggleReverse":
@@ -165,6 +218,12 @@ export function useTeleprompterState() {
     setFontSize: (value: number) => dispatch({ type: "fontSize", value }),
     setLineHeight: (value: number) => dispatch({ type: "lineHeight", value }),
     setTextWidth: (value: number) => dispatch({ type: "textWidth", value }),
+    setReaderSettings: (value: TeleprompterReaderSettings) =>
+      dispatch({ type: "readerSettings", value }),
+    resetSettings: (value?: Partial<TeleprompterReaderSettings>) => {
+      window.localStorage.removeItem(STORAGE_KEY);
+      dispatch({ type: "resetSettings", value });
+    },
     toggleMirror: () => dispatch({ type: "toggleMirror" }),
     toggleReverse: () => dispatch({ type: "toggleReverse" }),
     toggleEyeLine: () => dispatch({ type: "toggleEyeLine" }),

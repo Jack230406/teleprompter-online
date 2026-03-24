@@ -61,7 +61,10 @@ export function HomePage({ locale }: HomePageProps) {
   };
 
   return (
-    <main className="px-3 pb-12 pt-2 sm:px-6 sm:pb-16 sm:pt-3 lg:px-8">
+    <main
+      data-teleprompter-page
+      className="px-3 pb-12 pt-2 sm:px-6 sm:pb-16 sm:pt-3 lg:px-8"
+    >
       <Script
         id={`faq-schema-${locale}`}
         type="application/ld+json"
@@ -85,22 +88,10 @@ export function HomePage({ locale }: HomePageProps) {
         />
 
         <section className="pb-4 pt-4 sm:pb-6 sm:pt-6 lg:pb-8 lg:pt-8">
-          <div className="mx-auto max-w-5xl">
-            <div className="rounded-[1.5rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-6 lg:p-7">
-              <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-brand-deep sm:px-4 sm:py-2 sm:text-xs">
-                {copy.home.eyebrow}
-              </div>
-              <h1 className="mt-4 max-w-4xl font-display text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-ink sm:mt-5 sm:text-5xl lg:text-[3.5rem]">
-                {copy.home.title}
-              </h1>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:mt-4 sm:text-base sm:leading-7">
-                {copy.home.description}
-              </p>
-            </div>
-
+          <div className="mx-auto grid max-w-6xl gap-4 xl:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] xl:items-start xl:gap-5">
             <div
               id={teleprompterToolAnchor}
-              className="mt-4 scroll-mt-24 sm:mt-5"
+              className="order-1 scroll-mt-24"
             >
               <div className="mb-2 flex flex-wrap items-center justify-between gap-3 sm:mb-3">
                 <SectionLabel>{copy.home.toolLabel}</SectionLabel>
@@ -126,10 +117,28 @@ export function HomePage({ locale }: HomePageProps) {
                 </div>
               </div>
             </div>
+
+            <div
+              data-teleprompter-marketing
+              className="order-2 rounded-[1.5rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-6 lg:p-7 xl:sticky xl:top-28"
+            >
+              <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-brand-deep sm:px-4 sm:py-2 sm:text-xs">
+                {copy.home.eyebrow}
+              </div>
+              <h1 className="mt-4 max-w-4xl font-display text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-ink sm:mt-5 sm:text-5xl xl:text-[3.3rem]">
+                {copy.home.title}
+              </h1>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:mt-4 sm:text-base sm:leading-7">
+                {copy.home.description}
+              </p>
+            </div>
           </div>
         </section>
 
-        <section className="pb-3 sm:pb-4 lg:pb-6">
+        <section
+          data-teleprompter-marketing
+          className="pb-3 sm:pb-4 lg:pb-6"
+        >
           <div className="rounded-[1.5rem] border border-slate-900/90 bg-slate-950 px-4 py-4 text-white shadow-panel sm:rounded-[2rem] sm:px-5 sm:py-5 md:px-6">
             <p className="max-w-4xl text-sm leading-7 text-slate-200 sm:text-base">
               {copy.home.definition}
@@ -175,6 +184,7 @@ export function HomePage({ locale }: HomePageProps) {
         </section>
 
         <section
+          data-teleprompter-marketing
           id="features"
           className="scroll-mt-24 py-8 sm:py-10 lg:py-16"
         >
@@ -205,7 +215,7 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        <section className="py-8 sm:py-10 lg:py-16">
+        <section data-teleprompter-marketing className="py-8 sm:py-10 lg:py-16">
           <div className="max-w-3xl">
             <SectionLabel>Who this teleprompter is for</SectionLabel>
             <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
@@ -230,7 +240,7 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        <section className="py-8 sm:py-10 lg:py-16">
+        <section data-teleprompter-marketing className="py-8 sm:py-10 lg:py-16">
           <div className="max-w-3xl">
             <SectionLabel>Browser teleprompter advantages</SectionLabel>
             <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
@@ -255,7 +265,7 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        <section className="py-8 sm:py-10 lg:py-16">
+        <section data-teleprompter-marketing className="py-8 sm:py-10 lg:py-16">
           <div className="max-w-3xl">
             <SectionLabel>Browser vs app teleprompter</SectionLabel>
             <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
@@ -283,6 +293,7 @@ export function HomePage({ locale }: HomePageProps) {
         </section>
 
         <section
+          data-teleprompter-marketing
           id="how-it-works"
           className="scroll-mt-24 py-8 sm:py-10 lg:py-16"
         >
@@ -325,6 +336,7 @@ export function HomePage({ locale }: HomePageProps) {
         </section>
 
         <section
+          data-teleprompter-marketing
           id="faq"
           className="scroll-mt-24 py-8 sm:py-10 lg:py-16"
         >

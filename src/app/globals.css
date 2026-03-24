@@ -15,6 +15,11 @@
     scroll-behavior: smooth;
   }
 
+  html.teleprompter-focus-mode,
+  body.teleprompter-focus-mode {
+    overflow: hidden;
+  }
+
   body {
     min-height: 100vh;
     background:
@@ -34,6 +39,24 @@
     mask-image: linear-gradient(180deg, rgba(15, 23, 42, 0.45), transparent 72%);
     pointer-events: none;
     z-index: -1;
+  }
+
+  body.teleprompter-focus-mode {
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  }
+
+  body.teleprompter-focus-mode::before {
+    opacity: 0.25;
+  }
+
+  body.teleprompter-focus-mode [data-teleprompter-chrome],
+  body.teleprompter-focus-mode [data-teleprompter-marketing] {
+    display: none !important;
+  }
+
+  body.teleprompter-focus-mode [data-teleprompter-page] {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
   }
 
   ::selection {

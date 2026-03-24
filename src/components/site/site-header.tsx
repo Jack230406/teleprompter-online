@@ -50,7 +50,10 @@ export function SiteHeader({
       ];
 
   return (
-    <header className="sticky top-0 z-40 pt-0.5 sm:pt-1">
+    <header
+      data-teleprompter-chrome
+      className="sticky top-0 z-40 pt-0.5 sm:pt-1"
+    >
       <div className="rounded-[1.5rem] border border-white/80 bg-white/88 px-3 py-2.5 shadow-soft backdrop-blur-xl sm:rounded-[1.9rem] sm:px-4 sm:py-3 md:px-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link href={homePath} className="inline-flex min-w-0 items-center gap-2.5 sm:gap-3">

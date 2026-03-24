@@ -152,7 +152,7 @@ export function PrompterPreview({
     <div
       onClick={handlePreviewClick}
       className={cn(
-        "relative overflow-hidden rounded-[1.5rem] border sm:rounded-[2rem]",
+        "relative min-w-0 overflow-hidden rounded-[1.5rem] border sm:rounded-[2rem]",
         theme === "dark"
           ? "border-slate-800 bg-slate-950 text-slate-100"
           : "border-slate-200 bg-white text-slate-900",
@@ -169,7 +169,7 @@ export function PrompterPreview({
         ref={containerRef}
         data-reader-scroll
         className={cn(
-          "h-full overflow-y-auto px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-16",
+          "h-full overflow-x-hidden overflow-y-auto px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-16",
           compact
             ? "max-h-[17rem] sm:max-h-[22rem]"
             : isFullscreen
@@ -181,12 +181,14 @@ export function PrompterPreview({
       >
         <div
           data-prompter-script
-          className="mx-auto whitespace-pre-wrap"
+          className="mx-auto min-w-0 whitespace-pre-wrap break-words [overflow-wrap:anywhere]"
           style={{
             fontSize: `${fontSize}px`,
             lineHeight,
             width: `${textWidth}%`,
             maxWidth: "100%",
+            overflowWrap: "anywhere",
+            wordBreak: "break-word",
             transform: mirrored ? "scaleX(-1)" : undefined
           }}
         >

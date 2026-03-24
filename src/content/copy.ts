@@ -300,8 +300,8 @@ export const copy: Record<Locale, LocalizedCopy> = {
       themeDark: "Studio",
       play: "Play",
       pause: "Pause",
-      stop: "Stop",
-      reset: "Reset position",
+      stop: "Stop playback",
+      reset: "Back to start",
       fullscreen: "Fullscreen",
       exitFullscreen: "Exit fullscreen",
       openReader: "Open homepage teleprompter",
@@ -313,7 +313,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
       readerHint:
         "Use the homepage teleprompter for rehearsal, recording, or live delivery.",
       closeNote:
-        "Play resumes from the current position, stop returns the script to the starting edge, and every setting stays saved locally."
+        "Pause keeps your place, stop playback ends the run, and back to start jumps the script to the opening edge while every setting stays saved locally."
     },
     footer: {
       summary:
@@ -519,8 +519,8 @@ export const copy: Record<Locale, LocalizedCopy> = {
       themeDark: "Studio",
       play: "Reproducir",
       pause: "Pausar",
-      stop: "Detener",
-      reset: "Reiniciar posicion",
+      stop: "Detener lectura",
+      reset: "Volver al inicio",
       fullscreen: "Pantalla completa",
       exitFullscreen: "Salir de pantalla completa",
       openReader: "Abrir teleprompter en la home",
@@ -532,7 +532,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
       readerHint:
         "Usa el teleprompter de la home para practicar, grabar o presentar en vivo.",
       closeNote:
-        "Reproducir retoma desde la posicion actual, detener vuelve el guion al inicio y todos los ajustes se guardan localmente."
+        "Pausar conserva tu posicion, detener lectura termina la reproduccion y volver al inicio lleva el guion al borde inicial mientras todos los ajustes se guardan localmente."
     },
     footer: {
       summary:

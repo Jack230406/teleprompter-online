@@ -3,7 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { type LocalizedCopy } from "@/content/copy";
-import { useTeleprompterState } from "@/hooks/use-teleprompter-state";
+import {
+  defaultTeleprompterState,
+  getViewportReaderSettings,
+  useTeleprompterState
+} from "@/hooks/use-teleprompter-state";
 import { type Locale } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -32,6 +36,18 @@ type PlaybackState = "ready" | "playing" | "paused";
 const SPEED_STEP = 6;
 const FONT_SIZE_STEP = 4;
 
+const MOBILE_SHEET_SAFE_AREA_STYLE = {
+  paddingLeft: "max(1.25rem, env(safe-area-inset-left))",
+  paddingRight: "max(1.25rem, env(safe-area-inset-right))",
+  paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))"
+} as const;
+
+const MOBILE_BAR_SAFE_AREA_STYLE = {
+  left: "max(0.75rem, env(safe-area-inset-left))",
+  right: "max(0.75rem, env(safe-area-inset-right))",
+  bottom: "max(0.75rem, env(safe-area-inset-bottom))"
+} as const;
+
 export function TeleprompterWorkspace({
   locale,
   copy
@@ -43,6 +59,8 @@ export function TeleprompterWorkspace({
     setFontSize,
     setLineHeight,
     setTextWidth,
+    setReaderSettings,
+    resetSettings,
     toggleMirror,
     toggleReverse,
     toggleEyeLine,
@@ -69,41 +87,6 @@ export function TeleprompterWorkspace({
   const toolTheme = getToolTheme(state.theme);
   const isFocusMode = playbackState === "playing" || isFullscreen;
 
-  useEffect(() => {
-    setCanFullscreen(Boolean(document.fullscreenEnabled));
-
-    const handleFullscreenChange = () => {
-      setIsFullscreen(document.fullscreenElement === readerStageRef.current);
-    };
-
-    handleFullscreenChange();
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!state.script.trim()) {
-      setPlaybackState("ready");
-      setIsMobileControlsOpen(false);
-    }
-  }, [state.script]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const body = document.body;
-
-    root.classList.toggle("teleprompter-focus-mode", isFocusMode);
-    body.classList.toggle("teleprompter-focus-mode", isFocusMode);
-
-    return () => {
-      root.classList.remove("teleprompter-focus-mode");
-      body.classList.remove("teleprompter-focus-mode");
-    };
-  }, [isFocusMode]);
-
   const statusLabel =
     playbackState === "playing"
       ? copy.tool.playing
@@ -112,6 +95,9 @@ export function TeleprompterWorkspace({
         : copy.tool.ready;
 
   const numberLocale = locale === "es" ? "es-ES" : "en-US";
+  const toggleEnabledLabel = locale === "es" ? "Activo" : "On";
+  const toggleDisabledLabel = locale === "es" ? "Inactivo" : "Off";
+  const eyeLineTitle = locale === "es" ? "Guia visual" : "Eye-line guide";
   const mirrorDescription =
     locale === "es"
       ? "Volteo horizontal para rigs con cristal."
@@ -129,10 +115,22 @@ export function TeleprompterWorkspace({
       ? "Ajusta la superficie del lector."
       : "Adjust the reader surface.";
   const clearScriptLabel = locale === "es" ? "Limpiar guion" : "Clear script";
-  const controlsMenuLabel = locale === "es" ? "Controles" : "Controls";
+  const controlsMenuLabel = locale === "es" ? "Ajustes" : "Controls";
   const hideControlsLabel = locale === "es" ? "Ocultar" : "Hide";
   const controlsSheetTitle =
     locale === "es" ? "Controles del teleprompter" : "Teleprompter controls";
+  const primaryControlsTitle =
+    locale === "es" ? "Controles principales" : "Primary controls";
+  const layoutControlsTitle =
+    locale === "es" ? "Maquetacion del lector" : "Reading layout";
+  const secondaryControlsTitle =
+    locale === "es" ? "Opciones del lector" : "Reader options";
+  const resetAllSettingsLabel =
+    locale === "es" ? "Restablecer ajustes" : "Reset all settings";
+  const resetAllSettingsHint =
+    locale === "es"
+      ? "Borra las preferencias guardadas y recupera la configuracion recomendada."
+      : "Clear saved preferences and restore the recommended reader defaults.";
   const readingPaceHint =
     locale === "es"
       ? `Aprox. ${estimatedWordsPerMinute} ppm con esta velocidad`
@@ -145,6 +143,10 @@ export function TeleprompterWorkspace({
     locale === "es"
       ? "Pulsa Esc o toca un espacio vacio para recuperar la interfaz."
       : "Press Esc or tap empty space to restore the interface.";
+  const mobileControlsSummary =
+    locale === "es"
+      ? `Velocidad ${state.speed} px/s · Texto ${state.fontSize}px`
+      : `Speed ${state.speed} px/s · Text ${state.fontSize}px`;
 
   const readerMetrics = [
     {
@@ -162,6 +164,47 @@ export function TeleprompterWorkspace({
     }
   ];
 
+  const fitReaderToViewport = (force = false) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const viewportSettings = getViewportReaderSettings(
+      window.innerWidth,
+      window.innerHeight
+    );
+    const nextFontSize =
+      force ||
+      state.fontSize === defaultTeleprompterState.fontSize ||
+      state.fontSize > viewportSettings.fontSize
+        ? viewportSettings.fontSize
+        : state.fontSize;
+    const nextLineHeight =
+      force ||
+      state.lineHeight === defaultTeleprompterState.lineHeight ||
+      Math.abs(state.lineHeight - viewportSettings.lineHeight) > 0.28
+        ? viewportSettings.lineHeight
+        : state.lineHeight;
+    const nextTextWidth =
+      force ||
+      state.textWidth === defaultTeleprompterState.textWidth ||
+      state.textWidth < viewportSettings.textWidth
+        ? viewportSettings.textWidth
+        : state.textWidth;
+
+    if (
+      nextFontSize !== state.fontSize ||
+      nextLineHeight !== state.lineHeight ||
+      nextTextWidth !== state.textWidth
+    ) {
+      setReaderSettings({
+        fontSize: nextFontSize,
+        lineHeight: nextLineHeight,
+        textWidth: nextTextWidth
+      });
+    }
+  };
+
   const scrollReaderIntoView = () => {
     window.requestAnimationFrame(() => {
       readerSectionRef.current?.scrollIntoView({
@@ -176,6 +219,7 @@ export function TeleprompterWorkspace({
       return;
     }
 
+    fitReaderToViewport();
     scrollReaderIntoView();
     setIsMobileControlsOpen(false);
     setPlaybackState("playing");
@@ -202,6 +246,17 @@ export function TeleprompterWorkspace({
 
   const handleResetPosition = () => {
     setResetSignal((value) => value + 1);
+  };
+
+  const handleResetAllSettings = () => {
+    const viewportSettings =
+      typeof window === "undefined"
+        ? undefined
+        : getViewportReaderSettings(window.innerWidth, window.innerHeight);
+
+    resetSettings(viewportSettings);
+    setResetSignal((value) => value + 1);
+    setIsMobileControlsOpen(false);
   };
 
   const handleAdjustSpeed = (delta: number) => {
@@ -245,6 +300,7 @@ export function TeleprompterWorkspace({
       return;
     }
 
+    fitReaderToViewport();
     scrollReaderIntoView();
 
     try {
@@ -262,6 +318,67 @@ export function TeleprompterWorkspace({
       setIsFullscreen(false);
     }
   };
+
+  useEffect(() => {
+    setCanFullscreen(Boolean(document.fullscreenEnabled));
+
+    const handleFullscreenChange = () => {
+      const isReaderFullscreen =
+        document.fullscreenElement === readerStageRef.current;
+
+      setIsFullscreen(isReaderFullscreen);
+
+      if (isReaderFullscreen) {
+        fitReaderToViewport(true);
+      }
+    };
+
+    handleFullscreenChange();
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, [state.fontSize, state.lineHeight, state.textWidth]);
+
+  useEffect(() => {
+    if (!state.script.trim()) {
+      setPlaybackState("ready");
+      setIsMobileControlsOpen(false);
+    }
+  }, [state.script]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const body = document.body;
+
+    root.classList.toggle("teleprompter-focus-mode", isFocusMode);
+    body.classList.toggle("teleprompter-focus-mode", isFocusMode);
+
+    return () => {
+      root.classList.remove("teleprompter-focus-mode");
+      body.classList.remove("teleprompter-focus-mode");
+    };
+  }, [isFocusMode]);
+
+  useEffect(() => {
+    if (!isFocusMode) {
+      return;
+    }
+
+    const handleViewportChange = () => {
+      fitReaderToViewport();
+    };
+
+    handleViewportChange();
+    window.addEventListener("resize", handleViewportChange);
+    window.addEventListener("orientationchange", handleViewportChange);
+
+    return () => {
+      window.removeEventListener("resize", handleViewportChange);
+      window.removeEventListener("orientationchange", handleViewportChange);
+    };
+  }, [isFocusMode, state.fontSize, state.lineHeight, state.textWidth]);
 
   useEffect(() => {
     const handleGlobalKeydown = (event: KeyboardEvent) => {
@@ -413,6 +530,8 @@ export function TeleprompterWorkspace({
           enabled={state.mirrored}
           onToggle={toggleMirror}
           theme={state.theme}
+          enabledLabel={toggleEnabledLabel}
+          disabledLabel={toggleDisabledLabel}
         />
         <ToggleCard
           title={copy.tool.reverseLabel}
@@ -420,13 +539,17 @@ export function TeleprompterWorkspace({
           enabled={state.reverse}
           onToggle={toggleReverse}
           theme={state.theme}
+          enabledLabel={toggleEnabledLabel}
+          disabledLabel={toggleDisabledLabel}
         />
         <ToggleCard
-          title={locale === "es" ? "Guia visual" : "Eye-line guide"}
+          title={eyeLineTitle}
           description={eyeLineDescription}
           enabled={state.showEyeLine}
           onToggle={toggleEyeLine}
           theme={state.theme}
+          enabledLabel={toggleEnabledLabel}
+          disabledLabel={toggleDisabledLabel}
         />
       </div>
 
@@ -471,13 +594,21 @@ export function TeleprompterWorkspace({
         <p className={cn("max-w-2xl text-sm leading-6", toolTheme.muted)}>
           {copy.tool.closeNote} {keyboardHint}
         </p>
-        <ActionButton
-          label={copy.tool.reset}
-          onClick={handleResetPosition}
-          disabled={!state.script.trim()}
-          variant="ghost"
-          theme={state.theme}
-        />
+        <div className="flex flex-wrap items-center gap-2">
+          <ActionButton
+            label={copy.tool.reset}
+            onClick={handleResetPosition}
+            disabled={!state.script.trim()}
+            variant="ghost"
+            theme={state.theme}
+          />
+          <ActionButton
+            label={resetAllSettingsLabel}
+            onClick={handleResetAllSettings}
+            variant="secondary"
+            theme={state.theme}
+          />
+        </div>
       </div>
     </div>
   );
@@ -485,6 +616,7 @@ export function TeleprompterWorkspace({
   return (
     <>
       <div
+        data-teleprompter-tool
         className={cn(
           "overflow-hidden rounded-[1.5rem] border shadow-panel sm:rounded-[2rem]",
           toolTheme.shell
@@ -514,11 +646,11 @@ export function TeleprompterWorkspace({
           </div>
         ) : null}
 
-        <div className="grid gap-0">
+        <div className="grid gap-0 xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
           {!isFocusMode ? (
-            <section className="border-b p-4 sm:p-6 md:p-8">
+            <section className="min-w-0 border-b p-4 sm:p-6 md:p-8 xl:border-b-0 xl:border-r">
               <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <div>
+                <div className="min-w-0">
                   <h2 className="font-display text-2xl leading-none sm:text-3xl">
                     {copy.tool.editorTitle}
                   </h2>
@@ -526,29 +658,30 @@ export function TeleprompterWorkspace({
                     {copy.tool.localHint}
                   </p>
                 </div>
-                <div className="text-[0.65rem] uppercase tracking-[0.2em] text-slate-400 sm:text-xs">
-                  {copy.localeLabel}
-                </div>
               </div>
 
               <label className="mt-4 block space-y-2.5 sm:mt-6 sm:space-y-3">
-                <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-3">
                   <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
                   <div className={cn("text-xs sm:text-sm", toolTheme.muted)}>
                     {keyboardHint}
                   </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative min-w-0">
                   <textarea
                     ref={textareaRef}
                     value={state.script}
                     onChange={(event) => setScript(event.target.value)}
                     placeholder={copy.tool.scriptPlaceholder}
                     className={cn(
-                      "h-[16rem] max-h-[16rem] w-full resize-none overflow-y-auto rounded-[1.25rem] border px-3.5 py-3.5 pr-14 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:h-[20rem] sm:max-h-[20rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:pr-16 sm:text-base sm:leading-7 lg:h-[22rem] lg:max-h-[22rem]",
+                      "h-[16rem] max-h-[16rem] w-full resize-none overflow-x-hidden overflow-y-auto rounded-[1.25rem] border px-3.5 py-3.5 pr-14 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 [overflow-wrap:anywhere] break-words sm:h-[18rem] sm:max-h-[18rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:pr-16 sm:text-base sm:leading-7 lg:h-[20rem] lg:max-h-[20rem]",
                       toolTheme.textarea
                     )}
+                    style={{
+                      overflowWrap: "anywhere",
+                      wordBreak: "break-word"
+                    }}
                   />
                   <button
                     type="button"
@@ -567,10 +700,10 @@ export function TeleprompterWorkspace({
             </section>
           ) : null}
 
-          <div className="grid gap-0">
-            {!isFocusMode ? (
-              <section className="flex flex-col gap-4 border-b p-4 sm:gap-5 sm:p-5 md:p-6">
-                <div className="grid gap-3 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
+          {!isFocusMode ? (
+            <section className="min-w-0 border-b p-4 sm:p-5 md:p-6">
+              <div className="flex flex-col gap-4 sm:gap-5">
+                <div className="grid gap-3 xl:grid-cols-[1.05fr_0.95fr] xl:items-start">
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-2">
                     <ActionButton
                       label={copy.tool.play}
@@ -586,6 +719,7 @@ export function TeleprompterWorkspace({
                       disabled={playbackState === "ready"}
                       variant="danger"
                       theme={state.theme}
+                      className="w-full min-w-0"
                     />
                     {canFullscreen ? (
                       <ActionButton
@@ -597,6 +731,7 @@ export function TeleprompterWorkspace({
                         onClick={handleToggleFullscreen}
                         variant="secondary"
                         theme={state.theme}
+                        className="w-full min-w-0"
                       />
                     ) : null}
                     <ActionButton
@@ -605,17 +740,8 @@ export function TeleprompterWorkspace({
                       disabled={!state.script.trim()}
                       variant="ghost"
                       theme={state.theme}
+                      className="w-full min-w-0"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setIsMobileControlsOpen(true)}
-                      className={cn(
-                        "col-span-2 inline-flex items-center justify-center rounded-full border px-4 py-2.5 text-xs font-medium transition sm:col-span-4 sm:text-sm md:hidden",
-                        toolTheme.secondaryButton
-                      )}
-                    >
-                      {controlsMenuLabel}
-                    </button>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -638,10 +764,10 @@ export function TeleprompterWorkspace({
                   )}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
+                    <div className="min-w-0">
                       <div className="text-sm font-medium">{copy.tool.controlsTitle}</div>
                       <div className={cn("mt-1 text-sm leading-5", toolTheme.muted)}>
-                        {copy.tool.speedLabel}: {state.speed} px/s · {copy.tool.fontSizeLabel}: {state.fontSize}px
+                        {mobileControlsSummary}
                       </div>
                     </div>
                     <button
@@ -658,24 +784,26 @@ export function TeleprompterWorkspace({
                 </div>
 
                 {desktopControls}
-              </section>
-            ) : null}
+              </div>
+            </section>
+          ) : null}
 
-            <section
+          <section
             ref={readerSectionRef}
             id="reader"
             className={cn(
-              "p-4 sm:p-6 md:p-8 lg:p-10",
+              "min-w-0 p-4 sm:p-6 md:p-8 lg:p-10",
               !isFocusMode &&
                 (state.theme === "dark"
-                  ? "border-t border-slate-800"
-                  : "border-t border-slate-200")
+                  ? "border-t border-slate-800 xl:col-span-2"
+                  : "border-t border-slate-200 xl:col-span-2"),
+              isFocusMode && "xl:col-span-2"
             )}
           >
             <div
               ref={readerStageRef}
               className={cn(
-                "relative space-y-4 sm:space-y-5",
+                "relative min-w-0 space-y-4 sm:space-y-5",
                 isFullscreen &&
                   (state.theme === "dark"
                     ? "flex min-h-screen flex-col bg-slate-950 p-4 md:p-6"
@@ -684,7 +812,7 @@ export function TeleprompterWorkspace({
             >
               {!isFocusMode ? (
                 <div className="flex flex-col items-start justify-between gap-2.5 sm:flex-row sm:items-center sm:gap-4">
-                  <div>
+                  <div className="min-w-0">
                     <h2 className="font-display text-2xl leading-none sm:text-3xl">
                       {copy.tool.readerTitle}
                     </h2>
@@ -707,7 +835,7 @@ export function TeleprompterWorkspace({
                 </p>
               )}
 
-              <div className={cn("relative", isFullscreen && "flex flex-1")}>
+              <div className={cn("relative min-w-0", isFullscreen && "flex flex-1")}>
                 {isFocusMode ? (
                   <div className="pointer-events-none fixed inset-x-0 bottom-5 z-50 hidden justify-center px-6 md:flex">
                     <div
@@ -719,7 +847,9 @@ export function TeleprompterWorkspace({
                       )}
                     >
                       <FloatingButton
-                        label={playbackState === "playing" ? copy.tool.pause : copy.tool.play}
+                        label={
+                          playbackState === "playing" ? copy.tool.pause : copy.tool.play
+                        }
                         onClick={handleTogglePlayback}
                         emphasized
                       />
@@ -753,7 +883,10 @@ export function TeleprompterWorkspace({
                 ) : null}
 
                 {isFocusMode ? (
-                  <div className="fixed inset-x-4 bottom-4 z-50 md:hidden">
+                  <div
+                    className="fixed z-50 md:hidden"
+                    style={MOBILE_BAR_SAFE_AREA_STYLE}
+                  >
                     <div
                       className={cn(
                         "flex items-center justify-between gap-3 rounded-[1.25rem] border px-4 py-3 shadow-2xl backdrop-blur-xl",
@@ -809,7 +942,6 @@ export function TeleprompterWorkspace({
               </div>
             </div>
           </section>
-          </div>
         </div>
       </div>
 
@@ -823,14 +955,15 @@ export function TeleprompterWorkspace({
           />
           <div
             className={cn(
-              "absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto rounded-t-[2rem] border px-4 pb-6 pt-4 shadow-2xl",
+              "absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto rounded-t-[2rem] border px-5 pb-6 pt-4 shadow-2xl",
               toolTheme.shell
             )}
+            style={MOBILE_SHEET_SAFE_AREA_STYLE}
           >
             <div className="mx-auto h-1.5 w-12 rounded-full bg-current/10" />
 
             <div className="mt-4 flex items-center justify-between gap-3">
-              <div>
+              <div className="min-w-0">
                 <div className="font-display text-2xl leading-none">
                   {controlsSheetTitle}
                 </div>
@@ -842,7 +975,7 @@ export function TeleprompterWorkspace({
                 type="button"
                 onClick={() => setIsMobileControlsOpen(false)}
                 className={cn(
-                  "inline-flex h-10 w-10 items-center justify-center rounded-full border transition",
+                  "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition",
                   toolTheme.card
                 )}
               >
@@ -850,7 +983,7 @@ export function TeleprompterWorkspace({
               </button>
             </div>
 
-            <div className="mt-4 grid gap-3">
+            <div className="mt-4 grid gap-4">
               <div className="grid grid-cols-2 gap-3">
                 {readerMetrics.map((metric) => (
                   <MetricCard
@@ -863,6 +996,16 @@ export function TeleprompterWorkspace({
                 ))}
               </div>
 
+              <MobileSectionHeading
+                theme={state.theme}
+                title={primaryControlsTitle}
+                description={
+                  locale === "es"
+                    ? "Empieza la lectura y ajusta lo imprescindible."
+                    : "Start prompting and tune the essentials."
+                }
+              />
+
               <div className="grid grid-cols-2 gap-3">
                 <ActionButton
                   label={
@@ -871,20 +1014,6 @@ export function TeleprompterWorkspace({
                   onClick={handleTogglePlayback}
                   disabled={!state.script.trim()}
                   variant="primary"
-                  theme={state.theme}
-                />
-                <ActionButton
-                  label={copy.tool.stop}
-                  onClick={handleStop}
-                  disabled={playbackState === "ready"}
-                  variant="danger"
-                  theme={state.theme}
-                />
-                <ActionButton
-                  label={copy.tool.reset}
-                  onClick={handleResetPosition}
-                  disabled={!state.script.trim()}
-                  variant="ghost"
                   theme={state.theme}
                 />
                 {canFullscreen ? (
@@ -898,7 +1027,15 @@ export function TeleprompterWorkspace({
                     variant="secondary"
                     theme={state.theme}
                   />
-                ) : null}
+                ) : (
+                  <ActionButton
+                    label={copy.tool.stop}
+                    onClick={handleStop}
+                    disabled={playbackState === "ready"}
+                    variant="danger"
+                    theme={state.theme}
+                  />
+                )}
               </div>
 
               <RangeControl
@@ -919,6 +1056,34 @@ export function TeleprompterWorkspace({
                 formatValue={(value) => `${value} px`}
                 theme={state.theme}
               />
+
+              <MobileSectionHeading
+                theme={state.theme}
+                title={layoutControlsTitle}
+                description={
+                  locale === "es"
+                    ? "Ajusta el bloque de lectura y la posicion del guion."
+                    : "Adjust the reading block and script position."
+                }
+              />
+
+              <div className="grid grid-cols-2 gap-3">
+                <ActionButton
+                  label={copy.tool.stop}
+                  onClick={handleStop}
+                  disabled={playbackState === "ready"}
+                  variant="danger"
+                  theme={state.theme}
+                />
+                <ActionButton
+                  label={copy.tool.reset}
+                  onClick={handleResetPosition}
+                  disabled={!state.script.trim()}
+                  variant="ghost"
+                  theme={state.theme}
+                />
+              </div>
+
               <RangeControl
                 label={copy.tool.lineHeightLabel}
                 value={state.lineHeight}
@@ -939,12 +1104,24 @@ export function TeleprompterWorkspace({
                 theme={state.theme}
               />
 
+              <MobileSectionHeading
+                theme={state.theme}
+                title={secondaryControlsTitle}
+                description={
+                  locale === "es"
+                    ? "Opciones de lectura y presentacion."
+                    : "Reader behavior and presentation options."
+                }
+              />
+
               <ToggleCard
                 title={copy.tool.mirrorLabel}
                 description={mirrorDescription}
                 enabled={state.mirrored}
                 onToggle={toggleMirror}
                 theme={state.theme}
+                enabledLabel={toggleEnabledLabel}
+                disabledLabel={toggleDisabledLabel}
               />
               <ToggleCard
                 title={copy.tool.reverseLabel}
@@ -952,13 +1129,17 @@ export function TeleprompterWorkspace({
                 enabled={state.reverse}
                 onToggle={toggleReverse}
                 theme={state.theme}
+                enabledLabel={toggleEnabledLabel}
+                disabledLabel={toggleDisabledLabel}
               />
               <ToggleCard
-                title={locale === "es" ? "Guia visual" : "Eye-line guide"}
+                title={eyeLineTitle}
                 description={eyeLineDescription}
                 enabled={state.showEyeLine}
                 onToggle={toggleEyeLine}
                 theme={state.theme}
+                enabledLabel={toggleEnabledLabel}
+                disabledLabel={toggleDisabledLabel}
               />
 
               <div
@@ -985,6 +1166,26 @@ export function TeleprompterWorkspace({
                     onClick={() => setTheme("dark")}
                     activeClass={toolTheme.toggleActive}
                     idleClass={toolTheme.toggleIdle}
+                  />
+                </div>
+              </div>
+
+              <div
+                className={cn(
+                  "rounded-[1.25rem] border p-3.5",
+                  toolTheme.cardMuted
+                )}
+              >
+                <div className="text-sm font-medium">{resetAllSettingsLabel}</div>
+                <p className={cn("mt-1 text-sm leading-6", toolTheme.muted)}>
+                  {resetAllSettingsHint}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <ActionButton
+                    label={resetAllSettingsLabel}
+                    onClick={handleResetAllSettings}
+                    variant="secondary"
+                    theme={state.theme}
                   />
                 </div>
               </div>
@@ -1024,6 +1225,39 @@ function FloatingButton({
     >
       {label}
     </button>
+  );
+}
+
+type MobileSectionHeadingProps = {
+  title: string;
+  description: string;
+  theme: "light" | "dark";
+};
+
+function MobileSectionHeading({
+  title,
+  description,
+  theme
+}: MobileSectionHeadingProps) {
+  return (
+    <div
+      className={cn(
+        "rounded-[1.25rem] border px-3.5 py-3",
+        theme === "dark"
+          ? "border-slate-800 bg-slate-900/65"
+          : "border-slate-200 bg-slate-50/80"
+      )}
+    >
+      <div className="text-sm font-medium">{title}</div>
+      <div
+        className={cn(
+          "mt-1 text-sm leading-6",
+          theme === "dark" ? "text-slate-400" : "text-slate-500"
+        )}
+      >
+        {description}
+      </div>
+    </div>
   );
 }
 

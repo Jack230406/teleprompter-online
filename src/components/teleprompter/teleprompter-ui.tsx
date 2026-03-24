@@ -84,15 +84,17 @@ export function RangeControl({
   return (
     <label
       className={cn(
-        "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
+        "min-w-0 rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? "border-slate-800 bg-slate-900"
           : "border-slate-200 bg-slate-50"
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="text-xs font-medium sm:text-sm">{label}</span>
-        <span className="text-xs text-slate-500 sm:text-sm">{formatValue(value)}</span>
+        <span className="min-w-0 text-xs font-medium sm:text-sm">{label}</span>
+        <span className="shrink-0 text-xs text-slate-500 sm:text-sm">
+          {formatValue(value)}
+        </span>
       </div>
       <input
         type="range"
@@ -118,7 +120,7 @@ export function MetricCard({ label, value, theme, hint }: MetricCardProps) {
   return (
     <div
       className={cn(
-        "flex min-h-[7.5rem] flex-col rounded-[1.25rem] border p-3.5 sm:min-h-[8rem] sm:rounded-[1.5rem] sm:p-4",
+        "flex min-w-0 min-h-[7.5rem] flex-col rounded-[1.25rem] border p-3.5 sm:min-h-[8rem] sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? "border-slate-800 bg-slate-900"
           : "border-slate-200 bg-slate-50"
@@ -143,6 +145,8 @@ type ToggleCardProps = {
   enabled: boolean;
   onToggle: () => void;
   theme: TeleprompterTheme;
+  enabledLabel?: string;
+  disabledLabel?: string;
 };
 
 export function ToggleCard({
@@ -150,14 +154,17 @@ export function ToggleCard({
   description,
   enabled,
   onToggle,
-  theme
+  theme,
+  enabledLabel = "On",
+  disabledLabel = "Off"
 }: ToggleCardProps) {
   return (
     <button
       type="button"
       onClick={onToggle}
+      aria-pressed={enabled}
       className={cn(
-        "rounded-[1.25rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4",
+        "min-w-0 rounded-[1.25rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4",
         theme === "dark"
           ? enabled
             ? "border-slate-700 bg-slate-800"
@@ -169,10 +176,26 @@ export function ToggleCard({
     >
       <div className="flex items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0 flex-1">
-          <div className="line-clamp-1 text-xs font-medium sm:text-sm">{title}</div>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="text-xs font-medium sm:text-sm">{title}</div>
+            <span
+              className={cn(
+                "inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-[0.6rem] font-medium uppercase tracking-[0.18em] sm:text-[0.65rem]",
+                enabled
+                  ? theme === "dark"
+                    ? "border-white/15 bg-white/10 text-white"
+                    : "border-brand/20 bg-white text-brand-deep"
+                  : theme === "dark"
+                    ? "border-slate-700 bg-slate-900 text-slate-400"
+                    : "border-slate-200 bg-white text-slate-500"
+              )}
+            >
+              {enabled ? enabledLabel : disabledLabel}
+            </span>
+          </div>
           <div
             className={cn(
-              "mt-1 line-clamp-2 text-xs sm:text-sm",
+              "mt-1 text-xs sm:text-sm",
               theme === "dark" ? "text-slate-400" : "text-slate-500"
             )}
           >

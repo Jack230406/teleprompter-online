@@ -25,7 +25,10 @@ export function SiteFooter({
   const switchPath = getLocalizedPath(alternateLocale, normalizePath(currentPath));
 
   return (
-    <footer className="border-t border-slate-200/80 py-10">
+    <footer
+      data-teleprompter-chrome
+      className="border-t border-slate-200/80 py-10"
+    >
       <div className="rounded-[2rem] border border-white/80 bg-white/76 px-6 py-8 shadow-soft backdrop-blur">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
           <div>
