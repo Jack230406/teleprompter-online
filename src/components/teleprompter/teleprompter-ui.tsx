@@ -242,7 +242,7 @@ export function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center rounded-full px-4 py-2.5 text-xs font-medium transition disabled:cursor-not-allowed disabled:opacity-45 sm:px-5 sm:py-3 sm:text-sm",
+        "inline-flex min-w-0 items-center justify-center rounded-full px-3 py-2 text-xs font-medium text-center transition disabled:cursor-not-allowed disabled:opacity-45 sm:px-5 sm:py-3 sm:text-sm",
         getActionButtonClass(variant, theme)
       )}
     >

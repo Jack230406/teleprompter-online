@@ -415,7 +415,7 @@ export function TeleprompterWorkspace({
                   toolTheme.cardMuted
                 )}
               >
-                <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:gap-3">
                   <ActionButton
                     label={copy.tool.play}
                     onClick={handlePlay}
@@ -447,16 +447,18 @@ export function TeleprompterWorkspace({
                     theme={state.theme}
                   />
                   {canFullscreen ? (
-                    <ActionButton
-                      label={
-                        isFullscreen
-                          ? copy.tool.exitFullscreen
-                          : copy.tool.fullscreen
-                      }
-                      onClick={handleToggleFullscreen}
-                      variant="secondary"
-                      theme={state.theme}
-                    />
+                    <div className="col-span-2 sm:contents">
+                      <ActionButton
+                        label={
+                          isFullscreen
+                            ? copy.tool.exitFullscreen
+                            : copy.tool.fullscreen
+                        }
+                        onClick={handleToggleFullscreen}
+                        variant="secondary"
+                        theme={state.theme}
+                      />
+                    </div>
                   ) : null}
                 </div>
               </div>
