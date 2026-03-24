@@ -24,25 +24,25 @@ export function HomePage({ locale }: HomePageProps) {
           labels={copy.navigation}
         />
 
-        <section className="grid gap-12 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:py-16">
-          <div className="order-2 lg:order-1">
+        <section className="py-12 lg:py-16">
+          <div className="mx-auto max-w-5xl text-center">
             <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-brand-deep">
               {copy.home.eyebrow}
             </div>
-            <h1 className="mt-6 max-w-3xl font-display text-5xl leading-[0.95] tracking-[-0.03em] text-ink sm:text-6xl xl:text-7xl">
+            <h1 className="mt-6 font-display text-5xl leading-[0.95] tracking-[-0.03em] text-ink sm:text-6xl xl:text-7xl">
               {copy.home.title}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600">
               {copy.home.description}
             </p>
 
-            <div className="mt-8 grid gap-3">
+            <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-3">
               {copy.home.highlights.map((highlight) => (
                 <div
                   key={highlight}
-                  className="flex items-center gap-3 text-sm text-slate-700"
+                  className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-soft"
                 >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-accent">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-accent-soft text-accent">
                     <CheckIcon />
                   </span>
                   <span>{highlight}</span>
@@ -50,7 +50,7 @@ export function HomePage({ locale }: HomePageProps) {
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
               <Link
                 href={getLocalizedPath(locale, "/teleprompter")}
                 className="inline-flex items-center rounded-full bg-ink px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
@@ -65,7 +65,7 @@ export function HomePage({ locale }: HomePageProps) {
               </Link>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            <div className="mt-10 grid gap-4 text-left sm:grid-cols-3">
               {copy.home.stats.map((stat) => (
                 <div
                   key={stat.label}
@@ -82,7 +82,7 @@ export function HomePage({ locale }: HomePageProps) {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2">
+          <div className="mt-12">
             <TeleprompterWorkspace locale={locale} copy={copy} mode="landing" />
           </div>
         </section>
