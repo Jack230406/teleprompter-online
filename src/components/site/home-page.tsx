@@ -46,13 +46,13 @@ export function HomePage({ locale }: HomePageProps) {
           </div>
         </section>
 
-        <section className="py-8">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
+        <section className="py-6">
+          <div className="mx-auto max-w-6xl rounded-[1.75rem] border border-slate-200 bg-white/80 p-5 shadow-soft backdrop-blur md:p-6">
+            <div className="flex flex-wrap items-center gap-3">
               {copy.home.highlights.map((highlight) => (
                 <div
                   key={highlight}
-                  className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-soft"
+                  className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700"
                 >
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-accent-soft text-accent">
                     <CheckIcon />
@@ -62,16 +62,16 @@ export function HomePage({ locale }: HomePageProps) {
               ))}
             </div>
 
-            <div className="mt-6 grid gap-4 text-left sm:grid-cols-3">
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
               {copy.home.stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-[1.75rem] border border-slate-200 bg-white/70 px-5 py-5 shadow-soft backdrop-blur"
+                  className="rounded-[1.25rem] border border-slate-200 bg-slate-50/80 px-5 py-4"
                 >
                   <div className="text-xs uppercase tracking-[0.22em] text-slate-500">
                     {stat.label}
                   </div>
-                  <div className="mt-3 font-display text-3xl text-ink">
+                  <div className="mt-2 font-display text-2xl text-ink">
                     {stat.value}
                   </div>
                 </div>
