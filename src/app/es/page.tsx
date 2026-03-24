@@ -10,10 +10,12 @@ export const metadata: Metadata = buildMetadata({
   title: copy.es.home.metaTitle,
   description: copy.es.home.metaDescription,
   keywords: [
-    "Teleprompter Online",
-    "teleprompter gratis",
+    "teleprompter",
     "teleprompter online",
-    "lector de teleprompter"
+    "teleprompter gratis",
+    "app de teleprompter",
+    "teleprompter espejo",
+    "teleprompter mirror"
   ]
 });
 

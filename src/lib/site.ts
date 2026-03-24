@@ -1,12 +1,14 @@
 export const siteConfig = {
   name: "Teleprompter Online",
   description:
-    "Free online teleprompter with instant browser-based prompting, local script storage, mirror mode, theme controls, and no signup.",
+    "Free teleprompter online with instant browser-based prompting, teleprompter mirror mode, local script storage, fullscreen controls, and no signup.",
   url: "https://teleprompteronline.net",
   domain: "teleprompteronline.net",
   locales: ["en", "es"] as const,
   defaultLocale: "en" as const
 };
+
+export const teleprompterToolAnchor = "teleprompter-tool";
 
 export type Locale = (typeof siteConfig.locales)[number];
 
@@ -26,6 +28,12 @@ export function getLocalizedPath(locale: Locale, path = "/") {
   }
 
   return `/es${normalizedPath || ""}`;
+}
+
+export function getLocalizedToolPath(locale: Locale) {
+  const localizedHomePath = getLocalizedPath(locale, "/");
+
+  return `${localizedHomePath}#${teleprompterToolAnchor}`;
 }
 
 export function toAbsoluteUrl(path: string) {

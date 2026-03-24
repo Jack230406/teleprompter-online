@@ -73,7 +73,7 @@ export const landingPages: Record<
       tool: {
         title: "Draft and test the browser setup first.",
         description:
-          "Use a lightweight prompting surface here, then move the same script and settings into the dedicated reader when you need fullscreen control.",
+          "Use a lightweight prompting surface here, then move the same script and settings into the homepage teleprompter when you need fullscreen control.",
         points: ["No install", "Shared local state", "Reader handoff"],
         extraControl: "textWidth"
       },
@@ -95,7 +95,7 @@ export const landingPages: Record<
           {
             title: "Open the main reader",
             description:
-              "When you are ready to rehearse or record, move into the full reader with the same locally saved script and settings."
+              "When you are ready to rehearse or record, move into the homepage teleprompter with the same locally saved script and settings."
           }
         ]
       },
@@ -113,7 +113,7 @@ export const landingPages: Record<
         {
           title: "A clean reader stage",
           description:
-            "The dedicated reader separates play, pause, stop, reset, and fullscreen actions so the tool stays easy to control during rehearsal or recording."
+            "The homepage teleprompter keeps play, pause, stop, reset, and fullscreen actions together so the tool stays easy to control during rehearsal or recording."
         }
       ],
       faq: [
@@ -164,7 +164,7 @@ export const landingPages: Record<
       workflow: {
         title: "Keep the free workflow simple.",
         description:
-          "Visitors looking for a free teleprompter should reach a usable tool quickly, then decide whether they want the larger reader workspace.",
+          "Visitors looking for a free teleprompter should reach a usable tool quickly, then continue into the homepage teleprompter when they want the full experience.",
         steps: [
           {
             title: "Write or paste without friction",
@@ -179,7 +179,7 @@ export const landingPages: Record<
           {
             title: "Switch to the main product page",
             description:
-              "The full reader remains the best place for fullscreen prompting, but the draft and settings carry over from this landing page."
+              "The homepage teleprompter remains the best place for fullscreen prompting, and the draft and settings carry over from this landing page."
           }
         ]
       },
@@ -261,9 +261,9 @@ export const landingPages: Record<
               "Keep the script narrow enough for talking-head delivery and flip the preview when you are using reflective glass."
           },
           {
-            title: "Finish in the full reader",
+            title: "Finish on the homepage teleprompter",
             description:
-              "Move into the dedicated teleprompter when the script is ready for multiple takes, fullscreen viewing, or longer tutorial segments."
+              "Move into the homepage teleprompter when the script is ready for multiple takes, fullscreen viewing, or longer tutorial segments."
           }
         ]
       },
@@ -327,7 +327,7 @@ export const landingPages: Record<
       tool: {
         title: "Prueba primero el flujo dentro del navegador.",
         description:
-          "Usa aqui una superficie ligera para escribir y leer, y despues abre el lector dedicado con el mismo guion y la misma configuracion local.",
+          "Usa aqui una superficie ligera para escribir y leer, y despues abre el teleprompter de la home con el mismo guion y la misma configuracion local.",
         points: ["Sin instalar", "Estado compartido", "Salto al lector"],
         extraControl: "textWidth"
       },
@@ -349,7 +349,7 @@ export const landingPages: Record<
           {
             title: "Abre el lector principal",
             description:
-              "Cuando llegue el momento de ensayar o grabar, cambia al lector completo con el mismo guion guardado localmente."
+              "Cuando llegue el momento de ensayar o grabar, cambia al teleprompter de la home con el mismo guion guardado localmente."
           }
         ]
       },
@@ -367,7 +367,7 @@ export const landingPages: Record<
         {
           title: "Un lector limpio y claro",
           description:
-            "El lector dedicado separa reproducir, pausar, detener, reiniciar y pantalla completa para que todo sea mas facil durante ensayos y grabaciones."
+            "El teleprompter de la home mantiene reproducir, pausar, detener, reiniciar y pantalla completa en un mismo lugar para ensayos y grabaciones."
         }
       ],
       faq: [
@@ -418,7 +418,7 @@ export const landingPages: Record<
       workflow: {
         title: "Mantener el flujo gratis tambien debe ser simple.",
         description:
-          "Quien busca un teleprompter gratis deberia encontrar una herramienta usable enseguida y luego decidir si necesita el lector mas grande.",
+          "Quien busca un teleprompter gratis deberia encontrar una herramienta usable enseguida y luego continuar al teleprompter principal de la home.",
         steps: [
           {
             title: "Escribe o pega sin friccion",
@@ -433,7 +433,7 @@ export const landingPages: Record<
           {
             title: "Pasa a la pagina principal del producto",
             description:
-              "El lector completo sigue siendo el mejor lugar para usar pantalla completa, pero el borrador y la configuracion viajan desde esta landing."
+              "El teleprompter de la home sigue siendo el mejor lugar para usar pantalla completa, y el borrador con la configuracion viajan desde esta landing."
           }
         ]
       },
@@ -515,9 +515,9 @@ export const landingPages: Record<
               "Manten el texto lo bastante estrecho para videos talking-head y activa el espejo cuando uses cristal reflectante."
           },
           {
-            title: "Termina en el lector completo",
+            title: "Termina en el teleprompter de la home",
             description:
-              "Pasa al teleprompter dedicado cuando el guion ya este listo para varias tomas, pantalla completa o segmentos mas largos."
+              "Pasa al teleprompter de la home cuando el guion ya este listo para varias tomas, pantalla completa o segmentos mas largos."
           }
         ]
       },

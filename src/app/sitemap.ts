@@ -5,7 +5,6 @@ import { getLocalizedPath, toAbsoluteUrl } from "@/lib/site";
 
 const pagePaths = [
   "/",
-  "/teleprompter",
   ...landingPageSlugs.map((slug) => `/${slug}`)
 ] as const;
 
@@ -14,24 +13,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: toAbsoluteUrl(getLocalizedPath("en", path)),
       lastModified: new Date(),
-      changeFrequency: path === "/" || path === "/teleprompter" ? "daily" : "weekly",
-      priority:
-        path === "/"
-          ? 1
-          : path === "/teleprompter"
-            ? 0.95
-            : 0.8
+      changeFrequency: path === "/" ? "daily" : "weekly",
+      priority: path === "/" ? 1 : 0.8
     },
     {
       url: toAbsoluteUrl(getLocalizedPath("es", path)),
       lastModified: new Date(),
-      changeFrequency: path === "/" || path === "/teleprompter" ? "daily" : "weekly",
-      priority:
-        path === "/"
-          ? 0.95
-          : path === "/teleprompter"
-            ? 0.9
-            : 0.75
+      changeFrequency: path === "/" ? "daily" : "weekly",
+      priority: path === "/" ? 0.95 : 0.75
     }
   ]);
 }

@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-import { type Locale, getLocalizedPath, normalizePath } from "@/lib/site";
+import {
+  type Locale,
+  getLocalizedPath,
+  getLocalizedToolPath,
+  normalizePath,
+  teleprompterToolAnchor
+} from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 type SiteHeaderProps = {
@@ -22,7 +28,8 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const normalizedPath = normalizePath(currentPath);
   const homePath = getLocalizedPath(locale, "/");
-  const teleprompterPath = getLocalizedPath(locale, "/teleprompter");
+  const teleprompterPath =
+    normalizedPath === "" ? `#${teleprompterToolAnchor}` : getLocalizedToolPath(locale);
   const alternateLocale = locale === "en" ? "es" : "en";
   const switchPath = getLocalizedPath(alternateLocale, normalizedPath || "/");
 
@@ -48,10 +55,7 @@ export function SiteHeader({
             <NavLink href={homePath} active={normalizedPath === ""}>
               {labels.home}
             </NavLink>
-            <NavLink
-              href={teleprompterPath}
-              active={normalizedPath === "/teleprompter"}
-            >
+            <NavLink href={teleprompterPath} active={false}>
               {labels.teleprompter}
             </NavLink>
             <Link

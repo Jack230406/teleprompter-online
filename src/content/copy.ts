@@ -26,13 +26,6 @@ export type LocalizedCopy = {
     metaTitle: string;
     metaDescription: string;
   };
-  teleprompterPage: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    metaTitle: string;
-    metaDescription: string;
-  };
   landing: {
     workflowLabel: string;
     productPagesLabel: string;
@@ -91,18 +84,19 @@ export const copy: Record<Locale, LocalizedCopy> = {
       home: "Home",
       teleprompter: "Teleprompter",
       switchLanguage: "Ver en espanol",
-      launch: "Open reader",
-      subtitle: "browser-first reader"
+      launch: "Open teleprompter",
+      subtitle: "free teleprompter app"
     },
     home: {
-      eyebrow: "Free browser teleprompter",
-      title: "Teleprompter Online puts the working tool in front before the pitch.",
+      eyebrow: "Free teleprompter online",
+      title:
+        "Teleprompter Online is the free online teleprompter app for recording, rehearsal, and teleprompter mirror setups.",
       description:
-        "Write your script, tune the pace, control line height and text width, and move into a clean fullscreen-ready reader without signing in. Everything stays in this browser.",
+        "Write or paste your script, control speed, font size, line height, text width, reverse scroll, and teleprompter mirror mode directly on the homepage. Everything stays in this browser with fullscreen-ready controls.",
       highlights: [
         "No account or backend required",
         "Script and settings persist locally",
-        "Built for creators, presenters, and video teams"
+        "Mirror mode for glass teleprompter rigs"
       ],
       stats: [
         { label: "Storage", value: "Local-first" },
@@ -113,34 +107,34 @@ export const copy: Record<Locale, LocalizedCopy> = {
         {
           title: "Immediate use",
           description:
-            "The first screen is the tool, not a waitlist form. Paste a script and start adjusting the reader in seconds."
+            "The homepage is the main teleprompter product page, not a waitlist or a separate handoff. Paste a script and start adjusting the read in seconds."
         },
         {
           title: "Presentation-ready controls",
           description:
-            "Dial in speed, font size, line height, text width, mirror mode, reverse direction, and a light or studio theme without leaving the page."
+            "Dial in speed, font size, line height, text width, mirror mode, reverse direction, and a paper or studio theme without leaving the homepage tool."
         },
         {
           title: "SEO-ready foundation",
           description:
-            "The app is organized for future landing pages, tutorials, and keyword-targeted tool pages under the same brand."
+            "The product stays centered on one main teleprompter page while supporting future landing pages, tutorials, and keyword-targeted SEO flows."
         }
       ],
       steps: [
         {
           title: "Paste or write your script",
           description:
-            "Draft from scratch or drop in prepared notes. Updates sync instantly to the reader preview."
+            "Draft from scratch or drop in prepared notes. Updates sync instantly to the live teleprompter preview."
         },
         {
           title: "Adjust the reading setup",
           description:
-            "Tune scroll speed, font size, line height, text width, mirrored output, and direction based on your camera or glass rig."
+            "Tune scroll speed, font size, line height, text width, teleprompter mirror mode, and direction based on your camera or glass rig."
         },
         {
-          title: "Open the focused reader",
+          title: "Prompt on the homepage teleprompter",
           description:
-            "Switch to the dedicated teleprompter page and start prompting with the same locally saved state."
+            "Use fullscreen, playback controls, and the same locally saved state without leaving the main product page."
         }
       ],
       faq: [
@@ -160,38 +154,29 @@ export const copy: Record<Locale, LocalizedCopy> = {
             "No installation is required. It is a pure frontend Next.js application that runs directly in the browser."
         }
       ],
-      readerCta: "Start prompting",
-      secondaryCta: "See the reader workspace",
+      readerCta: "Open the teleprompter",
+      secondaryCta: "See how it works",
       workflowLabel: "Workflow",
       workflowTitle: "Designed for fast rehearsal and recording loops.",
       stepLabel: "Step",
-      metaTitle: "Free Online Teleprompter",
+      metaTitle: "Teleprompter Online: Free Online Teleprompter App",
       metaDescription:
-        "Use Teleprompter Online for free in your browser. Paste a script, control speed and font size, mirror the text, and launch a clean teleprompter reader instantly."
-    },
-    teleprompterPage: {
-      eyebrow: "Reader workspace",
-      title: "A focused teleprompter reader with local-first settings.",
-      description:
-        "Your script, pacing, layout, and reader settings stay saved in this browser while you rehearse or record.",
-      metaTitle: "Teleprompter Reader",
-      metaDescription:
-        "Open the dedicated Teleprompter Online reader with fullscreen, script speed, font size, line height, text width, theme, mirrored text, and reverse scrolling controls."
+        "Use Teleprompter Online as your free teleprompter, online teleprompter app, and teleprompter mirror tool. Paste a script, control speed, mirror the text, and prompt in fullscreen on the homepage."
     },
     landing: {
       workflowLabel: "Scenario workflow",
-      productPagesLabel: "Main product pages",
-      productPagesTitle: "Use the landing page to set up, then move into the main product.",
+      productPagesLabel: "Homepage paths",
+      productPagesTitle: "The homepage is the main teleprompter product page.",
       productPagesDescription:
-        "The homepage and the dedicated teleprompter reader remain the strongest product destinations. These landing pages are tuned for a scenario, not meant to replace the full workspace.",
+        "These landing pages stay focused on scenario SEO. When someone is ready to use the tool, send them back to the homepage or straight to the homepage teleprompter section.",
       homeCardDescription:
-        "See the product overview, core benefits, and the broader Teleprompter Online story.",
+        "See the main product page, core benefits, and the broader Teleprompter Online story.",
       readerCardDescription:
-        "Open the dedicated reader with fullscreen, playback controls, reverse scroll, and full teleprompter settings.",
+        "Jump straight to the homepage teleprompter with fullscreen, playback controls, reverse scroll, and teleprompter mirror mode.",
       relatedPagesLabel: "More landing pages",
       faqLabel: "FAQ",
       stateNote:
-        "Your script and current settings stay saved locally when you open the full reader."
+        "Your script and current settings stay saved locally when you continue on the homepage teleprompter."
     },
     tool: {
       localBadge: "Saved locally in this browser",
@@ -218,19 +203,20 @@ export const copy: Record<Locale, LocalizedCopy> = {
       reset: "Reset position",
       fullscreen: "Fullscreen",
       exitFullscreen: "Exit fullscreen",
-      openReader: "Open full reader",
+      openReader: "Open homepage teleprompter",
       ready: "Ready to prompt",
       playing: "Prompting in progress",
       paused: "Paused",
       previewHint: "Preview updates with your current script and settings.",
       localHint: "Everything stays local to this browser. No sync, no login.",
-      readerHint: "Use the focused reader for rehearsal, recording, or live delivery.",
+      readerHint:
+        "Use the homepage teleprompter for rehearsal, recording, or live delivery.",
       closeNote:
         "Play resumes from the current position, stop returns the script to the starting edge, and every setting stays saved locally."
     },
     footer: {
       summary:
-        "Teleprompter Online is a free browser teleprompter built for quick setup, readable pacing, and future SEO landing pages.",
+        "Teleprompter Online is a free teleprompter online with fullscreen controls, teleprompter mirror mode, and supporting SEO landing pages.",
       quickLinksLabel: "Quick links",
       popularPagesLabel: "Popular pages"
     }
@@ -241,18 +227,19 @@ export const copy: Record<Locale, LocalizedCopy> = {
       home: "Inicio",
       teleprompter: "Teleprompter",
       switchLanguage: "View in English",
-      launch: "Abrir lector",
-      subtitle: "lector en el navegador"
+      launch: "Abrir teleprompter",
+      subtitle: "app de teleprompter"
     },
     home: {
-      eyebrow: "Teleprompter gratis en el navegador",
-      title: "Teleprompter Online pone la herramienta principal al frente desde la primera pantalla.",
+      eyebrow: "Teleprompter online gratis",
+      title:
+        "Teleprompter Online es la app de teleprompter gratis para grabar, ensayar y usar modo espejo desde la home.",
       description:
-        "Escribe tu guion, ajusta velocidad, altura de linea y ancho del texto, invierte el texto para cristal y pasa a un lector limpio con pantalla completa. Todo queda guardado en este navegador.",
+        "Escribe o pega tu guion, controla velocidad, fuente, altura de linea, ancho del texto, direccion inversa y modo espejo directamente en la home. Todo queda guardado en este navegador con controles listos para pantalla completa.",
       highlights: [
         "Sin cuenta y sin backend",
         "Guion y ajustes guardados localmente",
-        "Pensado para creadores, presentadores y equipos de video"
+        "Modo espejo para rigs y cristal de teleprompter"
       ],
       stats: [
         { label: "Guardado", value: "Local" },
@@ -263,24 +250,24 @@ export const copy: Record<Locale, LocalizedCopy> = {
         {
           title: "Uso inmediato",
           description:
-            "La primera pantalla ya incluye la herramienta. Pega tu guion y empieza a ajustar el lector en segundos."
+            "La home es la pagina principal del producto. Pega tu guion y empieza a ajustar la lectura en segundos sin pasar por otra pagina."
         },
         {
           title: "Controles listos para grabar",
           description:
-            "Configura velocidad, tamano de fuente, altura de linea, ancho del texto, modo espejo, direccion inversa y tema claro u oscuro sin salir de la pagina."
+            "Configura velocidad, tamano de fuente, altura de linea, ancho del texto, modo espejo, direccion inversa y tema claro u oscuro sin salir de la home."
         },
         {
           title: "Base preparada para SEO",
           description:
-            "La arquitectura deja espacio para futuras landing pages, tutoriales y paginas orientadas a keywords."
+            "El producto se centra en una sola pagina principal de teleprompter y deja espacio para landings, tutoriales y paginas SEO orientadas a keywords."
         }
       ],
       steps: [
         {
           title: "Pega o escribe tu guion",
           description:
-            "Empieza desde cero o importa tus notas. Los cambios aparecen al instante en la vista previa."
+            "Empieza desde cero o importa tus notas. Los cambios aparecen al instante en la vista previa del teleprompter."
         },
         {
           title: "Ajusta la lectura",
@@ -288,9 +275,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
             "Controla velocidad, tamano, altura de linea, ancho del texto, espejo y direccion segun tu camara o configuracion de cristal."
         },
         {
-          title: "Abre el lector dedicado",
+          title: "Lee desde el teleprompter de la home",
           description:
-            "Pasa a la pagina del teleprompter y empieza a leer con el mismo estado guardado localmente."
+            "Usa pantalla completa, controles de reproduccion y el mismo estado guardado localmente sin salir de la pagina principal."
         }
       ],
       faq: [
@@ -310,38 +297,30 @@ export const copy: Record<Locale, LocalizedCopy> = {
             "No. Es una aplicacion frontend en Next.js que funciona directamente en el navegador."
         }
       ],
-      readerCta: "Empezar a leer",
-      secondaryCta: "Ver el lector",
+      readerCta: "Abrir teleprompter",
+      secondaryCta: "Ver como funciona",
       workflowLabel: "Flujo",
       workflowTitle: "Pensado para ensayar, grabar y presentar con rapidez.",
       stepLabel: "Paso",
-      metaTitle: "Teleprompter Online Gratis",
+      metaTitle: "Teleprompter Online Gratis: App de Teleprompter",
       metaDescription:
-        "Usa Teleprompter Online gratis en tu navegador. Pega tu guion, controla velocidad y fuente, invierte el texto y abre un lector limpio al instante."
-    },
-    teleprompterPage: {
-      eyebrow: "Espacio de lectura",
-      title: "Un lector de teleprompter limpio con ajustes guardados localmente.",
-      description:
-        "Tu guion, ritmo, formato y configuracion se mantienen en este navegador mientras practicas o grabas.",
-      metaTitle: "Lector de Teleprompter",
-      metaDescription:
-        "Abre el lector dedicado de Teleprompter Online con pantalla completa, velocidad, fuente, altura de linea, ancho del texto, tema, espejo y direccion inversa."
+        "Usa Teleprompter Online gratis como teleprompter online, app de teleprompter y herramienta con modo espejo. Pega tu guion, controla velocidad e invierte el texto desde la home."
     },
     landing: {
       workflowLabel: "Flujo por escenario",
-      productPagesLabel: "Paginas principales",
-      productPagesTitle: "Usa la landing para preparar el guion y termina en el producto principal.",
+      productPagesLabel: "Rutas hacia la home",
+      productPagesTitle:
+        "La home es la pagina principal del producto y del teleprompter.",
       productPagesDescription:
-        "La home y el lector dedicado siguen siendo las paginas principales del producto. Estas landings responden a un escenario concreto y no sustituyen el espacio completo.",
+        "Estas landings siguen enfocadas en SEO por escenario. Cuando alguien quiera usar la herramienta, debe volver a la home o ir directo a la seccion principal del teleprompter.",
       homeCardDescription:
-        "Revisa la propuesta general del producto, sus ventajas principales y la vista completa de Teleprompter Online.",
+        "Revisa la pagina principal del producto, sus ventajas clave y la vista completa de Teleprompter Online.",
       readerCardDescription:
-        "Abre el lector dedicado con pantalla completa, controles de reproduccion, direccion inversa y la configuracion completa del teleprompter.",
+        "Salta directo al teleprompter de la home con pantalla completa, controles de reproduccion, direccion inversa y modo espejo.",
       relatedPagesLabel: "Mas landings",
       faqLabel: "Preguntas frecuentes",
       stateNote:
-        "Tu guion y la configuracion actual siguen guardados localmente al abrir el lector completo."
+        "Tu guion y la configuracion actual siguen guardados localmente al continuar en el teleprompter de la home."
     },
     tool: {
       localBadge: "Guardado localmente en este navegador",
@@ -368,19 +347,20 @@ export const copy: Record<Locale, LocalizedCopy> = {
       reset: "Reiniciar posicion",
       fullscreen: "Pantalla completa",
       exitFullscreen: "Salir de pantalla completa",
-      openReader: "Abrir lector completo",
+      openReader: "Abrir teleprompter en la home",
       ready: "Listo para leer",
       playing: "Lectura en progreso",
       paused: "En pausa",
       previewHint: "La vista previa responde al guion y a la configuracion actual.",
       localHint: "Todo se mantiene local en este navegador. Sin login ni sincronizacion.",
-      readerHint: "Usa el lector dedicado para practicar, grabar o presentar en vivo.",
+      readerHint:
+        "Usa el teleprompter de la home para practicar, grabar o presentar en vivo.",
       closeNote:
         "Reproducir retoma desde la posicion actual, detener vuelve el guion al inicio y todos los ajustes se guardan localmente."
     },
     footer: {
       summary:
-        "Teleprompter Online es un teleprompter gratuito en el navegador con configuracion rapida y una base preparada para futuras landing pages SEO.",
+        "Teleprompter Online es un teleprompter online gratis con pantalla completa, modo espejo y una base preparada para landings SEO.",
       quickLinksLabel: "Enlaces rapidos",
       popularPagesLabel: "Paginas populares"
     }

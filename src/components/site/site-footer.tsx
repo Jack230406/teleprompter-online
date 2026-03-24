@@ -2,7 +2,12 @@ import Link from "next/link";
 
 import type { LocalizedCopy } from "@/content/copy";
 import type { LandingPageSlug } from "@/content/landing-pages";
-import { type Locale, getLocalizedPath, normalizePath } from "@/lib/site";
+import {
+  type Locale,
+  getLocalizedPath,
+  getLocalizedToolPath,
+  normalizePath
+} from "@/lib/site";
 
 import { LandingPageLinks } from "./landing-page-links";
 
@@ -37,7 +42,7 @@ export function SiteFooter({
               {copy.navigation.home}
             </Link>
             <Link
-              href={getLocalizedPath(locale, "/teleprompter")}
+              href={getLocalizedToolPath(locale)}
               className="hover:text-ink"
             >
               {copy.navigation.teleprompter}

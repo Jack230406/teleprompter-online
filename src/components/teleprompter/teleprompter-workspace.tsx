@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { type LocalizedCopy } from "@/content/copy";
 import { useTeleprompterState } from "@/hooks/use-teleprompter-state";
-import { type Locale, getLocalizedPath } from "@/lib/site";
+import { type Locale, getLocalizedToolPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 import { PrompterPreview } from "./prompter-preview";
@@ -52,7 +52,7 @@ export function TeleprompterWorkspace({
   const readerStageRef = useRef<HTMLDivElement | null>(null);
 
   const readerPath = useMemo(
-    () => getLocalizedPath(locale, "/teleprompter"),
+    () => getLocalizedToolPath(locale),
     [locale]
   );
   const wordCount = useMemo(() => countWords(state.script), [state.script]);

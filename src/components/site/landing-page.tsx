@@ -5,7 +5,7 @@ import type {
   LandingPageSlug
 } from "@/content/landing-pages";
 import { copy as localizedCopy } from "@/content/copy";
-import { type Locale, getLocalizedPath } from "@/lib/site";
+import { type Locale, getLocalizedPath, getLocalizedToolPath } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 import { LandingTeleprompterTool } from "../teleprompter/landing-teleprompter-tool";
@@ -57,7 +57,7 @@ const pageStyles: Record<
 
 export function LandingPage({ locale, page }: LandingPageProps) {
   const copy = localizedCopy[locale];
-  const teleprompterPath = getLocalizedPath(locale, "/teleprompter");
+  const teleprompterPath = getLocalizedToolPath(locale);
   const homePath = getLocalizedPath(locale, "/");
   const styles = pageStyles[page.slug];
 
@@ -245,7 +245,7 @@ export function LandingPage({ locale, page }: LandingPageProps) {
                 {copy.navigation.teleprompter}
               </div>
               <h3 className="mt-4 font-display text-3xl text-ink">
-                {copy.teleprompterPage.metaTitle}
+                {copy.navigation.teleprompter}
               </h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">
                 {copy.landing.readerCardDescription}
