@@ -570,11 +570,11 @@ export function TeleprompterWorkspace({
           <div
             className={cn(
               "grid gap-0",
-              isFocusMode ? "xl:grid-cols-1" : "xl:grid-cols-[0.92fr_1.08fr]"
+              isFocusMode ? "xl:grid-cols-1" : "xl:grid-cols-[0.78fr_1.22fr]"
             )}
           >
             {!isFocusMode ? (
-              <section className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 md:p-8">
+              <section className="flex flex-col gap-4 p-4 sm:gap-5 sm:p-5 md:p-6">
                 <div className="flex flex-wrap gap-2.5">
                   <ActionButton
                     label={copy.tool.play}
@@ -622,7 +622,7 @@ export function TeleprompterWorkspace({
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-1">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {readerMetrics.map((metric) => (
                     <MetricCard
                       key={metric.label}
@@ -668,7 +668,7 @@ export function TeleprompterWorkspace({
             ref={readerSectionRef}
             id="reader"
             className={cn(
-              "p-4 sm:p-6 md:p-8",
+              "p-4 sm:p-6 md:p-8 lg:p-10",
               !isFocusMode &&
                 (state.theme === "dark"
                   ? "border-t border-slate-800 xl:border-l xl:border-t-0"
