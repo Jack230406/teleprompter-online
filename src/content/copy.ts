@@ -159,9 +159,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
       workflowLabel: "Workflow",
       workflowTitle: "Designed for fast rehearsal and recording loops.",
       stepLabel: "Step",
-      metaTitle: "Teleprompter Online: Free Online Teleprompter App",
+      metaTitle: "Teleprompter Online – Free Teleprompter with Mirror Mode",
       metaDescription:
-        "Use Teleprompter Online as your free teleprompter, online teleprompter app, and teleprompter mirror tool. Paste a script, control speed, mirror the text, and prompt in fullscreen on the homepage."
+        "Use Teleprompter Online for free. Paste a script, adjust speed and text size, enable mirror mode, and prompt in fullscreen directly on the homepage."
     },
     landing: {
       workflowLabel: "Scenario workflow",
@@ -302,9 +302,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
       workflowLabel: "Flujo",
       workflowTitle: "Pensado para ensayar, grabar y presentar con rapidez.",
       stepLabel: "Paso",
-      metaTitle: "Teleprompter Online Gratis: App de Teleprompter",
+      metaTitle: "Teleprompter Online Gratis con Modo Espejo",
       metaDescription:
-        "Usa Teleprompter Online gratis como teleprompter online, app de teleprompter y herramienta con modo espejo. Pega tu guion, controla velocidad e invierte el texto desde la home."
+        "Usa Teleprompter Online gratis. Pega tu guion, ajusta velocidad y tamano del texto, activa el modo espejo y usa pantalla completa desde la home."
     },
     landing: {
       workflowLabel: "Flujo por escenario",

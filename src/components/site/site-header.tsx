@@ -55,9 +55,6 @@ export function SiteHeader({
             <NavLink href={homePath} active={normalizedPath === ""}>
               {labels.home}
             </NavLink>
-            <NavLink href={teleprompterPath} active={false}>
-              {labels.teleprompter}
-            </NavLink>
             <Link
               href={switchPath}
               className="inline-flex items-center rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-900 hover:text-slate-900"

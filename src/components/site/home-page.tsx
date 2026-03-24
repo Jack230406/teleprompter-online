@@ -27,7 +27,7 @@ export function HomePage({ locale }: HomePageProps) {
           labels={copy.navigation}
         />
 
-        <section className="py-10 lg:py-14">
+        <section className="py-6 lg:py-8">
           <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
             <div>
               <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-brand-deep">
@@ -103,7 +103,7 @@ export function HomePage({ locale }: HomePageProps) {
 
           <div
             id={teleprompterToolAnchor}
-            className="mt-10 scroll-mt-28"
+            className="mt-6 scroll-mt-24"
           >
             <TeleprompterWorkspace locale={locale} copy={copy} mode="reader" />
           </div>
