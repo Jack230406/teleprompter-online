@@ -1,5 +1,6 @@
 "use client";
 
+import type { MouseEvent } from "react";
 import { useEffect, useRef } from "react";
 
 import { TeleprompterTheme } from "@/hooks/use-teleprompter-state";
@@ -20,6 +21,9 @@ type PrompterPreviewProps = {
   resetSignal: number;
   compact?: boolean;
   isFullscreen?: boolean;
+  focusMode?: boolean;
+  showEyeLine?: boolean;
+  onBlankAreaClick?: () => void;
 };
 
 export function PrompterPreview({
@@ -36,11 +40,28 @@ export function PrompterPreview({
   onPlaybackComplete,
   resetSignal,
   compact = false,
-  isFullscreen = false
+  isFullscreen = false,
+  focusMode = false,
+  showEyeLine = true,
+  onBlankAreaClick
 }: PrompterPreviewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const lastTimestampRef = useRef<number | null>(null);
+
+  const handlePreviewClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (!onBlankAreaClick) {
+      return;
+    }
+
+    const target = event.target as HTMLElement;
+
+    if (target.closest("[data-prompter-script]")) {
+      return;
+    }
+
+    onBlankAreaClick();
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -129,6 +150,7 @@ export function PrompterPreview({
 
   return (
     <div
+      onClick={handlePreviewClick}
       className={cn(
         "relative overflow-hidden rounded-[1.5rem] border sm:rounded-[2rem]",
         theme === "dark"
@@ -137,22 +159,28 @@ export function PrompterPreview({
         compact
           ? "min-h-[17rem] sm:min-h-[22rem]"
           : isFullscreen
-            ? "h-full min-h-[calc(100vh-14rem)]"
+            ? "flex h-full min-h-0 flex-1"
+            : focusMode
+              ? "min-h-[72vh] sm:min-h-[78vh]"
             : "min-h-[20rem] sm:min-h-[28rem]"
       )}
     >
       <div
         ref={containerRef}
+        data-reader-scroll
         className={cn(
           "h-full overflow-y-auto px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-16",
           compact
             ? "max-h-[17rem] sm:max-h-[22rem]"
             : isFullscreen
               ? "max-h-none"
+              : focusMode
+                ? "max-h-[72vh] sm:max-h-[78vh]"
               : "max-h-[70vh]"
         )}
       >
         <div
+          data-prompter-script
           className="mx-auto whitespace-pre-wrap"
           style={{
             fontSize: `${fontSize}px`,
@@ -180,15 +208,26 @@ export function PrompterPreview({
           theme === "dark" ? "from-slate-950 to-transparent" : "from-white to-transparent"
         )}
       />
-      <div
-        aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute inset-x-4 top-1/2 h-14 -translate-y-1/2 rounded-2xl border sm:inset-x-6 sm:h-20 sm:rounded-3xl",
-          theme === "dark"
-            ? "border-white/10 bg-white/[0.03]"
-            : "border-slate-900/10 bg-brand-soft/20"
-        )}
-      />
+      {showEyeLine ? (
+        <>
+          <div
+            aria-hidden="true"
+            className={cn(
+              "pointer-events-none absolute inset-x-4 top-1/2 h-14 -translate-y-1/2 rounded-2xl border sm:inset-x-6 sm:h-20 sm:rounded-3xl",
+              theme === "dark"
+                ? "border-white/10 bg-white/[0.03]"
+                : "border-slate-900/10 bg-brand-soft/20"
+            )}
+          />
+          <div
+            aria-hidden="true"
+            className={cn(
+              "pointer-events-none absolute inset-x-6 top-1/2 h-px -translate-y-1/2 sm:inset-x-10",
+              theme === "dark" ? "bg-white/25" : "bg-ink/15"
+            )}
+          />
+        </>
+      ) : null}
     </div>
   );
 }

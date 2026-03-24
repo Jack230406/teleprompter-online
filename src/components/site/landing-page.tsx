@@ -279,7 +279,6 @@ export function LandingPage({ locale, page }: LandingPageProps) {
           locale={locale}
           copy={copy}
           currentPath={`/${page.slug}`}
-          currentLandingPageSlug={page.slug}
         />
       </div>
     </main>

@@ -12,6 +12,7 @@ export type TeleprompterState = {
   textWidth: number;
   mirrored: boolean;
   reverse: boolean;
+  showEyeLine: boolean;
   theme: TeleprompterTheme;
 };
 
@@ -24,6 +25,7 @@ type TeleprompterAction =
   | { type: "textWidth"; value: number }
   | { type: "toggleMirror" }
   | { type: "toggleReverse" }
+  | { type: "toggleEyeLine" }
   | { type: "theme"; value: TeleprompterTheme };
 
 const STORAGE_KEY = "teleprompter-online:v1";
@@ -40,6 +42,7 @@ This is a free online teleprompter built for creators, presenters, and recording
   textWidth: 74,
   mirrored: false,
   reverse: false,
+  showEyeLine: true,
   theme: "light"
 };
 
@@ -83,6 +86,10 @@ function coerceState(value: unknown): TeleprompterState | null {
       typeof candidate.reverse === "boolean"
         ? candidate.reverse
         : defaultTeleprompterState.reverse,
+    showEyeLine:
+      typeof candidate.showEyeLine === "boolean"
+        ? candidate.showEyeLine
+        : defaultTeleprompterState.showEyeLine,
     theme:
       candidate.theme === "dark" || candidate.theme === "light"
         ? candidate.theme
@@ -111,6 +118,8 @@ function reducer(
       return { ...state, mirrored: !state.mirrored };
     case "toggleReverse":
       return { ...state, reverse: !state.reverse };
+    case "toggleEyeLine":
+      return { ...state, showEyeLine: !state.showEyeLine };
     case "theme":
       return { ...state, theme: action.value };
     default:
@@ -158,6 +167,7 @@ export function useTeleprompterState() {
     setTextWidth: (value: number) => dispatch({ type: "textWidth", value }),
     toggleMirror: () => dispatch({ type: "toggleMirror" }),
     toggleReverse: () => dispatch({ type: "toggleReverse" }),
+    toggleEyeLine: () => dispatch({ type: "toggleEyeLine" }),
     setTheme: (value: TeleprompterTheme) =>
       dispatch({ type: "theme", value })
   };

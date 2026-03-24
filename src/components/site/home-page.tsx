@@ -9,7 +9,6 @@ import {
   teleprompterToolAnchor
 } from "@/lib/site";
 
-import { LandingPageLinks } from "./landing-page-links";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import { TeleprompterWorkspace } from "../teleprompter/teleprompter-workspace";
@@ -48,6 +47,18 @@ export function HomePage({ locale }: HomePageProps) {
       priceCurrency: "USD"
     }
   };
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: copy.home.workflowTitle,
+    description: copy.home.metaDescription,
+    step: copy.home.steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.title,
+      text: step.description
+    }))
+  };
 
   return (
     <main className="px-3 pb-12 pt-2 sm:px-6 sm:pb-16 sm:pt-3 lg:px-8">
@@ -60,6 +71,11 @@ export function HomePage({ locale }: HomePageProps) {
         id={`app-schema-${locale}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
+      <Script
+        id={`howto-schema-${locale}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <div className="mx-auto max-w-[90rem]">
         <SiteHeader
@@ -106,7 +122,7 @@ export function HomePage({ locale }: HomePageProps) {
                   className="pointer-events-none absolute bottom-8 right-8 h-24 w-24 rounded-full bg-accent/10 blur-3xl sm:bottom-10 sm:right-12 sm:h-32 sm:w-32"
                 />
                 <div className="relative rounded-[1.5rem] border border-white/80 bg-white/76 p-1 shadow-panel backdrop-blur sm:rounded-[2rem] sm:p-2 md:rounded-[2.5rem] md:p-3">
-                  <TeleprompterWorkspace locale={locale} copy={copy} mode="reader" />
+                  <TeleprompterWorkspace locale={locale} copy={copy} />
                 </div>
               </div>
             </div>
@@ -305,19 +321,6 @@ export function HomePage({ locale }: HomePageProps) {
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="py-8 sm:py-10 lg:py-16">
-          <div className="max-w-3xl">
-            <SectionLabel>{copy.home.toolsLabel}</SectionLabel>
-            <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
-              {copy.home.toolsTitle}
-            </h2>
-          </div>
-
-          <div className="mt-6 sm:mt-8">
-            <LandingPageLinks locale={locale} />
           </div>
         </section>
 

@@ -111,9 +111,10 @@ type MetricCardProps = {
   label: string;
   value: string;
   theme: TeleprompterTheme;
+  hint?: string;
 };
 
-export function MetricCard({ label, value, theme }: MetricCardProps) {
+export function MetricCard({ label, value, theme, hint }: MetricCardProps) {
   return (
     <div
       className={cn(
@@ -129,6 +130,9 @@ export function MetricCard({ label, value, theme }: MetricCardProps) {
       <div className="mt-2 font-display text-2xl leading-none sm:mt-3 sm:text-3xl">
         {value}
       </div>
+      {hint ? (
+        <div className="mt-2 text-xs text-slate-500 sm:text-sm">{hint}</div>
+      ) : null}
     </div>
   );
 }
@@ -227,6 +231,7 @@ type ActionButtonProps = {
   disabled?: boolean;
   variant: "primary" | "secondary" | "danger" | "ghost";
   theme: TeleprompterTheme;
+  className?: string;
 };
 
 export function ActionButton({
@@ -234,7 +239,8 @@ export function ActionButton({
   onClick,
   disabled = false,
   variant,
-  theme
+  theme,
+  className
 }: ActionButtonProps) {
   return (
     <button
@@ -243,7 +249,8 @@ export function ActionButton({
       disabled={disabled}
       className={cn(
         "inline-flex min-w-0 items-center justify-center rounded-full px-3 py-2 text-xs font-medium text-center transition disabled:cursor-not-allowed disabled:opacity-45 sm:px-5 sm:py-3 sm:text-sm",
-        getActionButtonClass(variant, theme)
+        getActionButtonClass(variant, theme),
+        className
       )}
     >
       {label}
@@ -305,6 +312,32 @@ export function formatReadingTime(seconds: number, locale: Locale) {
   }
 
   return `${minutes}m ${remainder}s`;
+}
+
+export function estimateWordsPerMinute(speed: number) {
+  const minWordsPerMinute = 65;
+  const maxWordsPerMinute = 310;
+  const minSpeed = 20;
+  const maxSpeed = 160;
+  const normalizedSpeed = Math.min(
+    1,
+    Math.max(0, (speed - minSpeed) / (maxSpeed - minSpeed))
+  );
+
+  return Math.round(
+    minWordsPerMinute +
+      normalizedSpeed * (maxWordsPerMinute - minWordsPerMinute)
+  );
+}
+
+export function estimateReadingSeconds(wordCount: number, speed: number) {
+  if (wordCount <= 0) {
+    return 0;
+  }
+
+  const wordsPerMinute = estimateWordsPerMinute(speed);
+
+  return Math.round((wordCount / wordsPerMinute) * 60);
 }
 
 export function trimDecimal(value: number) {

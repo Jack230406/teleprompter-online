@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import type { LocalizedCopy } from "@/content/copy";
-import type { LandingPageSlug } from "@/content/landing-pages";
 import {
   type Locale,
   getLocalizedPath,
@@ -10,20 +9,17 @@ import {
 } from "@/lib/site";
 
 import { BrandWordmark } from "./brand-wordmark";
-import { LandingPageLinks } from "./landing-page-links";
 
 type SiteFooterProps = {
   locale: Locale;
   copy: LocalizedCopy;
   currentPath?: string;
-  currentLandingPageSlug?: LandingPageSlug;
 };
 
 export function SiteFooter({
   locale,
   copy,
-  currentPath = "/",
-  currentLandingPageSlug
+  currentPath = "/"
 }: SiteFooterProps) {
   const alternateLocale = locale === "en" ? "es" : "en";
   const switchPath = getLocalizedPath(alternateLocale, normalizePath(currentPath));
@@ -31,7 +27,7 @@ export function SiteFooter({
   return (
     <footer className="border-t border-slate-200/80 py-10">
       <div className="rounded-[2rem] border border-white/80 bg-white/76 px-6 py-8 shadow-soft backdrop-blur">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_1fr]">
+        <div className="grid gap-8 lg:grid-cols-[1.4fr_0.6fr]">
           <div>
             <BrandWordmark subtitle={copy.navigation.subtitle} />
             <div className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
@@ -60,18 +56,6 @@ export function SiteFooter({
               </Link>
             </div>
           </nav>
-          <div>
-            <div className="text-xs uppercase tracking-[0.22em] text-slate-500">
-              {copy.footer.popularPagesLabel}
-            </div>
-            <div className="mt-4">
-              <LandingPageLinks
-                locale={locale}
-                currentSlug={currentLandingPageSlug}
-                variant="list"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </footer>
