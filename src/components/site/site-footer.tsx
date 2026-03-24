@@ -9,7 +9,7 @@ import {
   normalizePath
 } from "@/lib/site";
 
-import { BrandMark } from "./brand-mark";
+import { BrandWordmark } from "./brand-wordmark";
 import { LandingPageLinks } from "./landing-page-links";
 
 type SiteFooterProps = {
@@ -33,17 +33,7 @@ export function SiteFooter({
       <div className="rounded-[2rem] border border-white/80 bg-white/76 px-6 py-8 shadow-soft backdrop-blur">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_1fr]">
           <div>
-            <div className="inline-flex items-center gap-3">
-              <BrandMark className="h-10 w-10 rounded-2xl" />
-              <div>
-                <div className="font-display text-2xl leading-none text-ink">
-                  Teleprompter Online
-                </div>
-                <div className="mt-1 text-[0.65rem] uppercase tracking-[0.18em] text-slate-500">
-                  {copy.navigation.subtitle}
-                </div>
-              </div>
-            </div>
+            <BrandWordmark subtitle={copy.navigation.subtitle} />
             <div className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
               {copy.footer.summary}
             </div>
