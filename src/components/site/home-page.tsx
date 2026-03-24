@@ -88,10 +88,22 @@ export function HomePage({ locale }: HomePageProps) {
         />
 
         <section className="pb-4 pt-4 sm:pb-6 sm:pt-6 lg:pb-8 lg:pt-8">
-          <div className="mx-auto grid max-w-6xl gap-4 xl:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] xl:items-start xl:gap-5">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-4 rounded-[1.5rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur sm:mb-5 sm:rounded-[2rem] sm:p-6 lg:p-7">
+              <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-brand-deep sm:px-4 sm:py-2 sm:text-xs">
+                {copy.home.eyebrow}
+              </div>
+              <h1 className="mt-4 max-w-4xl font-display text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-ink sm:mt-5 sm:text-5xl xl:text-[3.3rem]">
+                {copy.home.title}
+              </h1>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:mt-4 sm:text-base sm:leading-7">
+                {copy.home.description}
+              </p>
+            </div>
+
             <div
               id={teleprompterToolAnchor}
-              className="order-1 scroll-mt-24"
+              className="scroll-mt-24"
             >
               <div className="mb-2 flex flex-wrap items-center justify-between gap-3 sm:mb-3">
                 <SectionLabel>{copy.home.toolLabel}</SectionLabel>
@@ -116,21 +128,6 @@ export function HomePage({ locale }: HomePageProps) {
                   <TeleprompterWorkspace locale={locale} copy={copy} />
                 </div>
               </div>
-            </div>
-
-            <div
-              data-teleprompter-marketing
-              className="order-2 rounded-[1.5rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-6 lg:p-7 xl:sticky xl:top-28"
-            >
-              <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-brand-deep sm:px-4 sm:py-2 sm:text-xs">
-                {copy.home.eyebrow}
-              </div>
-              <h1 className="mt-4 max-w-4xl font-display text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-ink sm:mt-5 sm:text-5xl xl:text-[3.3rem]">
-                {copy.home.title}
-              </h1>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:mt-4 sm:text-base sm:leading-7">
-                {copy.home.description}
-              </p>
             </div>
           </div>
         </section>
