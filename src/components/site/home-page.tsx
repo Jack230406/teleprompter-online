@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { copy as localizedCopy } from "@/content/copy";
 import {
   type Locale,
@@ -27,49 +25,27 @@ export function HomePage({ locale }: HomePageProps) {
           labels={copy.navigation}
         />
 
-        <section className="py-6 lg:py-8">
-          <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-            <div>
-              <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-brand-deep">
-                {copy.home.eyebrow}
-              </div>
-              <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[0.96] tracking-[-0.03em] text-ink sm:text-6xl">
-                {copy.home.title}
-              </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-                {copy.home.description}
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href={`#${teleprompterToolAnchor}`}
-                  className="inline-flex items-center rounded-full bg-ink px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-                >
-                  {copy.home.readerCta}
-                </Link>
-                <Link
-                  href="#how-it-works"
-                  className="inline-flex items-center rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
-                >
-                  {copy.home.secondaryCta}
-                </Link>
-              </div>
+        <section className="py-4 lg:py-6">
+          <div className="mx-auto max-w-5xl text-center">
+            <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-brand-deep">
+              {copy.home.eyebrow}
             </div>
-
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-soft">
-              <div className="text-xs uppercase tracking-[0.2em] text-slate-500">
-                Teleprompter Online
-              </div>
-              <div className="mt-3 font-display text-3xl text-ink">
-                {copy.tool.localBadge}
-              </div>
-              <p className="mt-3 text-sm leading-7 text-slate-600">
-                {copy.tool.localHint}
-              </p>
-            </div>
+            <h1 className="mx-auto mt-4 max-w-4xl font-display text-4xl leading-[1.02] tracking-[-0.03em] text-ink sm:text-5xl lg:text-6xl">
+              {copy.home.title}
+            </h1>
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+              {copy.home.description}
+            </p>
           </div>
 
-          <div className="mx-auto mt-8 max-w-5xl">
+          <div
+            id={teleprompterToolAnchor}
+            className="mx-auto mt-6 scroll-mt-24"
+          >
+            <TeleprompterWorkspace locale={locale} copy={copy} mode="reader" />
+          </div>
+
+          <div className="mx-auto mt-6 max-w-5xl">
             <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
               {copy.home.highlights.map((highlight) => (
                 <div
@@ -84,7 +60,7 @@ export function HomePage({ locale }: HomePageProps) {
               ))}
             </div>
 
-            <div className="mt-8 grid gap-4 text-left sm:grid-cols-3">
+            <div className="mt-6 grid gap-4 text-left sm:grid-cols-3">
               {copy.home.stats.map((stat) => (
                 <div
                   key={stat.label}
@@ -99,13 +75,6 @@ export function HomePage({ locale }: HomePageProps) {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div
-            id={teleprompterToolAnchor}
-            className="mt-6 scroll-mt-24"
-          >
-            <TeleprompterWorkspace locale={locale} copy={copy} mode="reader" />
           </div>
         </section>
 
