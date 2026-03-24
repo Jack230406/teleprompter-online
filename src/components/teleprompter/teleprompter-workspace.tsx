@@ -5,7 +5,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { type LocalizedCopy } from "@/content/copy";
 import {
   defaultTeleprompterState,
-  getViewportReaderSettings,
+  getRecommendedTeleprompterSettings,
+  getTeleprompterPresetSettings,
+  type TeleprompterPresetId,
   useTeleprompterState
 } from "@/hooks/use-teleprompter-state";
 import { type Locale } from "@/lib/site";
@@ -48,18 +50,22 @@ const MOBILE_BAR_SAFE_AREA_STYLE = {
   bottom: "max(0.75rem, env(safe-area-inset-bottom))"
 } as const;
 
+const SAVE_FEEDBACK_TIMEOUT_MS = 3000;
+const RESTORE_FEEDBACK_TIMEOUT_MS = 7000;
+
 export function TeleprompterWorkspace({
   locale,
   copy
 }: TeleprompterWorkspaceProps) {
   const {
+    persistence,
     state,
+    applyQuickSettings,
     setScript,
     setSpeed,
     setFontSize,
     setLineHeight,
     setTextWidth,
-    setReaderSettings,
     resetSettings,
     toggleMirror,
     toggleReverse,
@@ -71,6 +77,8 @@ export function TeleprompterWorkspace({
   const [canFullscreen, setCanFullscreen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMobileControlsOpen, setIsMobileControlsOpen] = useState(false);
+  const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
+  const [feedbackRefreshToken, setFeedbackRefreshToken] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const readerSectionRef = useRef<HTMLElement | null>(null);
   const readerStageRef = useRef<HTMLDivElement | null>(null);
@@ -135,18 +143,95 @@ export function TeleprompterWorkspace({
     locale === "es"
       ? `Aprox. ${estimatedWordsPerMinute} ppm con esta velocidad`
       : `Approx. ${estimatedWordsPerMinute} wpm at this speed`;
-  const keyboardHint =
-    locale === "es"
-      ? "Atajos: Espacio reproduce o pausa, ↑↓ cambia velocidad, +/- tamano, Esc restaura la interfaz."
-      : "Shortcuts: Space plays or pauses, ↑↓ changes speed, +/- changes text size, Esc restores the interface.";
   const focusHint =
     locale === "es"
       ? "Pulsa Esc o toca un espacio vacio para recuperar la interfaz."
       : "Press Esc or tap empty space to restore the interface.";
+  const firstUseTitle =
+    locale === "es" ? "Primera toma" : "Quick start";
+  const firstUseDescription =
+    locale === "es"
+      ? "Elige un preset, ajusta la pantalla y reemplaza el texto de ejemplo antes de reproducir."
+      : "Choose a preset, fit the reader to this screen, then replace the sample text before you hit play.";
+  const firstUseSteps =
+    locale === "es"
+      ? [
+          "Sustituye el texto de ejemplo",
+          "Elige un preset para tu setup",
+          "Pulsa reproducir cuando este listo"
+        ]
+      : [
+          "Replace the sample script",
+          "Choose a preset for your setup",
+          "Press play when you are ready"
+        ];
+  const emptyScriptHint =
+    locale === "es"
+      ? "Pega un guion o unas notas breves. El lector y el guardado local se actualizaran en cuanto escribas."
+      : "Paste a script or a short outline. The reader and local autosave will update as soon as you type.";
+  const fitToScreenLabel =
+    locale === "es" ? "Ajustar a pantalla" : "Fit to screen";
+  const fitToScreenDescription =
+    locale === "es"
+      ? "Recomienda tamano, ancho, interlineado y ritmo segun esta pantalla."
+      : "Recommends text size, width, line height, and pace for this screen.";
+  const presetSectionTitle =
+    locale === "es" ? "Presets de lectura" : "Reader presets";
+  const presetSectionDescription =
+    locale === "es"
+      ? "Arranca con un ajuste pensado para tu camara o escenario."
+      : "Start with a setup tuned for your camera or delivery context.";
+  const keyboardChips =
+    locale === "es"
+      ? ["Espacio: play/pausa", "↑↓: velocidad", "+/-: texto", "Esc: interfaz"]
+      : ["Space: play/pause", "↑↓: speed", "+/-: text", "Esc: chrome"];
   const mobileControlsSummary =
     locale === "es"
       ? `Velocidad ${state.speed} px/s · Texto ${state.fontSize}px`
       : `Speed ${state.speed} px/s · Text ${state.fontSize}px`;
+
+  const presetOptions = useMemo(
+    () =>
+      [
+        {
+          id: "phoneSelfie",
+          title: locale === "es" ? "Selfie en movil" : "Phone selfie",
+          description:
+            locale === "es"
+              ? "Texto amplio y ritmo tranquilo cerca de la camara."
+              : "Wide text and a calmer pace when the phone sits close to the lens."
+        },
+        {
+          id: "laptopWebcam",
+          title: locale === "es" ? "Webcam de laptop" : "Laptop webcam",
+          description:
+            locale === "es"
+              ? "Lectura equilibrada para webcam y reuniones."
+              : "Balanced framing for laptop webcams, Zoom, and desk setups."
+        },
+        {
+          id: "glassTeleprompter",
+          title: locale === "es" ? "Teleprompter con cristal" : "Glass teleprompter",
+          description:
+            locale === "es"
+              ? "Activa espejo y mantiene una lectura compacta para rigs."
+              : "Turns mirror on and keeps the text compact for beam-splitter rigs."
+        },
+        {
+          id: "speechKeynote",
+          title: locale === "es" ? "Discurso / keynote" : "Speech / keynote",
+          description:
+            locale === "es"
+              ? "Texto grande y mas aire para lecturas desde escenario."
+              : "Larger text with more breathing room for podium or keynote reads."
+        }
+      ] satisfies Array<{
+        id: TeleprompterPresetId;
+        title: string;
+        description: string;
+      }>,
+    [locale]
+  );
 
   const readerMetrics = [
     {
@@ -164,40 +249,135 @@ export function TeleprompterWorkspace({
     }
   ];
 
+  const fitRecommendation = useMemo(() => {
+    if (viewportSize.width <= 0 || viewportSize.height <= 0) {
+      return null;
+    }
+
+    return getRecommendedTeleprompterSettings({
+      viewportWidth: viewportSize.width,
+      viewportHeight: viewportSize.height,
+      script: state.script
+    });
+  }, [state.script, viewportSize.height, viewportSize.width]);
+
+  const fitRecommendationSummary = fitRecommendation
+    ? locale === "es"
+      ? `${fitRecommendation.fontSize}px · ${fitRecommendation.textWidth}% ancho · ${trimDecimal(
+          fitRecommendation.lineHeight
+        )}x · ${fitRecommendation.speed} px/s`
+      : `${fitRecommendation.fontSize}px · ${fitRecommendation.textWidth}% width · ${trimDecimal(
+          fitRecommendation.lineHeight
+        )}x · ${fitRecommendation.speed} px/s`
+    : locale === "es"
+      ? "Midiendo esta pantalla..."
+      : "Reading this screen...";
+
+  const isDefaultWorkspaceState =
+    state.script === defaultTeleprompterState.script &&
+    state.speed === defaultTeleprompterState.speed &&
+    state.fontSize === defaultTeleprompterState.fontSize &&
+    state.lineHeight === defaultTeleprompterState.lineHeight &&
+    state.textWidth === defaultTeleprompterState.textWidth &&
+    state.mirrored === defaultTeleprompterState.mirrored &&
+    state.reverse === defaultTeleprompterState.reverse &&
+    state.showEyeLine === defaultTeleprompterState.showEyeLine &&
+    state.theme === defaultTeleprompterState.theme;
+
+  const showFirstUseGuidance =
+    persistence.restoredAt === null && isDefaultWorkspaceState;
+
+  const feedbackNow = useMemo(
+    () => Date.now(),
+    [
+      feedbackRefreshToken,
+      persistence.lastSavedAt,
+      persistence.restoredAt,
+      persistence.saveUnavailable
+    ]
+  );
+  const isRecentRestore =
+    persistence.restoredAt !== null &&
+    feedbackNow - persistence.restoredAt < RESTORE_FEEDBACK_TIMEOUT_MS &&
+    persistence.lastSavedAt === null;
+  const isRecentSave =
+    persistence.lastSavedAt !== null &&
+    feedbackNow - persistence.lastSavedAt < SAVE_FEEDBACK_TIMEOUT_MS;
+  const saveFeedback = persistence.saveUnavailable
+    ? {
+        label:
+          locale === "es"
+            ? "Guardado local no disponible"
+            : "Local save unavailable",
+        tone: "warning" as const
+      }
+    : isRecentRestore
+      ? {
+          label:
+            locale === "es"
+              ? "Se recupero tu ultima sesion"
+              : "Restored your last session",
+          tone: "success" as const
+        }
+      : isRecentSave && !(persistence.restoredAt === null && isDefaultWorkspaceState)
+        ? {
+            label:
+              locale === "es"
+                ? "Guardado local ahora mismo"
+                : "Saved locally just now",
+            tone: "success" as const
+          }
+        : {
+            label:
+              locale === "es"
+                ? "Autoguardado activo en este navegador"
+                : "Autosave is on in this browser",
+            tone: "neutral" as const
+          };
+
   const fitReaderToViewport = (force = false) => {
     if (typeof window === "undefined") {
       return;
     }
 
-    const viewportSettings = getViewportReaderSettings(
-      window.innerWidth,
-      window.innerHeight
-    );
+    const recommendedSettings = getRecommendedTeleprompterSettings({
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight,
+      script: state.script
+    });
     const nextFontSize =
       force ||
       state.fontSize === defaultTeleprompterState.fontSize ||
-      state.fontSize > viewportSettings.fontSize
-        ? viewportSettings.fontSize
+      state.fontSize > recommendedSettings.fontSize
+        ? recommendedSettings.fontSize
         : state.fontSize;
     const nextLineHeight =
       force ||
       state.lineHeight === defaultTeleprompterState.lineHeight ||
-      Math.abs(state.lineHeight - viewportSettings.lineHeight) > 0.28
-        ? viewportSettings.lineHeight
+      Math.abs(state.lineHeight - recommendedSettings.lineHeight) > 0.28
+        ? recommendedSettings.lineHeight
         : state.lineHeight;
     const nextTextWidth =
       force ||
       state.textWidth === defaultTeleprompterState.textWidth ||
-      state.textWidth < viewportSettings.textWidth
-        ? viewportSettings.textWidth
+      state.textWidth < recommendedSettings.textWidth
+        ? recommendedSettings.textWidth
         : state.textWidth;
+    const nextSpeed =
+      force ||
+      state.speed === defaultTeleprompterState.speed ||
+      Math.abs(state.speed - recommendedSettings.speed) > 18
+        ? recommendedSettings.speed
+        : state.speed;
 
     if (
+      nextSpeed !== state.speed ||
       nextFontSize !== state.fontSize ||
       nextLineHeight !== state.lineHeight ||
       nextTextWidth !== state.textWidth
     ) {
-      setReaderSettings({
+      applyQuickSettings({
+        speed: nextSpeed,
         fontSize: nextFontSize,
         lineHeight: nextLineHeight,
         textWidth: nextTextWidth
@@ -252,10 +432,35 @@ export function TeleprompterWorkspace({
     const viewportSettings =
       typeof window === "undefined"
         ? undefined
-        : getViewportReaderSettings(window.innerWidth, window.innerHeight);
+        : getRecommendedTeleprompterSettings({
+            viewportWidth: window.innerWidth,
+            viewportHeight: window.innerHeight,
+            script: state.script
+          });
 
     resetSettings(viewportSettings);
     setResetSignal((value) => value + 1);
+    setIsMobileControlsOpen(false);
+  };
+
+  const handleApplyPreset = (presetId: TeleprompterPresetId) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    applyQuickSettings(
+      getTeleprompterPresetSettings({
+        presetId,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        script: state.script
+      })
+    );
+    setIsMobileControlsOpen(false);
+  };
+
+  const handleFitToScreen = () => {
+    fitReaderToViewport(true);
     setIsMobileControlsOpen(false);
   };
 
@@ -342,6 +547,44 @@ export function TeleprompterWorkspace({
   }, [state.fontSize, state.lineHeight, state.textWidth]);
 
   useEffect(() => {
+    const handleViewportMeasurement = () => {
+      setViewportSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    handleViewportMeasurement();
+    window.addEventListener("resize", handleViewportMeasurement);
+    window.addEventListener("orientationchange", handleViewportMeasurement);
+
+    return () => {
+      window.removeEventListener("resize", handleViewportMeasurement);
+      window.removeEventListener("orientationchange", handleViewportMeasurement);
+    };
+  }, []);
+
+  useEffect(() => {
+    const timeoutDuration = persistence.lastSavedAt
+      ? SAVE_FEEDBACK_TIMEOUT_MS
+      : persistence.restoredAt
+        ? RESTORE_FEEDBACK_TIMEOUT_MS
+        : null;
+
+    if (!timeoutDuration) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setFeedbackRefreshToken((value) => value + 1);
+    }, timeoutDuration + 50);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [persistence.lastSavedAt, persistence.restoredAt]);
+
+  useEffect(() => {
     if (!state.script.trim()) {
       setPlaybackState("ready");
       setIsMobileControlsOpen(false);
@@ -378,7 +621,7 @@ export function TeleprompterWorkspace({
       window.removeEventListener("resize", handleViewportChange);
       window.removeEventListener("orientationchange", handleViewportChange);
     };
-  }, [isFocusMode, state.fontSize, state.lineHeight, state.textWidth]);
+  }, [isFocusMode, state.fontSize, state.lineHeight, state.script, state.textWidth]);
 
   useEffect(() => {
     const handleGlobalKeydown = (event: KeyboardEvent) => {
@@ -458,6 +701,65 @@ export function TeleprompterWorkspace({
 
   const desktopControls = (
     <div className="hidden gap-4 md:grid">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)] lg:gap-4">
+        <div
+          className={cn(
+            "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
+            toolTheme.card
+          )}
+        >
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <div className="text-sm font-medium">{presetSectionTitle}</div>
+              <div
+                className={cn("mt-1 text-sm leading-5 sm:leading-6", toolTheme.muted)}
+              >
+                {presetSectionDescription}
+              </div>
+            </div>
+            {showFirstUseGuidance ? (
+              <div
+                className={cn(
+                  "rounded-full border px-3 py-1 text-[0.65rem] uppercase tracking-[0.18em]",
+                  toolTheme.statusPill
+                )}
+              >
+                {firstUseTitle}
+              </div>
+            ) : null}
+          </div>
+
+          {showFirstUseGuidance ? (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {firstUseSteps.map((step) => (
+                <HelperChip key={step} label={step} theme={state.theme} />
+              ))}
+            </div>
+          ) : null}
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {presetOptions.map((preset) => (
+              <PresetCard
+                key={preset.id}
+                title={preset.title}
+                description={preset.description}
+                theme={state.theme}
+                onClick={() => handleApplyPreset(preset.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <UtilityActionCard
+          title={fitToScreenLabel}
+          description={fitToScreenDescription}
+          detail={fitRecommendationSummary}
+          ctaLabel={fitToScreenLabel}
+          theme={state.theme}
+          onClick={handleFitToScreen}
+        />
+      </div>
+
       <div
         className={cn(
           "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4 md:p-5",
@@ -591,9 +893,16 @@ export function TeleprompterWorkspace({
           toolTheme.cardMuted
         )}
       >
-        <p className={cn("max-w-2xl text-sm leading-6", toolTheme.muted)}>
-          {copy.tool.closeNote} {keyboardHint}
-        </p>
+        <div>
+          <div className="text-sm font-medium">
+            {locale === "es" ? "Ayudas rapidas" : "Quick helpers"}
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {keyboardChips.map((chip) => (
+              <HelperChip key={chip} label={chip} theme={state.theme} />
+            ))}
+          </div>
+        </div>
         <div className="flex flex-wrap items-center gap-2">
           <ActionButton
             label={copy.tool.reset}
@@ -629,11 +938,13 @@ export function TeleprompterWorkspace({
               toolTheme.section
             )}
           >
-            <div>
+            <div className="flex flex-wrap items-center gap-2">
               <div className="text-sm font-medium">{copy.tool.localBadge}</div>
-              <div className={cn("text-sm", toolTheme.muted)}>
-                {copy.tool.readerHint}
-              </div>
+              <SaveStatusPill
+                label={saveFeedback.label}
+                tone={saveFeedback.tone}
+                theme={state.theme}
+              />
             </div>
             <div
               className={cn(
@@ -655,18 +966,21 @@ export function TeleprompterWorkspace({
                     {copy.tool.editorTitle}
                   </h2>
                   <p className={cn("mt-1.5 text-sm leading-5 sm:mt-2 sm:leading-6", toolTheme.muted)}>
-                    {copy.tool.localHint}
+                    {showFirstUseGuidance
+                      ? firstUseDescription
+                      : !state.script.trim()
+                        ? emptyScriptHint
+                        : persistence.restoredAt
+                          ? locale === "es"
+                            ? "Continua donde lo dejaste o limpia el guion para empezar de nuevo."
+                            : "Continue where you left off, or clear the script to start fresh."
+                          : copy.tool.localHint}
                   </p>
                 </div>
               </div>
 
               <label className="mt-4 block space-y-2.5 sm:mt-6 sm:space-y-3">
-                <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-3">
-                  <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
-                  <div className={cn("text-xs sm:text-sm", toolTheme.muted)}>
-                    {keyboardHint}
-                  </div>
-                </div>
+                <div className="text-sm font-medium">{copy.tool.scriptLabel}</div>
 
                 <div className="relative min-w-0">
                   <textarea
@@ -696,6 +1010,12 @@ export function TeleprompterWorkspace({
                     <ClearIcon />
                   </button>
                 </div>
+
+                {!state.script.trim() ? (
+                  <p className={cn("text-sm leading-6", toolTheme.muted)}>
+                    {emptyScriptHint}
+                  </p>
+                ) : null}
               </label>
             </section>
           ) : null}
@@ -806,8 +1126,8 @@ export function TeleprompterWorkspace({
                 "relative min-w-0 space-y-4 sm:space-y-5",
                 isFullscreen &&
                   (state.theme === "dark"
-                    ? "flex min-h-screen flex-col bg-slate-950 p-4 md:p-6"
-                    : "flex min-h-screen flex-col bg-white p-4 md:p-6")
+                    ? "flex min-h-dvh min-h-screen flex-col bg-slate-950 p-4 md:p-6"
+                    : "flex min-h-dvh min-h-screen flex-col bg-white p-4 md:p-6")
               )}
             >
               {!isFocusMode ? (
@@ -955,7 +1275,7 @@ export function TeleprompterWorkspace({
           />
           <div
             className={cn(
-              "absolute inset-x-0 bottom-0 max-h-[88vh] overflow-y-auto rounded-t-[2rem] border px-5 pb-6 pt-4 shadow-2xl",
+              "absolute inset-x-0 bottom-0 max-h-[88dvh] overflow-y-auto rounded-t-[2rem] border px-5 pb-6 pt-4 shadow-2xl",
               toolTheme.shell
             )}
             style={MOBILE_SHEET_SAFE_AREA_STYLE}
@@ -968,7 +1288,7 @@ export function TeleprompterWorkspace({
                   {controlsSheetTitle}
                 </div>
                 <p className={cn("mt-2 text-sm leading-6", toolTheme.muted)}>
-                  {keyboardHint}
+                  {showFirstUseGuidance ? firstUseDescription : saveFeedback.label}
                 </p>
               </div>
               <button
@@ -994,6 +1314,37 @@ export function TeleprompterWorkspace({
                     theme={state.theme}
                   />
                 ))}
+              </div>
+
+              <MobileSectionHeading
+                theme={state.theme}
+                title={presetSectionTitle}
+                description={
+                  showFirstUseGuidance ? firstUseDescription : presetSectionDescription
+                }
+              />
+
+              <div className="grid gap-3">
+                <div className="grid grid-cols-2 gap-3">
+                  {presetOptions.map((preset) => (
+                    <PresetCard
+                      key={preset.id}
+                      title={preset.title}
+                      description={preset.description}
+                      theme={state.theme}
+                      onClick={() => handleApplyPreset(preset.id)}
+                    />
+                  ))}
+                </div>
+
+                <UtilityActionCard
+                  title={fitToScreenLabel}
+                  description={fitToScreenDescription}
+                  detail={fitRecommendationSummary}
+                  ctaLabel={fitToScreenLabel}
+                  theme={state.theme}
+                  onClick={handleFitToScreen}
+                />
               </div>
 
               <MobileSectionHeading
@@ -1190,9 +1541,24 @@ export function TeleprompterWorkspace({
                 </div>
               </div>
 
-              <p className={cn("text-sm leading-6", toolTheme.muted)}>
-                {copy.tool.closeNote} {focusHint}
-              </p>
+              <div
+                className={cn(
+                  "rounded-[1.25rem] border p-3.5",
+                  toolTheme.cardMuted
+                )}
+              >
+                <div className="text-sm font-medium">
+                  {locale === "es" ? "Atajos y foco" : "Shortcuts and focus"}
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {keyboardChips.map((chip) => (
+                    <HelperChip key={chip} label={chip} theme={state.theme} />
+                  ))}
+                </div>
+                <p className={cn("mt-3 text-sm leading-6", toolTheme.muted)}>
+                  {focusHint}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1258,6 +1624,169 @@ function MobileSectionHeading({
         {description}
       </div>
     </div>
+  );
+}
+
+type SaveStatusPillProps = {
+  label: string;
+  tone: "neutral" | "success" | "warning";
+  theme: "light" | "dark";
+};
+
+function SaveStatusPill({ label, tone, theme }: SaveStatusPillProps) {
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.7rem] font-medium",
+        theme === "dark"
+          ? tone === "warning"
+            ? "border-amber-500/30 bg-amber-500/10 text-amber-100"
+            : tone === "success"
+              ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-100"
+              : "border-slate-700 bg-slate-900 text-slate-200"
+          : tone === "warning"
+            ? "border-amber-200 bg-amber-50 text-amber-900"
+            : tone === "success"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+              : "border-slate-200 bg-white text-slate-600"
+      )}
+    >
+      <span
+        className={cn(
+          "h-1.5 w-1.5 rounded-full",
+          tone === "warning"
+            ? "bg-amber-500"
+            : tone === "success"
+              ? "bg-emerald-500"
+              : theme === "dark"
+                ? "bg-slate-400"
+                : "bg-slate-400"
+        )}
+      />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+type PresetCardProps = {
+  title: string;
+  description: string;
+  theme: "light" | "dark";
+  onClick: () => void;
+};
+
+function PresetCard({
+  title,
+  description,
+  theme,
+  onClick
+}: PresetCardProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "min-h-[7.5rem] rounded-[1.25rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4",
+        theme === "dark"
+          ? "border-slate-800 bg-slate-900 hover:border-slate-700"
+          : "border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-white"
+      )}
+    >
+      <div className="text-sm font-medium">{title}</div>
+      <div
+        className={cn(
+          "mt-2 text-sm leading-6",
+          theme === "dark" ? "text-slate-400" : "text-slate-500"
+        )}
+      >
+        {description}
+      </div>
+    </button>
+  );
+}
+
+type UtilityActionCardProps = {
+  title: string;
+  description: string;
+  detail: string;
+  ctaLabel: string;
+  theme: "light" | "dark";
+  onClick: () => void;
+};
+
+function UtilityActionCard({
+  title,
+  description,
+  detail,
+  ctaLabel,
+  theme,
+  onClick
+}: UtilityActionCardProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-[1.25rem] border p-3.5 text-left transition sm:rounded-[1.5rem] sm:p-4",
+        theme === "dark"
+          ? "border-slate-800 bg-slate-900 hover:border-slate-700"
+          : "border-slate-200 bg-slate-50 hover:border-slate-300 hover:bg-white"
+      )}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-sm font-medium">{title}</div>
+          <div
+            className={cn(
+              "mt-1 text-sm leading-6",
+              theme === "dark" ? "text-slate-400" : "text-slate-500"
+            )}
+          >
+            {description}
+          </div>
+        </div>
+        <span
+          className={cn(
+            "shrink-0 rounded-full px-3 py-1 text-[0.7rem] font-medium",
+            theme === "dark"
+              ? "bg-white text-slate-950"
+              : "bg-ink text-white"
+          )}
+        >
+          {ctaLabel}
+        </span>
+      </div>
+      <div
+        className={cn(
+          "mt-4 rounded-[1rem] border px-3 py-2 text-xs leading-5",
+          theme === "dark"
+            ? "border-slate-800 bg-slate-950 text-slate-300"
+            : "border-slate-200 bg-white text-slate-600"
+        )}
+      >
+        {detail}
+      </div>
+    </button>
+  );
+}
+
+type HelperChipProps = {
+  label: string;
+  theme: "light" | "dark";
+};
+
+function HelperChip({ label, theme }: HelperChipProps) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium",
+        theme === "dark"
+          ? "border-slate-700 bg-slate-950 text-slate-300"
+          : "border-slate-200 bg-white text-slate-600"
+      )}
+    >
+      {label}
+    </span>
   );
 }
 

@@ -161,7 +161,7 @@ export function PrompterPreview({
           : isFullscreen
             ? "flex h-full min-h-0 flex-1"
             : focusMode
-              ? "min-h-[72vh] sm:min-h-[78vh]"
+              ? "min-h-[72dvh] sm:min-h-[78dvh]"
             : "min-h-[20rem] sm:min-h-[28rem]"
       )}
     >
@@ -175,8 +175,8 @@ export function PrompterPreview({
             : isFullscreen
               ? "max-h-none"
               : focusMode
-                ? "max-h-[72vh] sm:max-h-[78vh]"
-              : "max-h-[70vh]"
+                ? "max-h-[72dvh] sm:max-h-[78dvh]"
+                : "max-h-[70vh]"
         )}
       >
         <div
