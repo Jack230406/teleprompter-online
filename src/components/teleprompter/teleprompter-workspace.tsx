@@ -567,71 +567,68 @@ export function TeleprompterWorkspace({
             </section>
           ) : null}
 
-          <div
-            className={cn(
-              "grid gap-0",
-              isFocusMode ? "xl:grid-cols-1" : "xl:grid-cols-[0.78fr_1.22fr]"
-            )}
-          >
+          <div className="grid gap-0">
             {!isFocusMode ? (
-              <section className="flex flex-col gap-4 p-4 sm:gap-5 sm:p-5 md:p-6">
-                <div className="grid grid-cols-2 gap-2.5 xl:grid-cols-1 2xl:grid-cols-2">
-                  <ActionButton
-                    label={copy.tool.play}
-                    onClick={handleTogglePlayback}
-                    disabled={!state.script.trim()}
-                    variant="primary"
-                    theme={state.theme}
-                    className="w-full min-w-0"
-                  />
-                  <ActionButton
-                    label={copy.tool.stop}
-                    onClick={handleStop}
-                    disabled={playbackState === "ready"}
-                    variant="danger"
-                    theme={state.theme}
-                  />
-                  {canFullscreen ? (
+              <section className="flex flex-col gap-4 border-b p-4 sm:gap-5 sm:p-5 md:p-6">
+                <div className="grid gap-3 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
+                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-2">
                     <ActionButton
-                      label={
-                        isFullscreen
-                          ? copy.tool.exitFullscreen
-                          : copy.tool.fullscreen
-                      }
-                      onClick={handleToggleFullscreen}
-                      variant="secondary"
+                      label={copy.tool.play}
+                      onClick={handleTogglePlayback}
+                      disabled={!state.script.trim()}
+                      variant="primary"
+                      theme={state.theme}
+                      className="w-full min-w-0"
+                    />
+                    <ActionButton
+                      label={copy.tool.stop}
+                      onClick={handleStop}
+                      disabled={playbackState === "ready"}
+                      variant="danger"
                       theme={state.theme}
                     />
-                  ) : null}
-                  <ActionButton
-                    label={copy.tool.reset}
-                    onClick={handleResetPosition}
-                    disabled={!state.script.trim()}
-                    variant="ghost"
-                    theme={state.theme}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setIsMobileControlsOpen(true)}
-                    className={cn(
-                      "inline-flex items-center rounded-full border px-4 py-2.5 text-xs font-medium transition sm:text-sm md:hidden",
-                      toolTheme.secondaryButton
-                    )}
-                  >
-                    {controlsMenuLabel}
-                  </button>
-                </div>
+                    {canFullscreen ? (
+                      <ActionButton
+                        label={
+                          isFullscreen
+                            ? copy.tool.exitFullscreen
+                            : copy.tool.fullscreen
+                        }
+                        onClick={handleToggleFullscreen}
+                        variant="secondary"
+                        theme={state.theme}
+                      />
+                    ) : null}
+                    <ActionButton
+                      label={copy.tool.reset}
+                      onClick={handleResetPosition}
+                      disabled={!state.script.trim()}
+                      variant="ghost"
+                      theme={state.theme}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setIsMobileControlsOpen(true)}
+                      className={cn(
+                        "col-span-2 inline-flex items-center justify-center rounded-full border px-4 py-2.5 text-xs font-medium transition sm:col-span-4 sm:text-sm md:hidden",
+                        toolTheme.secondaryButton
+                      )}
+                    >
+                      {controlsMenuLabel}
+                    </button>
+                  </div>
 
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  {readerMetrics.map((metric) => (
-                    <MetricCard
-                      key={metric.label}
-                      label={metric.label}
-                      value={metric.value}
-                      hint={metric.hint}
-                      theme={state.theme}
-                    />
-                  ))}
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                    {readerMetrics.map((metric) => (
+                      <MetricCard
+                        key={metric.label}
+                        label={metric.label}
+                        value={metric.value}
+                        hint={metric.hint}
+                        theme={state.theme}
+                      />
+                    ))}
+                  </div>
                 </div>
 
                 <div
@@ -671,8 +668,8 @@ export function TeleprompterWorkspace({
               "p-4 sm:p-6 md:p-8 lg:p-10",
               !isFocusMode &&
                 (state.theme === "dark"
-                  ? "border-t border-slate-800 xl:border-l xl:border-t-0"
-                  : "border-t border-slate-200 xl:border-l xl:border-t-0")
+                  ? "border-t border-slate-800"
+                  : "border-t border-slate-200")
             )}
           >
             <div
