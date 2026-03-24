@@ -546,7 +546,7 @@ export function TeleprompterWorkspace({
                     onChange={(event) => setScript(event.target.value)}
                     placeholder={copy.tool.scriptPlaceholder}
                     className={cn(
-                      "min-h-[16rem] w-full rounded-[1.25rem] border px-3.5 py-3.5 pr-14 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:min-h-[20rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:pr-16 sm:text-base sm:leading-7 lg:min-h-[22rem]",
+                      "h-[16rem] max-h-[16rem] w-full resize-none overflow-y-auto rounded-[1.25rem] border px-3.5 py-3.5 pr-14 text-[15px] leading-6 outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:h-[20rem] sm:max-h-[20rem] sm:rounded-[1.5rem] sm:px-4 sm:py-4 sm:pr-16 sm:text-base sm:leading-7 lg:h-[22rem] lg:max-h-[22rem]",
                       toolTheme.textarea
                     )}
                   />
