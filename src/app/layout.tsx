@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Newsreader, Roboto } from "next/font/google";
 import type { ReactNode } from "react";
 
@@ -68,6 +69,22 @@ export default function RootLayout({
         className={`${newsreader.variable} ${roboto.variable} bg-paper font-body text-ink antialiased`}
       >
         <HostRobotsTag />
+        <Script
+          defer
+          data-domain="teleprompteronline.net"
+          src="https://app.pageview.app/js/script.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-8W0LZYG5VX"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-8W0LZYG5VX');`}
+        </Script>
         <LanguageRoot />
         {children}
       </body>
