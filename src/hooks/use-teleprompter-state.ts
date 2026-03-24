@@ -31,7 +31,7 @@ const STORAGE_KEY = "teleprompter-online:v1";
 export const defaultTeleprompterState: TeleprompterState = {
   script: `Welcome to Teleprompter Online.
 
-This is a clean, local-first teleprompter MVP built for creators, presenters, and teams.
+This is a free online teleprompter built for creators, presenters, and recording teams.
 
   Paste your own script, adjust the speed, mirror the text for reflective glass, and start reading when you are ready.`,
   speed: 42,

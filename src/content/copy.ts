@@ -88,10 +88,10 @@ export const copy: Record<Locale, LocalizedCopy> = {
       subtitle: "free teleprompter app"
     },
     home: {
-      eyebrow: "Free teleprompter online",
-      title: "Free Online Teleprompter with Mirror Mode",
+      eyebrow: "Free teleprompter app · browser-based · no account needed",
+      title: "Free Online Teleprompter with Teleprompter Mirror",
       description:
-        "Paste your script, adjust the reading speed, and use fullscreen teleprompting directly on the homepage. No login or download required.",
+        "Paste your script, set the scroll speed, and read in fullscreen directly in your browser. Works as a free teleprompter app on desktop and phone, with no login or download required.",
       highlights: [
         "No account or backend required",
         "Script and settings persist locally",
@@ -104,63 +104,74 @@ export const copy: Record<Locale, LocalizedCopy> = {
       ],
       sections: [
         {
-          title: "Immediate use",
+          title: "Start using this free teleprompter online in seconds",
           description:
-            "The homepage is the main teleprompter product page, not a waitlist or a separate handoff. Paste a script and start adjusting the read in seconds."
+            "Open the page, paste your script, and start prompting immediately. No signup form, no email, and no software to download. Your script and settings stay saved locally in the browser."
         },
         {
-          title: "Presentation-ready controls",
+          title: "Full teleprompter controls — speed, font, teleprompter mirror, and more",
           description:
-            "Dial in speed, font size, line height, text width, mirror mode, reverse direction, and a paper or studio theme without leaving the homepage tool."
+            "Dial in scroll speed, font size, line height, text width, teleprompter mirror mode, reverse scroll direction, and a light or dark reading theme without leaving the page."
         },
         {
-          title: "SEO-ready foundation",
+          title: "Works for video, Zoom, presentations, and live delivery",
           description:
-            "The product stays centered on one main teleprompter page while supporting future landing pages, tutorials, and keyword-targeted SEO flows."
+            "Use this free online teleprompter for YouTube videos, Zoom calls, keynotes, podcasts, or any recording where you need to read from a script. Enable teleprompter mirror for glass rigs or go fullscreen on a second display."
         }
       ],
       steps: [
         {
-          title: "Paste or write your script",
+          title: "Paste or type your teleprompter script",
           description:
-            "Draft from scratch or drop in prepared notes. Updates sync instantly to the live teleprompter preview."
+            "Paste notes, a speech, or a production script and see updates reflected in the live teleprompter immediately."
         },
         {
-          title: "Adjust the reading setup",
+          title: "Adjust speed, font size, and teleprompter mirror",
           description:
-            "Tune scroll speed, font size, line height, text width, teleprompter mirror mode, and direction based on your camera or glass rig."
+            "Tune scroll speed, font size, line height, text width, and teleprompter mirror mode to match your camera distance, reading pace, or glass rig."
         },
         {
-          title: "Prompt on the homepage teleprompter",
+          title: "Read in fullscreen on any device",
           description:
-            "Use fullscreen, playback controls, and the same locally saved state without leaving the main product page."
+            "Go fullscreen and use play, pause, and stop controls. This free teleprompter app works on desktop, laptop, and phone, with your script always saved locally."
         }
       ],
       faq: [
         {
-          question: "Does Teleprompter Online store my script on a server?",
+          question: "Does this online teleprompter store my script?",
           answer:
-            "No. This MVP stores your script and settings in localStorage, so the content stays on the device and browser you are using."
+            "No. Teleprompter Online stores your script and settings in your browser's localStorage. Nothing is sent to any server, so your content stays entirely on your device."
         },
         {
-          question: "Can I use it for YouTube, Zoom, or keynote-style delivery?",
+          question: "Can I use this teleprompter for YouTube videos, Zoom calls, or presentations?",
           answer:
-            "Yes. The current MVP is tuned for general creator and presentation workflows and can expand into tailored landing pages later."
+            "Yes. This free online teleprompter works for any scenario where you read from a script, including YouTube recordings, Zoom meetings, keynotes, podcasts, and live events. Adjust scroll speed and font size to match your delivery pace and camera distance."
         },
         {
-          question: "Do I need to install anything?",
+          question: "Do I need to install anything to use this teleprompter online?",
           answer:
-            "No installation is required. It is a pure frontend Next.js application that runs directly in the browser."
+            "No. This teleprompter runs entirely in your browser on desktop, laptop, or phone. There is nothing to download or install, and it also works on Mac, Windows, and any device with a modern browser."
+        },
+        {
+          question: "How do I make my computer work as a teleprompter?",
+          answer:
+            "Open teleprompteronline.net in any browser, paste your script into the text area, and press Play. Adjust scroll speed, font size, and text width to match your reading pace. For a glass teleprompter rig, enable teleprompter mirror mode so the text reads correctly through beam-splitter glass."
+        },
+        {
+          question: "Does this teleprompter work for Zoom and webcam recordings?",
+          answer:
+            "Yes. Position the browser window near your webcam so you can read while still looking toward the camera. For Zoom presentations, open the teleprompter in a separate window alongside your video call."
         }
       ],
       readerCta: "Open the teleprompter",
       secondaryCta: "See how it works",
       workflowLabel: "Workflow",
-      workflowTitle: "Designed for fast rehearsal and recording loops.",
+      workflowTitle: "How to use this free online teleprompter",
       stepLabel: "Step",
-      metaTitle: "Teleprompter Online – Free Teleprompter with Mirror Mode",
+      metaTitle:
+        "Free Online Teleprompter | Teleprompter Mirror, Fullscreen & No Signup — Teleprompter Online",
       metaDescription:
-        "Use Teleprompter Online for free. Paste a script, adjust speed and text size, enable mirror mode, and prompt in fullscreen directly on the homepage."
+        "Free online teleprompter with teleprompter mirror, fullscreen reading, and adjustable scroll speed. Paste your script and start reading with no account, no download, and support for desktop and phone."
     },
     landing: {
       workflowLabel: "Scenario workflow",
@@ -179,9 +190,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
     },
     tool: {
       localBadge: "Saved locally in this browser",
-      editorTitle: "Script and controls",
+      editorTitle: "Your script and teleprompter controls",
       previewTitle: "Live preview",
-      readerTitle: "Reader stage",
+      readerTitle: "Teleprompter reader",
       scriptLabel: "Script",
       scriptPlaceholder:
         "Paste or write your script here. Changes are saved automatically and will appear in the reader immediately.",
@@ -215,7 +226,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
     },
     footer: {
       summary:
-        "Teleprompter Online is a free teleprompter online with fullscreen controls, teleprompter mirror mode, and supporting SEO landing pages.",
+        "Teleprompter Online (teleprompteronline.net) is a free online teleprompter with teleprompter mirror, fullscreen controls, and local script saving with no account or download required.",
       quickLinksLabel: "Quick links",
       popularPagesLabel: "Popular pages"
     }

@@ -128,23 +128,28 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section className="py-12">
           <div className="inline-flex rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-slate-500">
-            {copy.footer.popularPagesLabel}
+            More free teleprompter tools
           </div>
           <div className="mt-8">
             <LandingPageLinks locale={locale} />
           </div>
         </section>
 
-        <section className="grid gap-6 py-12 md:grid-cols-3">
-          {copy.home.faq.map((faq) => (
-            <article
-              key={faq.question}
-              className="rounded-[1.75rem] border border-slate-200 bg-white px-6 py-6 shadow-soft"
-            >
-              <h3 className="font-display text-3xl text-ink">{faq.question}</h3>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{faq.answer}</p>
-            </article>
-          ))}
+        <section className="py-12">
+          <h2 className="font-display text-4xl text-ink">
+            Frequently asked questions about this free online teleprompter
+          </h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {copy.home.faq.map((faq) => (
+              <article
+                key={faq.question}
+                className="rounded-[1.75rem] border border-slate-200 bg-white px-6 py-6 shadow-soft"
+              >
+                <h3 className="font-display text-3xl text-ink">{faq.question}</h3>
+                <p className="mt-4 text-sm leading-7 text-slate-600">{faq.answer}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <SiteFooter locale={locale} copy={copy} currentPath="/" />
