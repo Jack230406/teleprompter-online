@@ -42,17 +42,25 @@ export type LocalizedCopy = {
     scriptPlaceholder: string;
     speedLabel: string;
     fontSizeLabel: string;
+    lineHeightLabel: string;
+    textWidthLabel: string;
+    wordCountLabel: string;
+    readingTimeLabel: string;
     mirrorLabel: string;
     reverseLabel: string;
     themeLabel: string;
     themeLight: string;
     themeDark: string;
-    start: string;
+    play: string;
+    pause: string;
     stop: string;
     reset: string;
+    fullscreen: string;
+    exitFullscreen: string;
     openReader: string;
     ready: string;
     playing: string;
+    paused: string;
     previewHint: string;
     localHint: string;
     readerHint: string;
@@ -60,6 +68,8 @@ export type LocalizedCopy = {
   };
   footer: {
     summary: string;
+    quickLinksLabel: string;
+    popularPagesLabel: string;
   };
 };
 
@@ -77,7 +87,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
       eyebrow: "Free browser teleprompter",
       title: "Teleprompter Online puts the working tool in front before the pitch.",
       description:
-        "Write your script, tune the pace, flip it for glass, and move into a clean reader without signing in. Everything stays in this browser.",
+        "Write your script, tune the pace, control line height and text width, and move into a clean fullscreen-ready reader without signing in. Everything stays in this browser.",
       highlights: [
         "No account or backend required",
         "Script and settings persist locally",
@@ -97,7 +107,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
         {
           title: "Presentation-ready controls",
           description:
-            "Dial in speed, font size, mirror mode, reverse direction, and a light or studio theme without leaving the page."
+            "Dial in speed, font size, line height, text width, mirror mode, reverse direction, and a light or studio theme without leaving the page."
         },
         {
           title: "SEO-ready foundation",
@@ -114,7 +124,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
         {
           title: "Adjust the reading setup",
           description:
-            "Tune scroll speed, font size, mirrored output, and direction based on your camera or glass rig."
+            "Tune scroll speed, font size, line height, text width, mirrored output, and direction based on your camera or glass rig."
         },
         {
           title: "Open the focused reader",
@@ -152,10 +162,10 @@ export const copy: Record<Locale, LocalizedCopy> = {
       eyebrow: "Reader workspace",
       title: "A focused teleprompter reader with local-first settings.",
       description:
-        "Your script, pacing, and reader settings stay saved in this browser while you rehearse or record.",
+        "Your script, pacing, layout, and reader settings stay saved in this browser while you rehearse or record.",
       metaTitle: "Teleprompter Reader",
       metaDescription:
-        "Open the dedicated Teleprompter Online reader to control script speed, font size, theme, mirrored text, and reverse scrolling in one place."
+        "Open the dedicated Teleprompter Online reader with fullscreen, script speed, font size, line height, text width, theme, mirrored text, and reverse scrolling controls."
     },
     tool: {
       localBadge: "Saved locally in this browser",
@@ -167,25 +177,36 @@ export const copy: Record<Locale, LocalizedCopy> = {
         "Paste or write your script here. Changes are saved automatically and will appear in the reader immediately.",
       speedLabel: "Speed",
       fontSizeLabel: "Font size",
+      lineHeightLabel: "Line height",
+      textWidthLabel: "Text width",
+      wordCountLabel: "Word count",
+      readingTimeLabel: "Estimated read time",
       mirrorLabel: "Mirror",
       reverseLabel: "Reverse scroll",
       themeLabel: "Theme",
       themeLight: "Paper",
       themeDark: "Studio",
-      start: "Start prompting",
-      stop: "Pause",
+      play: "Play",
+      pause: "Pause",
+      stop: "Stop",
       reset: "Reset position",
+      fullscreen: "Fullscreen",
+      exitFullscreen: "Exit fullscreen",
       openReader: "Open full reader",
       ready: "Ready to prompt",
       playing: "Prompting in progress",
+      paused: "Paused",
       previewHint: "Preview updates with your current script and settings.",
       localHint: "Everything stays local to this browser. No sync, no login.",
       readerHint: "Use the focused reader for rehearsal, recording, or live delivery.",
-      closeNote: "Short scripts work too, but longer copy gives a smoother teleprompter flow."
+      closeNote:
+        "Play resumes from the current position, stop returns the script to the starting edge, and every setting stays saved locally."
     },
     footer: {
       summary:
-        "Teleprompter Online is a free browser teleprompter built for quick setup, readable pacing, and future SEO landing pages."
+        "Teleprompter Online is a free browser teleprompter built for quick setup, readable pacing, and future SEO landing pages.",
+      quickLinksLabel: "Quick links",
+      popularPagesLabel: "Popular pages"
     }
   },
   es: {
@@ -201,7 +222,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
       eyebrow: "Teleprompter gratis en el navegador",
       title: "Teleprompter Online pone la herramienta principal al frente desde la primera pantalla.",
       description:
-        "Escribe tu guion, ajusta la velocidad, invierte el texto para cristal y pasa a un lector limpio sin iniciar sesion. Todo queda guardado en este navegador.",
+        "Escribe tu guion, ajusta velocidad, altura de linea y ancho del texto, invierte el texto para cristal y pasa a un lector limpio con pantalla completa. Todo queda guardado en este navegador.",
       highlights: [
         "Sin cuenta y sin backend",
         "Guion y ajustes guardados localmente",
@@ -221,7 +242,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
         {
           title: "Controles listos para grabar",
           description:
-            "Configura velocidad, tamano de fuente, modo espejo, direccion inversa y tema claro u oscuro sin salir de la pagina."
+            "Configura velocidad, tamano de fuente, altura de linea, ancho del texto, modo espejo, direccion inversa y tema claro u oscuro sin salir de la pagina."
         },
         {
           title: "Base preparada para SEO",
@@ -238,7 +259,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
         {
           title: "Ajusta la lectura",
           description:
-            "Controla velocidad, tamano, espejo y direccion segun tu camara o configuracion de cristal."
+            "Controla velocidad, tamano, altura de linea, ancho del texto, espejo y direccion segun tu camara o configuracion de cristal."
         },
         {
           title: "Abre el lector dedicado",
@@ -276,10 +297,10 @@ export const copy: Record<Locale, LocalizedCopy> = {
       eyebrow: "Espacio de lectura",
       title: "Un lector de teleprompter limpio con ajustes guardados localmente.",
       description:
-        "Tu guion, ritmo y configuracion se mantienen en este navegador mientras practicas o grabas.",
+        "Tu guion, ritmo, formato y configuracion se mantienen en este navegador mientras practicas o grabas.",
       metaTitle: "Lector de Teleprompter",
       metaDescription:
-        "Abre el lector dedicado de Teleprompter Online para controlar velocidad, fuente, tema, espejo y direccion inversa desde un solo lugar."
+        "Abre el lector dedicado de Teleprompter Online con pantalla completa, velocidad, fuente, altura de linea, ancho del texto, tema, espejo y direccion inversa."
     },
     tool: {
       localBadge: "Guardado localmente en este navegador",
@@ -291,26 +312,36 @@ export const copy: Record<Locale, LocalizedCopy> = {
         "Pega o escribe tu guion aqui. Los cambios se guardan automaticamente y aparecen en el lector al instante.",
       speedLabel: "Velocidad",
       fontSizeLabel: "Tamano de fuente",
+      lineHeightLabel: "Altura de linea",
+      textWidthLabel: "Ancho del texto",
+      wordCountLabel: "Conteo de palabras",
+      readingTimeLabel: "Tiempo estimado",
       mirrorLabel: "Espejo",
       reverseLabel: "Direccion inversa",
       themeLabel: "Tema",
       themeLight: "Papel",
       themeDark: "Studio",
-      start: "Empezar a leer",
-      stop: "Pausar",
+      play: "Reproducir",
+      pause: "Pausar",
+      stop: "Detener",
       reset: "Reiniciar posicion",
+      fullscreen: "Pantalla completa",
+      exitFullscreen: "Salir de pantalla completa",
       openReader: "Abrir lector completo",
       ready: "Listo para leer",
       playing: "Lectura en progreso",
+      paused: "En pausa",
       previewHint: "La vista previa responde al guion y a la configuracion actual.",
       localHint: "Todo se mantiene local en este navegador. Sin login ni sincronizacion.",
       readerHint: "Usa el lector dedicado para practicar, grabar o presentar en vivo.",
       closeNote:
-        "Los textos cortos tambien funcionan, pero un guion mas largo ofrece una experiencia mas fluida."
+        "Reproducir retoma desde la posicion actual, detener vuelve el guion al inicio y todos los ajustes se guardan localmente."
     },
     footer: {
       summary:
-        "Teleprompter Online es un teleprompter gratuito en el navegador con configuracion rapida y una base preparada para futuras landing pages SEO."
+        "Teleprompter Online es un teleprompter gratuito en el navegador con configuracion rapida y una base preparada para futuras landing pages SEO.",
+      quickLinksLabel: "Enlaces rapidos",
+      popularPagesLabel: "Paginas populares"
     }
   }
 };

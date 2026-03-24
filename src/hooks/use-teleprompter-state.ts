@@ -8,6 +8,8 @@ export type TeleprompterState = {
   script: string;
   speed: number;
   fontSize: number;
+  lineHeight: number;
+  textWidth: number;
   mirrored: boolean;
   reverse: boolean;
   theme: TeleprompterTheme;
@@ -18,6 +20,8 @@ type TeleprompterAction =
   | { type: "script"; value: string }
   | { type: "speed"; value: number }
   | { type: "fontSize"; value: number }
+  | { type: "lineHeight"; value: number }
+  | { type: "textWidth"; value: number }
   | { type: "toggleMirror" }
   | { type: "toggleReverse" }
   | { type: "theme"; value: TeleprompterTheme };
@@ -29,9 +33,11 @@ export const defaultTeleprompterState: TeleprompterState = {
 
 This is a clean, local-first teleprompter MVP built for creators, presenters, and teams.
 
-Paste your own script, adjust the speed, mirror the text for reflective glass, and start reading when you are ready.`,
+  Paste your own script, adjust the speed, mirror the text for reflective glass, and start reading when you are ready.`,
   speed: 42,
   fontSize: 54,
+  lineHeight: 1.55,
+  textWidth: 74,
   mirrored: false,
   reverse: false,
   theme: "light"
@@ -61,6 +67,14 @@ function coerceState(value: unknown): TeleprompterState | null {
       typeof candidate.fontSize === "number"
         ? clamp(candidate.fontSize, 28, 104)
         : defaultTeleprompterState.fontSize,
+    lineHeight:
+      typeof candidate.lineHeight === "number"
+        ? clamp(candidate.lineHeight, 1.15, 2.4)
+        : defaultTeleprompterState.lineHeight,
+    textWidth:
+      typeof candidate.textWidth === "number"
+        ? clamp(candidate.textWidth, 42, 100)
+        : defaultTeleprompterState.textWidth,
     mirrored:
       typeof candidate.mirrored === "boolean"
         ? candidate.mirrored
@@ -89,6 +103,10 @@ function reducer(
       return { ...state, speed: clamp(action.value, 20, 160) };
     case "fontSize":
       return { ...state, fontSize: clamp(action.value, 28, 104) };
+    case "lineHeight":
+      return { ...state, lineHeight: clamp(action.value, 1.15, 2.4) };
+    case "textWidth":
+      return { ...state, textWidth: clamp(action.value, 42, 100) };
     case "toggleMirror":
       return { ...state, mirrored: !state.mirrored };
     case "toggleReverse":
@@ -136,6 +154,8 @@ export function useTeleprompterState() {
     setScript: (value: string) => dispatch({ type: "script", value }),
     setSpeed: (value: number) => dispatch({ type: "speed", value }),
     setFontSize: (value: number) => dispatch({ type: "fontSize", value }),
+    setLineHeight: (value: number) => dispatch({ type: "lineHeight", value }),
+    setTextWidth: (value: number) => dispatch({ type: "textWidth", value }),
     toggleMirror: () => dispatch({ type: "toggleMirror" }),
     toggleReverse: () => dispatch({ type: "toggleReverse" }),
     setTheme: (value: TeleprompterTheme) =>

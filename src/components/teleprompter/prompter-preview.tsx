@@ -9,26 +9,34 @@ type PrompterPreviewProps = {
   script: string;
   speed: number;
   fontSize: number;
+  lineHeight: number;
+  textWidth: number;
   mirrored: boolean;
   reverse: boolean;
   theme: TeleprompterTheme;
   isPlaying: boolean;
   onPlayingChange: (value: boolean) => void;
+  onPlaybackComplete?: () => void;
   resetSignal: number;
   compact?: boolean;
+  isFullscreen?: boolean;
 };
 
 export function PrompterPreview({
   script,
   speed,
   fontSize,
+  lineHeight,
+  textWidth,
   mirrored,
   reverse,
   theme,
   isPlaying,
   onPlayingChange,
+  onPlaybackComplete,
   resetSignal,
-  compact = false
+  compact = false,
+  isFullscreen = false
 }: PrompterPreviewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -46,6 +54,7 @@ export function PrompterPreview({
       0
     );
 
+    lastTimestampRef.current = null;
     container.scrollTop = reverse ? maxScroll : 0;
   }, [resetSignal, reverse, script]);
 
@@ -100,6 +109,7 @@ export function PrompterPreview({
 
       if (reachedEnd) {
         onPlayingChange(false);
+        onPlaybackComplete?.();
         lastTimestampRef.current = null;
         return;
       }
@@ -115,7 +125,7 @@ export function PrompterPreview({
         animationFrameRef.current = null;
       }
     };
-  }, [isPlaying, onPlayingChange, reverse, speed]);
+  }, [isPlaying, onPlaybackComplete, onPlayingChange, reverse, speed]);
 
   return (
     <div
@@ -124,20 +134,27 @@ export function PrompterPreview({
         theme === "dark"
           ? "border-slate-800 bg-slate-950 text-slate-100"
           : "border-slate-200 bg-white text-slate-900",
-        compact ? "min-h-[22rem]" : "min-h-[28rem]"
+        compact
+          ? "min-h-[22rem]"
+          : isFullscreen
+            ? "h-full min-h-[calc(100vh-14rem)]"
+            : "min-h-[28rem]"
       )}
     >
       <div
         ref={containerRef}
         className={cn(
           "h-full overflow-y-auto px-6 py-16 md:px-10",
-          compact ? "max-h-[22rem]" : "max-h-[70vh]"
+          compact ? "max-h-[22rem]" : isFullscreen ? "max-h-none" : "max-h-[70vh]"
         )}
       >
         <div
-          className={cn("mx-auto max-w-4xl whitespace-pre-wrap leading-[1.8]")}
+          className="mx-auto whitespace-pre-wrap"
           style={{
             fontSize: `${fontSize}px`,
+            lineHeight,
+            width: `${textWidth}%`,
+            maxWidth: "100%",
             transform: mirrored ? "scaleX(-1)" : undefined
           }}
         >

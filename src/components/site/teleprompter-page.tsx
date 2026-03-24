@@ -49,7 +49,7 @@ export function TeleprompterPage({ locale }: TeleprompterPageProps) {
 
         <TeleprompterWorkspace locale={locale} copy={copy} mode="reader" />
 
-        <SiteFooter locale={locale} copy={copy} />
+        <SiteFooter locale={locale} copy={copy} currentPath="/teleprompter" />
       </div>
     </main>
   );

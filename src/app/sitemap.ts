@@ -1,8 +1,13 @@
 import type { MetadataRoute } from "next";
 
+import { landingPageSlugs } from "@/content/landing-pages";
 import { getLocalizedPath, toAbsoluteUrl } from "@/lib/site";
 
-const pagePaths = ["/", "/teleprompter"] as const;
+const pagePaths = [
+  "/",
+  "/teleprompter",
+  ...landingPageSlugs.map((slug) => `/${slug}`)
+] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return pagePaths.flatMap((path) => [

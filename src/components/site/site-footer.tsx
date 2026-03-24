@@ -1,36 +1,66 @@
 import Link from "next/link";
 
-import { LocalizedCopy } from "@/content/copy";
-import { type Locale, getLocalizedPath } from "@/lib/site";
+import type { LocalizedCopy } from "@/content/copy";
+import type { LandingPageSlug } from "@/content/landing-pages";
+import { type Locale, getLocalizedPath, normalizePath } from "@/lib/site";
+
+import { LandingPageLinks } from "./landing-page-links";
 
 type SiteFooterProps = {
   locale: Locale;
   copy: LocalizedCopy;
+  currentPath?: string;
+  currentLandingPageSlug?: LandingPageSlug;
 };
 
-export function SiteFooter({ locale, copy }: SiteFooterProps) {
+export function SiteFooter({
+  locale,
+  copy,
+  currentPath = "/",
+  currentLandingPageSlug
+}: SiteFooterProps) {
+  const alternateLocale = locale === "en" ? "es" : "en";
+  const switchPath = getLocalizedPath(alternateLocale, normalizePath(currentPath));
+
   return (
     <footer className="border-t border-slate-200/80 py-10">
-      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr_1fr]">
         <div className="max-w-2xl text-sm leading-7 text-slate-600">
           {copy.footer.summary}
         </div>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600">
-          <Link href={getLocalizedPath(locale, "/")} className="hover:text-ink">
-            {copy.navigation.home}
-          </Link>
-          <Link
-            href={getLocalizedPath(locale, "/teleprompter")}
-            className="hover:text-ink"
-          >
-            {copy.navigation.teleprompter}
-          </Link>
-          <Link
-            href={locale === "en" ? "/es" : "/"}
-            className="hover:text-ink"
-          >
-            {copy.navigation.switchLanguage}
-          </Link>
+        <nav aria-label={copy.footer.quickLinksLabel}>
+          <div className="text-xs uppercase tracking-[0.22em] text-slate-500">
+            {copy.footer.quickLinksLabel}
+          </div>
+          <div className="mt-4 flex flex-col gap-3 text-sm text-slate-600">
+            <Link href={getLocalizedPath(locale, "/")} className="hover:text-ink">
+              {copy.navigation.home}
+            </Link>
+            <Link
+              href={getLocalizedPath(locale, "/teleprompter")}
+              className="hover:text-ink"
+            >
+              {copy.navigation.teleprompter}
+            </Link>
+            <Link
+              href={switchPath}
+              className="hover:text-ink"
+            >
+              {copy.navigation.switchLanguage}
+            </Link>
+          </div>
+        </nav>
+        <div>
+          <div className="text-xs uppercase tracking-[0.22em] text-slate-500">
+            {copy.footer.popularPagesLabel}
+          </div>
+          <div className="mt-4">
+            <LandingPageLinks
+              locale={locale}
+              currentSlug={currentLandingPageSlug}
+              variant="list"
+            />
+          </div>
         </div>
       </div>
     </footer>
