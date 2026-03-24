@@ -69,24 +69,22 @@ export function HomePage({ locale }: HomePageProps) {
         />
 
         <section className="pb-4 pt-4 sm:pb-6 sm:pt-6 lg:pb-8 lg:pt-8">
-          <div className="grid gap-4 sm:gap-6 xl:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:items-start">
-            <div className="xl:sticky xl:top-28">
-              <div className="rounded-[1.5rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-6">
-                <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-brand-deep sm:px-4 sm:py-2 sm:text-xs">
-                  {copy.home.eyebrow}
-                </div>
-                <h1 className="mt-4 max-w-xl font-display text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-ink sm:mt-5 sm:text-5xl lg:text-[3.5rem]">
-                  {copy.home.title}
-                </h1>
-                <p className="mt-3 max-w-lg text-sm leading-6 text-slate-600 sm:mt-4 sm:text-base sm:leading-7">
-                  {copy.home.description}
-                </p>
+          <div className="mx-auto max-w-5xl">
+            <div className="rounded-[1.5rem] border border-white/80 bg-white/78 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-6 lg:p-7">
+              <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.22em] text-brand-deep sm:px-4 sm:py-2 sm:text-xs">
+                {copy.home.eyebrow}
               </div>
+              <h1 className="mt-4 max-w-4xl font-display text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-ink sm:mt-5 sm:text-5xl lg:text-[3.5rem]">
+                {copy.home.title}
+              </h1>
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600 sm:mt-4 sm:text-base sm:leading-7">
+                {copy.home.description}
+              </p>
             </div>
 
             <div
               id={teleprompterToolAnchor}
-              className="scroll-mt-24"
+              className="mt-4 scroll-mt-24 sm:mt-5"
             >
               <div className="mb-2 flex flex-wrap items-center justify-between gap-3 sm:mb-3">
                 <SectionLabel>{copy.home.toolLabel}</SectionLabel>
