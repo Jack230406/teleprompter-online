@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { copy as localizedCopy } from "@/content/copy";
 import {
   type Locale,
+  siteConfig,
   teleprompterToolAnchor
 } from "@/lib/site";
 
@@ -18,9 +20,47 @@ type HomePageProps = {
 
 export function HomePage({ locale }: HomePageProps) {
   const copy = localizedCopy[locale];
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: copy.home.faq.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer
+      }
+    }))
+  };
+  const appSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: siteConfig.name,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    browserRequirements: "Requires a modern browser",
+    isAccessibleForFree: true,
+    url: siteConfig.url,
+    description: copy.home.metaDescription,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD"
+    }
+  };
 
   return (
     <main className="px-3 pb-12 pt-2 sm:px-6 sm:pb-16 sm:pt-3 lg:px-8">
+      <Script
+        id={`faq-schema-${locale}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <Script
+        id={`app-schema-${locale}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
       <div className="mx-auto max-w-[90rem]">
         <SiteHeader
           locale={locale}
@@ -77,6 +117,10 @@ export function HomePage({ locale }: HomePageProps) {
 
         <section className="pb-3 sm:pb-4 lg:pb-6">
           <div className="rounded-[1.5rem] border border-slate-900/90 bg-slate-950 px-4 py-4 text-white shadow-panel sm:rounded-[2rem] sm:px-5 sm:py-5 md:px-6">
+            <p className="max-w-4xl text-sm leading-7 text-slate-200 sm:text-base">
+              {copy.home.definition}
+            </p>
+            <div className="my-5 h-px bg-white/10" />
             <div className="grid gap-5 sm:gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
               <div>
                 <SectionLabel className="border-white/10 bg-white/5 text-slate-300">
@@ -143,6 +187,83 @@ export function HomePage({ locale }: HomePageProps) {
                   {section.description}
                 </p>
               </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="py-8 sm:py-10 lg:py-16">
+          <div className="max-w-3xl">
+            <SectionLabel>Who this teleprompter is for</SectionLabel>
+            <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
+              Use one browser-based teleprompter across creator, meeting, and speech workflows.
+            </h2>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-3">
+            {copy.home.audiences.map((audience) => (
+              <article
+                key={audience.title}
+                className="rounded-[1.5rem] border border-slate-200 bg-white/88 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-7"
+              >
+                <h3 className="font-display text-2xl leading-tight text-ink sm:text-3xl">
+                  {audience.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-slate-600 sm:mt-4 sm:leading-7">
+                  {audience.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="py-8 sm:py-10 lg:py-16">
+          <div className="max-w-3xl">
+            <SectionLabel>Browser teleprompter advantages</SectionLabel>
+            <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
+              Why many teams choose a browser teleprompter over an app-based setup.
+            </h2>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:mt-8 lg:grid-cols-2">
+            {copy.home.reasons.map((reason) => (
+              <article
+                key={reason.title}
+                className="rounded-[1.5rem] border border-slate-200 bg-white/88 p-5 shadow-soft backdrop-blur sm:rounded-[2rem] sm:p-7"
+              >
+                <h3 className="font-display text-2xl leading-tight text-ink sm:text-3xl">
+                  {reason.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-slate-600 sm:mt-4 sm:leading-7">
+                  {reason.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="py-8 sm:py-10 lg:py-16">
+          <div className="max-w-3xl">
+            <SectionLabel>Browser vs app teleprompter</SectionLabel>
+            <h2 className="mt-3 font-display text-3xl leading-tight text-ink sm:mt-4 sm:text-4xl lg:text-5xl">
+              Compare an app-based teleprompter with a browser-first workflow.
+            </h2>
+          </div>
+
+          <div className="mt-6 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-soft">
+            <div className="grid grid-cols-[1.1fr_1fr_1fr] border-b border-slate-200 bg-slate-50/80 text-sm font-medium text-slate-700">
+              <div className="px-4 py-4">Category</div>
+              <div className="px-4 py-4">App-based teleprompter</div>
+              <div className="px-4 py-4">Teleprompter Online</div>
+            </div>
+            {copy.home.comparisonRows.map((row) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-[1.1fr_1fr_1fr] border-b border-slate-200 last:border-b-0"
+              >
+                <div className="px-4 py-4 text-sm font-medium text-ink">{row.label}</div>
+                <div className="px-4 py-4 text-sm leading-6 text-slate-600">{row.appBased}</div>
+                <div className="px-4 py-4 text-sm leading-6 text-slate-600">{row.browserBased}</div>
+              </div>
             ))}
           </div>
         </section>

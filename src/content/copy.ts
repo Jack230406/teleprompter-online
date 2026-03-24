@@ -15,9 +15,13 @@ export type LocalizedCopy = {
     eyebrow: string;
     title: string;
     description: string;
+    definition: string;
     highlights: string[];
     stats: Array<{ label: string; value: string }>;
     sections: Array<{ title: string; description: string }>;
+    audiences: Array<{ title: string; description: string }>;
+    reasons: Array<{ title: string; description: string }>;
+    comparisonRows: Array<{ label: string; appBased: string; browserBased: string }>;
     steps: Array<{ title: string; description: string }>;
     faq: Array<{ question: string; answer: string }>;
     readerCta: string;
@@ -104,7 +108,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
       eyebrow: "Free teleprompter app · browser-based · no account needed",
       title: "Free Online Teleprompter with Teleprompter Mirror",
       description:
-        "Paste your script, set the scroll speed, and read in fullscreen directly in your browser. Works as a free teleprompter app on desktop and phone, with no login or download required.",
+        "Paste your script, set the scroll speed, and read in fullscreen directly in your browser. Works on desktop and phone with no login or download required.",
+      definition:
+        "A free online teleprompter is a browser-based tool that scrolls your script while you read on camera. Teleprompter Online lets you paste text, adjust speed, use mirror mode, and read in fullscreen without signup or downloads.",
       highlights: [
         "No account or backend required",
         "Script and settings persist locally",
@@ -130,6 +136,67 @@ export const copy: Record<Locale, LocalizedCopy> = {
           title: "Works for video, Zoom, presentations, and live delivery",
           description:
             "Use this free online teleprompter for YouTube videos, Zoom calls, keynotes, podcasts, or any recording where you need to read from a script. Enable teleprompter mirror for glass rigs or go fullscreen on a second display."
+        }
+      ],
+      audiences: [
+        {
+          title: "For YouTube creators",
+          description:
+            "Use the teleprompter for intros, tutorials, sponsor reads, and talking-head videos while keeping your eyes close to the lens."
+        },
+        {
+          title: "For Zoom and presentations",
+          description:
+            "Keep notes near the camera, control scroll speed, and read more naturally during remote meetings, webinars, and keynote-style delivery."
+        },
+        {
+          title: "For speeches and podcasts",
+          description:
+            "Load a speech, sermon, outline, or podcast script and adjust text size and pacing so the read feels comfortable and confident."
+        }
+      ],
+      reasons: [
+        {
+          title: "Why use a browser-based teleprompter",
+          description:
+            "A browser teleprompter is faster to access than an app-based setup. You can open it on almost any device, paste a script, and start reading without dealing with downloads, accounts, or sync problems."
+        },
+        {
+          title: "Mirror mode for glass teleprompter rigs",
+          description:
+            "Teleprompter mirror mode flips the script so it reads correctly through beam-splitter glass. That makes the same page useful for both webcam setups and traditional glass rigs."
+        },
+        {
+          title: "Privacy with local-first script storage",
+          description:
+            "Your script stays in the browser using local storage. That makes this online teleprompter a better fit for private scripts, client work, and rehearsal notes that you do not want to upload anywhere."
+        },
+        {
+          title: "Common teleprompter mistakes to avoid",
+          description:
+            "Most reading problems come from text that is too wide, speed that is too fast, or a window that is too far from the camera. Start with a narrower reading width, slower pace, and larger text, then adjust from there."
+        }
+      ],
+      comparisonRows: [
+        {
+          label: "Setup time",
+          appBased: "Install the app, configure device access, and manage updates.",
+          browserBased: "Open the page and start prompting in under a minute."
+        },
+        {
+          label: "Device flexibility",
+          appBased: "Often tied to one platform or operating system.",
+          browserBased: "Works across desktop, laptop, tablet, and phone."
+        },
+        {
+          label: "Privacy",
+          appBased: "May require sign-in, cloud sync, or permissions.",
+          browserBased: "Keeps scripts locally in your browser with no account needed."
+        },
+        {
+          label: "Best use case",
+          appBased: "Long-term studio workflows with app-specific features.",
+          browserBased: "Fast rehearsals, creator setups, Zoom, speeches, and everyday prompting."
         }
       ],
       steps: [
@@ -192,9 +259,9 @@ export const copy: Record<Locale, LocalizedCopy> = {
       workflowTitle: "How to use this free online teleprompter",
       stepLabel: "Step",
       metaTitle:
-        "Free Online Teleprompter | Teleprompter Mirror, Fullscreen & No Signup — Teleprompter Online",
+        "Free Online Teleprompter with Mirror & Fullscreen | Teleprompter Online",
       metaDescription:
-        "Free online teleprompter with teleprompter mirror, fullscreen reading, and adjustable scroll speed. Paste your script and start reading with no account, no download, and support for desktop and phone."
+        "Use a free online teleprompter with mirror mode, fullscreen reading, and adjustable speed. Paste your script and start instantly on desktop or phone."
     },
     landing: {
       workflowLabel: "Scenario workflow",
@@ -271,6 +338,8 @@ export const copy: Record<Locale, LocalizedCopy> = {
       title: "Teleprompter Online Gratis con Modo Espejo",
       description:
         "Pega tu guion, ajusta la velocidad de lectura y usa pantalla completa directamente desde la home. Sin login ni descarga.",
+      definition:
+        "Un teleprompter online gratis es una herramienta en el navegador que desplaza tu guion mientras lees a camara. Teleprompter Online te permite pegar texto, ajustar la velocidad, activar modo espejo y leer en pantalla completa sin registro ni descargas.",
       highlights: [
         "Sin cuenta y sin backend",
         "Guion y ajustes guardados localmente",
@@ -296,6 +365,67 @@ export const copy: Record<Locale, LocalizedCopy> = {
           title: "Base preparada para SEO",
           description:
             "El producto se centra en una sola pagina principal de teleprompter y deja espacio para landings, tutoriales y paginas SEO orientadas a keywords."
+        }
+      ],
+      audiences: [
+        {
+          title: "Para creadores de YouTube",
+          description:
+            "Usa el teleprompter para intros, tutoriales, menciones patrocinadas y videos talking-head manteniendo la mirada cerca de la camara."
+        },
+        {
+          title: "Para Zoom y presentaciones",
+          description:
+            "Mantiene tus notas cerca de la camara y ayuda a leer de forma natural en reuniones, webinars y presentaciones."
+        },
+        {
+          title: "Para discursos y podcasts",
+          description:
+            "Carga un discurso, sermon, esquema o guion de podcast y ajusta el tamano del texto y el ritmo de lectura con comodidad."
+        }
+      ],
+      reasons: [
+        {
+          title: "Por que usar un teleprompter en el navegador",
+          description:
+            "Un teleprompter en el navegador es mas rapido de abrir que una app. Puedes entrar desde casi cualquier dispositivo, pegar un guion y empezar sin descargas ni cuentas."
+        },
+        {
+          title: "Modo espejo para rigs de cristal",
+          description:
+            "El modo espejo invierte el guion para que se lea correctamente a traves del cristal divisor. Asi la misma pagina sirve tanto para webcam como para rigs tradicionales."
+        },
+        {
+          title: "Privacidad con almacenamiento local",
+          description:
+            "Tu guion se guarda en el navegador con almacenamiento local. Eso lo hace mejor para guiones privados, trabajos de cliente y notas de ensayo que no quieres subir a ningun servidor."
+        },
+        {
+          title: "Errores comunes de teleprompter que conviene evitar",
+          description:
+            "La mayoria de los problemas vienen de usar lineas demasiado anchas, una velocidad excesiva o una ventana demasiado lejos de la camara. Empieza con texto mas grande, un ancho menor y un ritmo mas lento."
+        }
+      ],
+      comparisonRows: [
+        {
+          label: "Tiempo de preparacion",
+          appBased: "Instala la app, configura el dispositivo y gestiona actualizaciones.",
+          browserBased: "Abre la pagina y empieza en menos de un minuto."
+        },
+        {
+          label: "Flexibilidad de dispositivo",
+          appBased: "Suele depender de una plataforma concreta.",
+          browserBased: "Funciona en desktop, laptop, tablet y movil."
+        },
+        {
+          label: "Privacidad",
+          appBased: "Puede requerir login, sync en la nube o permisos extra.",
+          browserBased: "Mantiene el guion en el navegador sin necesidad de cuenta."
+        },
+        {
+          label: "Mejor caso de uso",
+          appBased: "Flujos de estudio a largo plazo con funciones muy especificas.",
+          browserBased: "Ensayos rapidos, creadores, Zoom, discursos y prompting diario."
         }
       ],
       steps: [

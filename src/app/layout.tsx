@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Newsreader, Roboto } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { HostRobotsTag } from "@/components/site/host-robots-tag";
 import { LanguageRoot } from "@/components/site/language-root";
 import { siteConfig } from "@/lib/site";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body
         className={`${newsreader.variable} ${roboto.variable} bg-paper font-body text-ink antialiased`}
       >
+        <HostRobotsTag />
         <LanguageRoot />
         {children}
       </body>
