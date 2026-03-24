@@ -24,19 +24,25 @@ export function HomePage({ locale }: HomePageProps) {
           labels={copy.navigation}
         />
 
-        <section className="py-12 lg:py-16">
+        <section className="py-10 lg:py-14">
           <div className="mx-auto max-w-5xl text-center">
             <div className="inline-flex rounded-full border border-brand/20 bg-brand-soft px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-brand-deep">
               {copy.home.eyebrow}
             </div>
-            <h1 className="mt-6 font-display text-5xl leading-[0.95] tracking-[-0.03em] text-ink sm:text-6xl xl:text-7xl">
+            <h1 className="mt-5 font-display text-4xl leading-[0.98] tracking-[-0.03em] text-ink sm:text-5xl xl:text-6xl">
               {copy.home.title}
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
               {copy.home.description}
             </p>
+          </div>
 
-            <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-3">
+          <div className="mt-8">
+            <TeleprompterWorkspace locale={locale} copy={copy} mode="landing" />
+          </div>
+
+          <div className="mx-auto mt-8 max-w-5xl">
+            <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
               {copy.home.highlights.map((highlight) => (
                 <div
                   key={highlight}
@@ -50,7 +56,7 @@ export function HomePage({ locale }: HomePageProps) {
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 href={getLocalizedPath(locale, "/teleprompter")}
                 className="inline-flex items-center rounded-full bg-ink px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
@@ -65,7 +71,7 @@ export function HomePage({ locale }: HomePageProps) {
               </Link>
             </div>
 
-            <div className="mt-10 grid gap-4 text-left sm:grid-cols-3">
+            <div className="mt-8 grid gap-4 text-left sm:grid-cols-3">
               {copy.home.stats.map((stat) => (
                 <div
                   key={stat.label}
@@ -80,10 +86,6 @@ export function HomePage({ locale }: HomePageProps) {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="mt-12">
-            <TeleprompterWorkspace locale={locale} copy={copy} mode="landing" />
           </div>
         </section>
 
