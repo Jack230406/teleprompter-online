@@ -53,9 +53,9 @@ export function LandingPageLinks({
           <div className="text-xs uppercase tracking-[0.22em] text-slate-500">
             {page.eyebrow}
           </div>
-          <h2 className="mt-4 font-display text-3xl leading-tight text-ink">
+          <h3 className="mt-4 font-display text-3xl leading-tight text-ink">
             {page.label}
-          </h2>
+          </h3>
           <p className="mt-3 text-sm leading-7 text-slate-600">
             {page.metaDescription}
           </p>
