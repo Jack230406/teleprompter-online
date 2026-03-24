@@ -243,9 +243,9 @@ export function TeleprompterWorkspace({
           >
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <div className="text-sm font-medium">Core controls</div>
+                <div className="text-sm font-medium">{copy.tool.controlsTitle}</div>
                 <div className={cn("mt-1 text-sm", toolTheme.muted)}>
-                  {copy.tool.speedLabel}, {copy.tool.fontSizeLabel}, {copy.tool.lineHeightLabel} and {copy.tool.textWidthLabel}
+                  {copy.tool.speedLabel}, {copy.tool.fontSizeLabel}, {copy.tool.lineHeightLabel}, {copy.tool.textWidthLabel}
                 </div>
               </div>
               <div

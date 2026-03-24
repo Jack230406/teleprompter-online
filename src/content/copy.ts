@@ -5,6 +5,8 @@ export type LocalizedCopy = {
   navigation: {
     home: string;
     teleprompter: string;
+    features: string;
+    faq: string;
     switchLanguage: string;
     launch: string;
     subtitle: string;
@@ -20,6 +22,14 @@ export type LocalizedCopy = {
     faq: Array<{ question: string; answer: string }>;
     readerCta: string;
     secondaryCta: string;
+    toolLabel: string;
+    trustLabel: string;
+    featuresLabel: string;
+    featuresTitle: string;
+    toolsLabel: string;
+    toolsTitle: string;
+    faqLabel: string;
+    faqTitle: string;
     workflowLabel: string;
     workflowTitle: string;
     stepLabel: string;
@@ -40,6 +50,7 @@ export type LocalizedCopy = {
   tool: {
     localBadge: string;
     editorTitle: string;
+    controlsTitle: string;
     previewTitle: string;
     readerTitle: string;
     scriptLabel: string;
@@ -83,6 +94,8 @@ export const copy: Record<Locale, LocalizedCopy> = {
     navigation: {
       home: "Home",
       teleprompter: "Teleprompter",
+      features: "Features",
+      faq: "FAQ",
       switchLanguage: "Ver en espanol",
       launch: "Open teleprompter",
       subtitle: "free teleprompter app"
@@ -165,6 +178,16 @@ export const copy: Record<Locale, LocalizedCopy> = {
       ],
       readerCta: "Open the teleprompter",
       secondaryCta: "See how it works",
+      toolLabel: "Main teleprompter tool",
+      trustLabel: "Why creators use it",
+      featuresLabel: "Core features",
+      featuresTitle:
+        "A single teleprompter workspace for script, controls, and fullscreen preview.",
+      toolsLabel: "More free teleprompter tools",
+      toolsTitle: "Explore additional teleprompter landing pages",
+      faqLabel: "FAQ",
+      faqTitle:
+        "Frequently asked questions about this free online teleprompter",
       workflowLabel: "Workflow",
       workflowTitle: "How to use this free online teleprompter",
       stepLabel: "Step",
@@ -191,6 +214,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
     tool: {
       localBadge: "Saved locally in this browser",
       editorTitle: "Your script and teleprompter controls",
+      controlsTitle: "Core controls",
       previewTitle: "Live preview",
       readerTitle: "Teleprompter reader",
       scriptLabel: "Script",
@@ -236,6 +260,8 @@ export const copy: Record<Locale, LocalizedCopy> = {
     navigation: {
       home: "Inicio",
       teleprompter: "Teleprompter",
+      features: "Funciones",
+      faq: "FAQ",
       switchLanguage: "View in English",
       launch: "Abrir teleprompter",
       subtitle: "app de teleprompter"
@@ -308,6 +334,16 @@ export const copy: Record<Locale, LocalizedCopy> = {
       ],
       readerCta: "Abrir teleprompter",
       secondaryCta: "Ver como funciona",
+      toolLabel: "Herramienta principal",
+      trustLabel: "Por que se usa",
+      featuresLabel: "Funciones clave",
+      featuresTitle:
+        "Un espacio de teleprompter para guion, controles y vista previa.",
+      toolsLabel: "Mas herramientas de teleprompter",
+      toolsTitle: "Explora mas paginas y usos del teleprompter",
+      faqLabel: "Preguntas frecuentes",
+      faqTitle:
+        "Preguntas frecuentes sobre este teleprompter online gratis",
       workflowLabel: "Flujo",
       workflowTitle: "Pensado para ensayar, grabar y presentar con rapidez.",
       stepLabel: "Paso",
@@ -334,6 +370,7 @@ export const copy: Record<Locale, LocalizedCopy> = {
     tool: {
       localBadge: "Guardado localmente en este navegador",
       editorTitle: "Guion y controles",
+      controlsTitle: "Controles principales",
       previewTitle: "Vista previa",
       readerTitle: "Escenario de lectura",
       scriptLabel: "Guion",

@@ -43,12 +43,12 @@ export function LandingPageLinks({
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
       {pages.map((page) => (
         <Link
           key={page.slug}
           href={getLocalizedPath(locale, `/${page.slug}`)}
-          className="group rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-soft transition hover:-translate-y-0.5 hover:border-slate-300"
+          className="group rounded-[2rem] border border-slate-200 bg-white/88 p-6 shadow-soft backdrop-blur transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white"
         >
           <div className="text-xs uppercase tracking-[0.22em] text-slate-500">
             {page.eyebrow}

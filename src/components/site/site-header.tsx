@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import {
   type Locale,
@@ -15,6 +16,8 @@ type SiteHeaderProps = {
   labels: {
     home: string;
     teleprompter: string;
+    features: string;
+    faq: string;
     switchLanguage: string;
     launch: string;
     subtitle: string;
@@ -27,22 +30,33 @@ export function SiteHeader({
   labels
 }: SiteHeaderProps) {
   const normalizedPath = normalizePath(currentPath);
+  const isHome = normalizedPath === "";
   const homePath = getLocalizedPath(locale, "/");
   const teleprompterPath =
-    normalizedPath === "" ? `#${teleprompterToolAnchor}` : getLocalizedToolPath(locale);
+    isHome ? `#${teleprompterToolAnchor}` : getLocalizedToolPath(locale);
   const alternateLocale = locale === "en" ? "es" : "en";
   const switchPath = getLocalizedPath(alternateLocale, normalizedPath || "/");
+  const navLinks = isHome
+    ? [
+        { href: teleprompterPath, label: labels.teleprompter, active: false },
+        { href: "#features", label: labels.features, active: false },
+        { href: "#faq", label: labels.faq, active: false }
+      ]
+    : [
+        { href: homePath, label: labels.home, active: false },
+        { href: teleprompterPath, label: labels.teleprompter, active: false }
+      ];
 
   return (
-    <header className="sticky top-0 z-40">
-      <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 px-4 py-3 shadow-soft backdrop-blur md:px-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <Link href={homePath} className="inline-flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-ink text-sm font-semibold tracking-[0.16em] text-white">
+    <header className="sticky top-0 z-40 pt-1">
+      <div className="rounded-[1.9rem] border border-white/80 bg-white/88 px-4 py-3 shadow-soft backdrop-blur-xl md:px-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link href={homePath} className="inline-flex min-w-0 items-center gap-3">
+            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-ink text-sm font-semibold tracking-[0.16em] text-white">
               TO
             </span>
-            <div>
-              <div className="font-display text-2xl leading-none text-ink">
+            <div className="min-w-0">
+              <div className="truncate font-display text-2xl leading-none text-ink">
                 Teleprompter Online
               </div>
               <div className="text-xs uppercase tracking-[0.18em] text-slate-500">
@@ -51,10 +65,22 @@ export function SiteHeader({
             </div>
           </Link>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <NavLink href={homePath} active={normalizedPath === ""}>
-              {labels.home}
-            </NavLink>
+          <nav
+            aria-label="Primary navigation"
+            className="order-3 hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50/90 p-1 md:order-none md:flex"
+          >
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.href}
+                href={link.href}
+                active={Boolean(link.active)}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <Link
               href={switchPath}
               className="inline-flex items-center rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-900 hover:text-slate-900"
@@ -77,7 +103,7 @@ export function SiteHeader({
 type NavLinkProps = {
   href: string;
   active: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 function NavLink({ href, active, children }: NavLinkProps) {
@@ -87,8 +113,8 @@ function NavLink({ href, active, children }: NavLinkProps) {
       className={cn(
         "inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition",
         active
-          ? "bg-brand-soft text-brand-deep"
-          : "text-slate-600 hover:bg-slate-100 hover:text-ink"
+          ? "bg-white text-ink shadow-sm"
+          : "text-slate-600 hover:bg-white hover:text-ink"
       )}
     >
       {children}
