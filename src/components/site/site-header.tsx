@@ -10,6 +10,8 @@ import {
 } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+import { BrandMark } from "./brand-mark";
+
 type SiteHeaderProps = {
   locale: Locale;
   currentPath: string;
@@ -52,9 +54,7 @@ export function SiteHeader({
       <div className="rounded-[1.5rem] border border-white/80 bg-white/88 px-3 py-2.5 shadow-soft backdrop-blur-xl sm:rounded-[1.9rem] sm:px-4 sm:py-3 md:px-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link href={homePath} className="inline-flex min-w-0 items-center gap-2.5 sm:gap-3">
-            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-ink text-xs font-semibold tracking-[0.16em] text-white sm:h-10 sm:w-10 sm:rounded-2xl sm:text-sm">
-              TO
-            </span>
+            <BrandMark className="h-9 w-9 shrink-0 rounded-xl sm:h-10 sm:w-10 sm:rounded-2xl" />
             <div className="min-w-0">
               <div className="truncate font-display text-xl leading-none text-ink sm:text-2xl">
                 Teleprompter Online
