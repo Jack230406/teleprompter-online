@@ -30,8 +30,6 @@ export type LocalizedCopy = {
     trustLabel: string;
     featuresLabel: string;
     featuresTitle: string;
-    toolsLabel: string;
-    toolsTitle: string;
     faqLabel: string;
     faqTitle: string;
     workflowLabel: string;
@@ -42,12 +40,6 @@ export type LocalizedCopy = {
   };
   landing: {
     workflowLabel: string;
-    productPagesLabel: string;
-    productPagesTitle: string;
-    productPagesDescription: string;
-    homeCardDescription: string;
-    readerCardDescription: string;
-    relatedPagesLabel: string;
     faqLabel: string;
     stateNote: string;
   };
@@ -250,8 +242,6 @@ export const copy: Record<Locale, LocalizedCopy> = {
       featuresLabel: "Core features",
       featuresTitle:
         "A single teleprompter workspace for script, controls, and fullscreen preview.",
-      toolsLabel: "More free teleprompter tools",
-      toolsTitle: "Explore additional teleprompter landing pages",
       faqLabel: "FAQ",
       faqTitle:
         "Frequently asked questions about this free online teleprompter",
@@ -265,15 +255,6 @@ export const copy: Record<Locale, LocalizedCopy> = {
     },
     landing: {
       workflowLabel: "Scenario workflow",
-      productPagesLabel: "Homepage paths",
-      productPagesTitle: "The homepage is the main teleprompter product page.",
-      productPagesDescription:
-        "These landing pages stay focused on scenario SEO. When someone is ready to use the tool, send them back to the homepage or straight to the homepage teleprompter section.",
-      homeCardDescription:
-        "See the main product page, core benefits, and the broader Teleprompter Online story.",
-      readerCardDescription:
-        "Jump straight to the homepage teleprompter with fullscreen, playback controls, reverse scroll, and teleprompter mirror mode.",
-      relatedPagesLabel: "More landing pages",
       faqLabel: "FAQ",
       stateNote:
         "Your script and current settings stay saved locally when you continue on the homepage teleprompter."
@@ -469,8 +450,6 @@ export const copy: Record<Locale, LocalizedCopy> = {
       featuresLabel: "Funciones clave",
       featuresTitle:
         "Un espacio de teleprompter para guion, controles y vista previa.",
-      toolsLabel: "Mas herramientas de teleprompter",
-      toolsTitle: "Explora mas paginas y usos del teleprompter",
       faqLabel: "Preguntas frecuentes",
       faqTitle:
         "Preguntas frecuentes sobre este teleprompter online gratis",
@@ -483,16 +462,6 @@ export const copy: Record<Locale, LocalizedCopy> = {
     },
     landing: {
       workflowLabel: "Flujo por escenario",
-      productPagesLabel: "Rutas hacia la home",
-      productPagesTitle:
-        "La home es la pagina principal del producto y del teleprompter.",
-      productPagesDescription:
-        "Estas landings siguen enfocadas en SEO por escenario. Cuando alguien quiera usar la herramienta, debe volver a la home o ir directo a la seccion principal del teleprompter.",
-      homeCardDescription:
-        "Revisa la pagina principal del producto, sus ventajas clave y la vista completa de Teleprompter Online.",
-      readerCardDescription:
-        "Salta directo al teleprompter de la home con pantalla completa, controles de reproduccion, direccion inversa y modo espejo.",
-      relatedPagesLabel: "Mas landings",
       faqLabel: "Preguntas frecuentes",
       stateNote:
         "Tu guion y la configuracion actual siguen guardados localmente al continuar en el teleprompter de la home."
@@ -539,6 +508,224 @@ export const copy: Record<Locale, LocalizedCopy> = {
         "Teleprompter Online es un teleprompter online gratis con pantalla completa, modo espejo y una base preparada para landings SEO.",
       quickLinksLabel: "Enlaces rapidos",
       popularPagesLabel: "Paginas populares"
+    }
+  },
+  fil: {
+    localeLabel: "Filipino",
+    navigation: {
+      home: "Home",
+      teleprompter: "Teleprompter",
+      features: "Mga Tampok",
+      faq: "FAQ",
+      switchLanguage: "Tingnan sa English",
+      launch: "Buksan ang teleprompter",
+      subtitle: "libreng teleprompter app"
+    },
+    home: {
+      eyebrow: "Libreng teleprompter app · nasa browser · walang account",
+      title: "Libreng Online Teleprompter na may Mirror Mode",
+      description:
+        "I-paste ang script mo, ayusin ang bilis ng scroll, at magbasa sa fullscreen direkta sa browser. Gumagana sa desktop at phone nang walang login o download.",
+      definition:
+        "Ang libreng online teleprompter ay isang browser-based na tool na awtomatikong ini-scroll ang script habang nagbabasa ka sa camera. Binibigyan ka ng Teleprompter Online ng paste text, speed control, mirror mode, at fullscreen reading nang walang signup o download.",
+      highlights: [
+        "Walang account o backend na kailangan",
+        "Naka-save nang lokal ang script at settings",
+        "May mirror mode para sa glass teleprompter rigs"
+      ],
+      stats: [
+        { label: "Storage", value: "Local-first" },
+        { label: "Setup time", value: "< 1 minuto" },
+        { label: "Device", value: "Desktop + mobile" }
+      ],
+      sections: [
+        {
+          title: "Magsimulang gumamit ng libreng online teleprompter sa loob ng ilang segundo",
+          description:
+            "Buksan ang page, i-paste ang script mo, at magsimulang mag-prompt agad. Walang signup form, walang email, at walang software na ida-download. Nananatiling naka-save sa browser ang script at settings mo."
+        },
+        {
+          title: "Buong teleprompter controls — speed, font, mirror mode, at iba pa",
+          description:
+            "Ayusin ang scroll speed, font size, line height, text width, mirror mode, reverse scroll direction, at light o dark theme nang hindi umaalis sa page."
+        },
+        {
+          title: "Pwede para sa video, Zoom, presentations, at live delivery",
+          description:
+            "Gamitin ang libreng online teleprompter na ito para sa YouTube videos, Zoom calls, keynotes, podcasts, o anumang recording na may script. I-on ang mirror mode para sa glass rigs o gamitin ang fullscreen sa second display."
+        }
+      ],
+      audiences: [
+        {
+          title: "Para sa YouTube creators",
+          description:
+            "Gamitin ang teleprompter para sa intros, tutorials, sponsor reads, at talking-head videos habang nananatiling malapit ang tingin mo sa lens."
+        },
+        {
+          title: "Para sa Zoom at presentations",
+          description:
+            "Panatilihing malapit sa camera ang notes, kontrolin ang bilis ng scroll, at magbasa nang mas natural sa remote meetings, webinars, at presentations."
+        },
+        {
+          title: "Para sa speeches at podcasts",
+          description:
+            "Mag-load ng speech, sermon, outline, o podcast script at ayusin ang laki ng text at pacing para mas komportable at kumpiyansa ang pagbasa."
+        }
+      ],
+      reasons: [
+        {
+          title: "Bakit browser-based na teleprompter ang gamitin",
+          description:
+            "Mas mabilis buksan ang browser teleprompter kaysa app-based setup. Maaari mo itong buksan sa halos anumang device, mag-paste ng script, at magsimulang magbasa nang walang download, account, o sync issues."
+        },
+        {
+          title: "Mirror mode para sa glass teleprompter rigs",
+          description:
+            "Binabaliktad ng mirror mode ang script para mabasa ito nang tama sa beam-splitter glass. Dahil dito, pwede ang parehong page para sa webcam setup at traditional glass rigs."
+        },
+        {
+          title: "Privacy sa local-first script storage",
+          description:
+            "Nananatili ang script mo sa browser gamit ang local storage. Mas bagay ito para sa private scripts, client work, at rehearsal notes na ayaw mong i-upload kung saan-saan."
+        },
+        {
+          title: "Mga karaniwang teleprompter mistakes na dapat iwasan",
+          description:
+            "Kadalasang galing ang reading problems sa sobrang lapad na text, sobrang bilis na speed, o window na masyadong malayo sa camera. Magsimula sa mas makitid na width, mas mabagal na pace, at mas malaking text, tapos mag-adjust mula roon."
+        }
+      ],
+      comparisonRows: [
+        {
+          label: "Setup time",
+          appBased: "I-install ang app, i-configure ang access ng device, at i-manage ang updates.",
+          browserBased: "Buksan ang page at magsimulang mag-prompt sa loob ng wala pang isang minuto."
+        },
+        {
+          label: "Device flexibility",
+          appBased: "Madalas naka-tali sa isang platform o operating system.",
+          browserBased: "Gumagana sa desktop, laptop, tablet, at phone."
+        },
+        {
+          label: "Privacy",
+          appBased: "Maaaring mangailangan ng sign-in, cloud sync, o permissions.",
+          browserBased: "Pinapanatiling lokal sa browser ang scripts mo at walang account na kailangan."
+        },
+        {
+          label: "Best use case",
+          appBased: "Pangmatagalang studio workflows na may app-specific features.",
+          browserBased: "Mabilis na rehearsal, creator setups, Zoom, speeches, at araw-araw na prompting."
+        }
+      ],
+      steps: [
+        {
+          title: "I-paste o i-type ang teleprompter script mo",
+          description:
+            "Mag-paste ng notes, speech, o production script at makita agad ang updates sa live teleprompter."
+        },
+        {
+          title: "Ayusin ang speed, font size, at mirror mode",
+          description:
+            "I-tune ang scroll speed, font size, line height, text width, at mirror mode ayon sa distance ng camera, reading pace, o glass rig mo."
+        },
+        {
+          title: "Magbasa sa fullscreen sa anumang device",
+          description:
+            "Mag-fullscreen at gamitin ang play, pause, at stop controls. Gumagana ang libreng teleprompter app na ito sa desktop, laptop, at phone, at laging naka-save nang lokal ang script mo."
+        }
+      ],
+      faq: [
+        {
+          question: "Sine-save ba ng online teleprompter na ito ang script ko?",
+          answer:
+            "Hindi. Ang Teleprompter Online ay nagse-save ng script at settings sa localStorage ng browser mo. Walang ipinapadala sa anumang server, kaya nasa device mo lang ang content mo."
+        },
+        {
+          question: "Pwede ko ba itong gamitin para sa YouTube videos, Zoom calls, o presentations?",
+          answer:
+            "Oo. Gumagana ang libreng online teleprompter na ito para sa anumang sitwasyon na may script, kasama ang YouTube recordings, Zoom meetings, keynotes, podcasts, at live events. Ayusin ang bilis ng scroll at font size ayon sa delivery pace at camera distance mo."
+        },
+        {
+          question: "Kailangan ko bang mag-install ng kahit ano para gamitin ito?",
+          answer:
+            "Hindi. Buong gumagana ang teleprompter na ito sa browser sa desktop, laptop, o phone. Walang ida-download o i-install, at pwede ito sa Mac, Windows, at anumang device na may modern browser."
+        },
+        {
+          question: "Paano ko gagawing teleprompter ang computer ko?",
+          answer:
+            "Buksan ang teleprompteronline.net sa anumang browser, i-paste ang script mo sa text area, at pindutin ang Play. Ayusin ang scroll speed, font size, at text width ayon sa reading pace mo. Para sa glass teleprompter rig, i-enable ang mirror mode para tama ang basa sa beam-splitter glass."
+        },
+        {
+          question: "Gumagana ba ito para sa Zoom at webcam recordings?",
+          answer:
+            "Oo. Ilagay ang browser window malapit sa webcam para makabasa ka habang nakatingin pa rin sa camera. Para sa Zoom presentations, buksan ang teleprompter sa hiwalay na window katabi ng video call mo."
+        }
+      ],
+      readerCta: "Buksan ang teleprompter",
+      secondaryCta: "Tingnan kung paano ito gumagana",
+      toolLabel: "Pangunahing teleprompter tool",
+      trustLabel: "Bakit ito ginagamit ng creators",
+      featuresLabel: "Core features",
+      featuresTitle:
+        "Isang teleprompter workspace para sa script, controls, at fullscreen preview.",
+      faqLabel: "FAQ",
+      faqTitle:
+        "Mga madalas itanong tungkol sa libreng online teleprompter na ito",
+      workflowLabel: "Workflow",
+      workflowTitle: "Paano gamitin ang libreng online teleprompter na ito",
+      stepLabel: "Hakbang",
+      metaTitle:
+        "Libreng Online Teleprompter na may Mirror at Fullscreen | Teleprompter Online",
+      metaDescription:
+        "Gumamit ng libreng online teleprompter na may mirror mode, fullscreen reading, at adjustable speed. I-paste ang script mo at magsimula agad sa desktop o phone."
+    },
+    landing: {
+      workflowLabel: "Scenario workflow",
+      faqLabel: "FAQ",
+      stateNote:
+        "Nananatiling naka-save nang lokal ang script at current settings mo kapag nagpatuloy ka sa homepage teleprompter."
+    },
+    tool: {
+      localBadge: "Naka-save nang lokal sa browser na ito",
+      editorTitle: "Script mo at teleprompter controls",
+      controlsTitle: "Core controls",
+      previewTitle: "Live preview",
+      readerTitle: "Teleprompter reader",
+      scriptLabel: "Script",
+      scriptPlaceholder:
+        "I-paste o isulat ang script mo rito. Awtomatikong nase-save ang changes at lalabas agad sa reader.",
+      speedLabel: "Bilis",
+      fontSizeLabel: "Laki ng font",
+      lineHeightLabel: "Line height",
+      textWidthLabel: "Lapad ng text",
+      wordCountLabel: "Bilang ng salita",
+      readingTimeLabel: "Tinatayang oras ng pagbasa",
+      mirrorLabel: "Mirror",
+      reverseLabel: "Reverse scroll",
+      themeLabel: "Tema",
+      themeLight: "Paper",
+      themeDark: "Studio",
+      play: "Play",
+      pause: "Pause",
+      stop: "Itigil ang playback",
+      reset: "Bumalik sa simula",
+      fullscreen: "Fullscreen",
+      exitFullscreen: "Lumabas sa fullscreen",
+      openReader: "Buksan ang homepage teleprompter",
+      ready: "Handa nang mag-prompt",
+      playing: "Kasulukuyang nagpo-prompt",
+      paused: "Naka-pause",
+      previewHint: "Nag-a-update ang preview ayon sa kasalukuyang script at settings mo.",
+      localHint: "Lahat ay nananatiling lokal sa browser na ito. Walang sync, walang login.",
+      readerHint:
+        "Gamitin ang homepage teleprompter para sa rehearsal, recording, o live delivery.",
+      closeNote:
+        "Pinapanatili ng pause ang puwesto mo, tinatapos ng stop ang playback, at ibinabalik ng back to start ang script sa unahan habang naka-save pa rin nang lokal ang lahat ng settings."
+    },
+    footer: {
+      summary:
+        "Ang Teleprompter Online (teleprompteronline.net) ay libreng online teleprompter na may mirror mode, fullscreen controls, at local script saving nang walang account o download.",
+      quickLinksLabel: "Quick links",
+      popularPagesLabel: "Popular pages"
     }
   }
 };

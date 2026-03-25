@@ -701,65 +701,6 @@ export function TeleprompterWorkspace({
 
   const desktopControls = (
     <div className="hidden gap-4 md:grid">
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)] lg:gap-4">
-        <div
-          className={cn(
-            "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4",
-            toolTheme.card
-          )}
-        >
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <div className="text-sm font-medium">{presetSectionTitle}</div>
-              <div
-                className={cn("mt-1 text-sm leading-5 sm:leading-6", toolTheme.muted)}
-              >
-                {presetSectionDescription}
-              </div>
-            </div>
-            {showFirstUseGuidance ? (
-              <div
-                className={cn(
-                  "rounded-full border px-3 py-1 text-[0.65rem] uppercase tracking-[0.18em]",
-                  toolTheme.statusPill
-                )}
-              >
-                {firstUseTitle}
-              </div>
-            ) : null}
-          </div>
-
-          {showFirstUseGuidance ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {firstUseSteps.map((step) => (
-                <HelperChip key={step} label={step} theme={state.theme} />
-              ))}
-            </div>
-          ) : null}
-
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {presetOptions.map((preset) => (
-              <PresetCard
-                key={preset.id}
-                title={preset.title}
-                description={preset.description}
-                theme={state.theme}
-                onClick={() => handleApplyPreset(preset.id)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <UtilityActionCard
-          title={fitToScreenLabel}
-          description={fitToScreenDescription}
-          detail={fitRecommendationSummary}
-          ctaLabel={fitToScreenLabel}
-          theme={state.theme}
-          onClick={handleFitToScreen}
-        />
-      </div>
-
       <div
         className={cn(
           "rounded-[1.25rem] border p-3.5 sm:rounded-[1.5rem] sm:p-4 md:p-5",
@@ -957,9 +898,9 @@ export function TeleprompterWorkspace({
           </div>
         ) : null}
 
-        <div className="grid gap-0 xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
+        <div className="grid gap-0">
           {!isFocusMode ? (
-            <section className="min-w-0 border-b p-4 sm:p-6 md:p-8 xl:border-b-0 xl:border-r">
+            <section className="min-w-0 border-b p-4 sm:p-6 md:p-8">
               <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <div className="min-w-0">
                   <h2 className="font-display text-2xl leading-none sm:text-3xl">
@@ -1115,9 +1056,8 @@ export function TeleprompterWorkspace({
               "min-w-0 p-4 sm:p-6 md:p-8 lg:p-10",
               !isFocusMode &&
                 (state.theme === "dark"
-                  ? "border-t border-slate-800 xl:col-span-2"
-                  : "border-t border-slate-200 xl:col-span-2"),
-              isFocusMode && "xl:col-span-2"
+                  ? "border-t border-slate-800"
+                  : "border-t border-slate-200")
             )}
           >
             <div

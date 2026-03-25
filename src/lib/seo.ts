@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 
-import { Locale, getLocalizedPath, siteConfig } from "@/lib/site";
+import {
+  type Locale,
+  getLocalizedAlternates,
+  getLocalizedPath,
+  localeConfig,
+  siteConfig
+} from "@/lib/site";
 
 type BuildMetadataInput = {
   locale: Locale;
@@ -18,8 +24,7 @@ export function buildMetadata({
   keywords = []
 }: BuildMetadataInput): Metadata {
   const canonical = getLocalizedPath(locale, path);
-  const englishPath = getLocalizedPath("en", path);
-  const spanishPath = getLocalizedPath("es", path);
+  const alternateLanguages = getLocalizedAlternates(path);
 
   return {
     title,
@@ -27,18 +32,17 @@ export function buildMetadata({
     keywords,
     alternates: {
       canonical,
-      languages: {
-        en: englishPath,
-        es: spanishPath,
-        "x-default": englishPath
-      }
+      languages: alternateLanguages
     },
     openGraph: {
       title,
       description,
       url: canonical,
       siteName: siteConfig.name,
-      locale: locale === "es" ? "es_ES" : "en_US",
+      locale: localeConfig[locale].ogLocale,
+      alternateLocale: siteConfig.locales
+        .filter((candidate) => candidate !== locale)
+        .map((candidate) => localeConfig[candidate].ogLocale),
       type: "website",
       images: [
         {

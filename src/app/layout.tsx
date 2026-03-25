@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 
 import { HostRobotsTag } from "@/components/site/host-robots-tag";
 import { LanguageRoot } from "@/components/site/language-root";
-import { siteConfig } from "@/lib/site";
+import { getLocalizedAlternates, siteConfig } from "@/lib/site";
 
 import "./globals.css";
 
@@ -50,11 +50,7 @@ export const metadata: Metadata = {
     images: ["/og-image.svg"]
   },
   alternates: {
-    languages: {
-      en: "/",
-      es: "/es",
-      "x-default": "/"
-    }
+    languages: getLocalizedAlternates("/")
   }
 };
 
